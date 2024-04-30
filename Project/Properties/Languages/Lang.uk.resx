@@ -157,10 +157,13 @@
     <value>Ні</value>
   </data>
   <data name="ReturnToMainMenu" xml:space="preserve">
-    <value>Повернутися до головного меню</value>
+    <value>Повернутися назад</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Збереження</value>
+  </data>
+  <data name="SaveSettings" xml:space="preserve">
+    <value>Зберегти</value>
   </data>
   <data name="SelectDifficulty" xml:space="preserve">
     <value>Виберіть складність:</value>
@@ -178,7 +181,7 @@
     <value>Українська</value>
   </data>
   <data name="WantToChangeLang1" xml:space="preserve">
-    <value>Щоб змінити мову, вам треба перезавантажити гру.</value>
+    <value>Для зміни налаштувань, перезавантажте гру.</value>
   </data>
   <data name="WantToChangeLang2" xml:space="preserve">
     <value>Хочете вийти з гри?</value>

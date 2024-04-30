@@ -162,6 +162,9 @@
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="SaveSettings" xml:space="preserve">
+    <value>Save</value>
+  </data>
   <data name="SelectDifficulty" xml:space="preserve">
     <value>Select difficulty:</value>
   </data>
@@ -178,7 +181,7 @@
     <value>Ukrainian</value>
   </data>
   <data name="WantToChangeLang1" xml:space="preserve">
-    <value>To change language you need to restart the game.</value>
+    <value>To change settings restart the game.</value>
   </data>
   <data name="WantToChangeLang2" xml:space="preserve">
     <value>Do you want to exit from game?</value>

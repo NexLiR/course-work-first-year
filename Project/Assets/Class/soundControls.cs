@@ -7,24 +7,64 @@ using System.Media;
 using Microsoft.SqlServer.Server;
 using System.Windows.Media;
 using Project.Properties;
+using System.Threading;
+using System.Windows.Threading;
+using System.Windows;
 
 namespace Project.Assets.Class
 {
-    public class soundControls
+    public class SoundControls
     {
         MediaPlayer mediaPlayer = new MediaPlayer();
         MediaPlayer soundPlayer = new MediaPlayer();
 
-        public void musicSound()
+        private Dispatcher _dispatcher;
+
+        public SoundControls()
         {
-            mediaPlayer.Open(new Uri(string.Format("music-1.mp3"), UriKind.Relative));
-            mediaPlayer.Play();
-            mediaPlayer.MediaEnded += new EventHandler(Media_Ended);
+            _dispatcher = Application.Current.Dispatcher;
         }
-        private void Media_Ended(object sender, EventArgs e)
+
+        // Music player
+        public async void PlayMusic()
+        {
+            mediaPlayer.Open(new Uri(@"Assets\Music\music-1.mp3", UriKind.Relative));
+            mediaPlayer.Volume = (double)Properties.Settings.Default.musicVolume / 100.0;
+            mediaPlayer.Play();
+            mediaPlayer.MediaEnded += MediaPlayer_MediaEnded;
+            await Task.Run(() => KeepPlaying());
+        }
+        private void KeepPlaying()
+        {
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromMilliseconds(100);
+            timer.Tick += TimerTick;
+            timer.Start();
+        }
+        private void TimerTick(object sender, EventArgs e)
+        {
+            if (mediaPlayer.NaturalDuration.HasTimeSpan &&
+                mediaPlayer.NaturalDuration.TimeSpan - mediaPlayer.Position < TimeSpan.FromSeconds(1))
+            {
+                mediaPlayer.Position = TimeSpan.Zero;
+                mediaPlayer.Play();
+            }
+        }
+        private void MediaPlayer_MediaEnded(object sender, EventArgs e)
         {
             mediaPlayer.Position = TimeSpan.Zero;
             mediaPlayer.Play();
+        }
+
+        // Sound player
+        public async void PlaySound(string sound)
+        {
+            await _dispatcher.InvokeAsync(() =>
+            {
+                soundPlayer.Open(new Uri(@"Assets\Sound\" + sound + ".mp3", UriKind.Relative));
+                soundPlayer.Volume = (double)Properties.Settings.Default.soundVolume / 100.0;
+                soundPlayer.Play();
+            });
         }
     }
 }

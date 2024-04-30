@@ -196,6 +196,15 @@ namespace Project.Properties.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string SaveSettings {
+            get {
+                return ResourceManager.GetString("SaveSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select difficulty:.
         /// </summary>
         public static string SelectDifficulty {
@@ -241,7 +250,7 @@ namespace Project.Properties.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to To change language you need to restart the game..
+        ///   Looks up a localized string similar to To change settings restart the game..
         /// </summary>
         public static string WantToChangeLang1 {
             get {

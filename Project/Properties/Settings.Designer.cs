@@ -37,25 +37,25 @@ namespace Project.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool music {
+        [global::System.Configuration.DefaultSettingValueAttribute("50")]
+        public int musicVolume {
             get {
-                return ((bool)(this["music"]));
+                return ((int)(this["musicVolume"]));
             }
             set {
-                this["music"] = value;
+                this["musicVolume"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool sound {
+        [global::System.Configuration.DefaultSettingValueAttribute("50")]
+        public int soundVolume {
             get {
-                return ((bool)(this["sound"]));
+                return ((int)(this["soundVolume"]));
             }
             set {
-                this["sound"] = value;
+                this["soundVolume"] = value;
             }
         }
     }
