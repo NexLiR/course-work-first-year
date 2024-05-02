@@ -28,7 +28,7 @@ namespace Project.Assets.Class
         // Music player
         public async void PlayMusic()
         {
-            mediaPlayer.Open(new Uri(@"Assets\Music\music-1.mp3", UriKind.Relative));
+            mediaPlayer.Open(new Uri(@"Assets\Musics\music-1.mp3", UriKind.Relative));
             mediaPlayer.Volume = (double)Properties.Settings.Default.musicVolume / 100.0;
             mediaPlayer.Play();
             mediaPlayer.MediaEnded += MediaPlayer_MediaEnded;
@@ -61,7 +61,7 @@ namespace Project.Assets.Class
         {
             await _dispatcher.InvokeAsync(() =>
             {
-                soundPlayer.Open(new Uri(@"Assets\Sound\" + sound + ".mp3", UriKind.Relative));
+                soundPlayer.Open(new Uri(@"Assets\Sounds\" + sound + ".mp3", UriKind.Relative));
                 soundPlayer.Volume = (double)Properties.Settings.Default.soundVolume / 100.0;
                 soundPlayer.Play();
             });

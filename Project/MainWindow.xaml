@@ -4,79 +4,81 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Project"
+        xmlns:settings="clr-namespace:Project.Properties"
         xmlns:languages="clr-namespace:Project.Properties.Languages"
         mc:Ignorable="d"
-        MinHeight="768" MinWidth="1024" MaxHeight="2160" MaxWidth="3840"
+        MinHeight="576" MinWidth="1024" MaxHeight="2160" MaxWidth="3840"
         
     Title="Void Hinters" Height="1080" Width="1920">
 
-    <Canvas x:Name="Game" Visibility="Visible">
-        <Canvas x:Name="Menu" Width="1920" Height="1064" Visibility="Visible">
-            <Canvas.Background>
-                <ImageBrush ImageSource="Assets/Texture/menu-background.png"/>
-            </Canvas.Background>
+    <Viewbox Visibility="Visible" Stretch="UniformToFill">
+        <Canvas x:Name="Game" Width="1920" Height="1064" Visibility="Visible">
+            <Canvas x:Name="Menu" Width="1920" Height="1064" Visibility="Hidden">
+                <Canvas.Background>
+                    <ImageBrush ImageSource="Assets/Textures/menu-background.png"/>
+                </Canvas.Background>
 
-            <StackPanel x:Name="MainMenu" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible" Canvas.Left="819" Canvas.Top="363">
-                <Button Content="{x:Static languages:Lang.NewGame}" Click="NewGame_Click" Margin="0,10,0,10" FontSize="32" Padding="30, 10"/>
-                <Button Content="{x:Static languages:Lang.ContinueGame}" Click="ContinueGame_Click" Margin="0,10,0,10" FontSize="32" Padding="30, 10"/>
-                <Button Content="{x:Static languages:Lang.Settings}" Click="Settings_Click" Margin="0,10,0,10" FontSize="32" Padding="30, 10"/>
-                <Button Content="{x:Static languages:Lang.Exit}" Click="Exit_Click" Margin="0,10,0,10" FontSize="32" Padding="30, 10"/>
-            </StackPanel>
-
-            <StackPanel x:Name="SettingsMenu" Background="Transparent" Width="1000" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="Hidden" Canvas.Left="460" Canvas.Top="32">
-                <Grid Height="1000" Width="1000" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <StackPanel Margin="0,425,0,0" Orientation="Horizontal" Width="456" HorizontalAlignment="Center" VerticalAlignment="Top">
-                        <TextBlock FontWeight="Bold" Width="80" Text="{x:Static languages:Lang.Music}" FontSize="20" Height="30"/>
-                        <Grid Width="30"/>
-                        <Slider Width="300" Height="30" Margin="0,15,0,0" Name="Music_Slider" Minimum="0" Maximum="100" TickFrequency="1" ValueChanged="Music_Slider_ValueChanged"/>
-                    </StackPanel>
-                    <StackPanel Margin="0,361,0,0" Orientation="Horizontal" Width="456" HorizontalAlignment="Center" VerticalAlignment="Top">
-                        <TextBlock FontWeight="Bold" Width="80" Text="{x:Static languages:Lang.Sound}" FontSize="20" Height="30"/>
-                        <Grid Width="30"/>
-                        <Slider Width="300" Height="30" Margin="0,15,0,0" Name="Sound_Slider"  Minimum="0" Maximum="100" TickFrequency="1" ValueChanged="Sound_Slider_ValueChanged"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="220" VerticalAlignment="Top" Margin="0,500,0,0">
-                        <Button Content="{x:Static languages:Lang.EnglishLang}" Click="Change_to_English_Click" FontSize="16" Padding="10" Width="100" Height="50"/>
-                        <Grid Width="20"></Grid>
-                        <Button Content="{x:Static languages:Lang.UkrainianLang}" Click="Change_to_Ukrainian_Click" FontSize="16" Padding="10" Width="100" Height="50"/>
-                    </StackPanel>
-                    <Button Click="Return_to_MainMenu_Click" FontSize="16" Padding="10" Margin="395,575,395,380">
-                        <Button.Content>
-                            <TextBlock TextAlignment="Center" TextWrapping="Wrap">
-                                <Run Text="{x:Static languages:Lang.ReturnToMainMenu}"/>
-                            </TextBlock>
-                        </Button.Content>
-                    </Button>
-                    <Button Click="Save_Settings_Click" Margin="288,575,626,380">
-                        <Button.Content>
-                            <TextBlock TextAlignment="Center" TextWrapping="Wrap">
-                                  <Run Text="{x:Static languages:Lang.SaveSettings}"/>
-                            </TextBlock>
-                        </Button.Content>
-                    </Button>
-                </Grid>
-            </StackPanel>
-
-            <StackPanel x:Name="SaveSettings" Visibility="Hidden" Background="Transparent" Width="844" Height="294" Canvas.Left="538" Canvas.Top="385" VerticalAlignment="Top" Orientation="Vertical" HorizontalAlignment="Center">
-                <TextBlock FontWeight="Bold" FontSize="36" Width="824" Height="158" TextWrapping="Wrap" TextAlignment="Center"><Run Text="{x:Static languages:Lang.WantToChangeLang1}"/><LineBreak/><Run Text="{x:Static languages:Lang.WantToChangeLang2}"/></TextBlock>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Content="{x:Static languages:Lang.Yes}" Click="SaveChanges_Click" FontSize="40" Padding="10" Width="180" Height="120"></Button>
-                    <Grid Width="50"/>
-                    <Button Content="{x:Static languages:Lang.No}" Click="Dont_SaveChanges_Click" FontSize="40" Padding="10" Width="180" Height="120"></Button>
+                <StackPanel x:Name="MainMenu" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible" Canvas.Left="821" Canvas.Top="414">
+                    <Button Content="{x:Static languages:Lang.NewGame}" Click="NewGame_Click" Margin="0,10,0,10" FontSize="32" Padding="30, 10"/>
+                    <Button Content="{x:Static languages:Lang.ContinueGame}" Click="ContinueGame_Click" Margin="0,10,0,10" FontSize="32" Padding="30, 10"/>
+                    <Button Content="{x:Static languages:Lang.Settings}" Click="Settings_Click" Margin="0,10,0,10" FontSize="32" Padding="30, 10"/>
+                    <Button Content="{x:Static languages:Lang.Exit}" Click="Exit_Click" Margin="0,10,0,10" FontSize="32" Padding="30, 10"/>
                 </StackPanel>
-            </StackPanel>
 
-            <StackPanel x:Name="GameSaves" Visibility="Hidden" Canvas.Left="478" Canvas.Top="163">
-                <StackPanel Orientation="Horizontal" Width="250" Height="712">
-                    <StackPanel Orientation="Vertical" >
-                        <Button Width="64" Background="Transparent" Click="Delete_Save1_Click">
-                            <Image Source="Assets/Texture/redCrossIcon.png" Height="64"></Image>
+                <StackPanel x:Name="SettingsMenu" Background="Transparent" Width="542" Visibility="Hidden" Canvas.Left="689" Canvas.Top="83" Height="656" HorizontalAlignment="Center" VerticalAlignment="Top">
+                    <Grid Height="1000" Width="1000" HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <StackPanel Margin="0,425,0,0" Orientation="Horizontal" Width="456" HorizontalAlignment="Center" VerticalAlignment="Top">
+                            <TextBlock FontWeight="Bold" Width="80" Text="{x:Static languages:Lang.Music}" FontSize="20" Height="30"/>
+                            <Grid Width="30"/>
+                            <Slider Width="300" Height="30" Margin="0,15,0,0" Name="Music_Slider" Minimum="0" Maximum="100" TickFrequency="1" ValueChanged="Music_Slider_ValueChanged" Value="{Binding Source={x:Static settings:Settings.Default}, Path=musicVolume}"/>
+                        </StackPanel>
+                        <StackPanel Margin="0,361,0,0" Orientation="Horizontal" Width="456" HorizontalAlignment="Center" VerticalAlignment="Top">
+                            <TextBlock FontWeight="Bold" Width="80" Text="{x:Static languages:Lang.Sound}" FontSize="20" Height="30"/>
+                            <Grid Width="30"/>
+                            <Slider Width="300" Height="30" Margin="0,15,0,0" Name="Sound_Slider"  Minimum="0" Maximum="100" TickFrequency="1" ValueChanged="Sound_Slider_ValueChanged" Value="{Binding Source={x:Static settings:Settings.Default}, Path=soundVolume}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Width="220" VerticalAlignment="Top" Margin="0,500,0,0">
+                            <Button Content="{x:Static languages:Lang.EnglishLang}" Click="Change_to_English_Click" FontSize="16" Padding="10" Width="100" Height="50"/>
+                            <Grid Width="20"></Grid>
+                            <Button Content="{x:Static languages:Lang.UkrainianLang}" Click="Change_to_Ukrainian_Click" FontSize="16" Padding="10" Width="100" Height="50"/>
+                        </StackPanel>
+                        <Button Click="Return_to_MainMenu_Click" FontSize="16" Padding="10" Margin="395,575,395,380">
+                            <Button.Content>
+                                <TextBlock TextAlignment="Center" TextWrapping="Wrap">
+                                <Run Text="{x:Static languages:Lang.ReturnToMainMenu}"/>
+                                </TextBlock>
+                            </Button.Content>
                         </Button>
-                        <Button  Click="Load_Save1_Click" FontSize="32" Padding="10" Width="250" Height="400">
-                            <TextBlock><Run Text="{x:Static languages:Lang.Save}" /><Run Text=" "/><Run Text=" 1"/></TextBlock>
+                        <Button Click="Save_Settings_Click" Margin="288,575,626,380">
+                            <Button.Content>
+                                <TextBlock TextAlignment="Center" TextWrapping="Wrap">
+                                    <Run Text="{x:Static languages:Lang.SaveSettings}"/>
+                                </TextBlock>
+                            </Button.Content>
                         </Button>
+                    </Grid>
+                </StackPanel>
+
+                <StackPanel x:Name="SaveSettings" Visibility="Hidden" Background="Transparent" Width="844" Height="294" Canvas.Left="538" Canvas.Top="436" VerticalAlignment="Top" Orientation="Vertical" HorizontalAlignment="Center">
+                    <TextBlock FontWeight="Bold" FontSize="32" Width="824" Height="158" TextWrapping="Wrap" TextAlignment="Center"><Run Text="{x:Static languages:Lang.WantToChangeLang1}"/><LineBreak/><Run Text="{x:Static languages:Lang.WantToChangeLang2}"/></TextBlock>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Content="{x:Static languages:Lang.Yes}" Click="SaveChanges_Click" FontSize="40" Padding="10" Width="180" Height="120"></Button>
+                        <Grid Width="50"/>
+                        <Button Content="{x:Static languages:Lang.No}" Click="Dont_SaveChanges_Click" FontSize="40" Padding="10" Width="180" Height="120"></Button>
                     </StackPanel>
-                    <!--   <Grid Width="265"/>
+                </StackPanel>
+
+                <StackPanel x:Name="GameSaves" Visibility="Hidden" Canvas.Left="478" Canvas.Top="376" HorizontalAlignment="Center" VerticalAlignment="Top">
+                    <StackPanel Orientation="Horizontal" Width="250" Height="300">
+                        <StackPanel Orientation="Vertical">
+                            <Button Width="64" Background="Transparent" Click="Delete_Save1_Click">
+                                <Image Source="Assets/Textures/redCrossIcon.png" Height="64"></Image>
+                            </Button>
+                            <Button  Click="Load_Save1_Click" FontSize="32" Padding="10" Width="250" Height="200">
+                                <TextBlock><Run Text="{x:Static languages:Lang.Save}" /><Run Text=" "/><Run Text=" 1"/></TextBlock>
+                            </Button>
+                        </StackPanel>
+                        <!--   <Grid Width="265"/>
                     <Button  Click="Load_Save2_Click" FontSize="32" Padding="10" Width="250" Height="400">
                         <Button.Content>
                             <TextBlock>
@@ -94,34 +96,38 @@
                             </TextBlock>
                         </Button.Content>
                     </Button> -->
+                    </StackPanel>
+                    <TextBlock Name="maxScore" FontSize="32" TextAlignment="Center"><Run Text="{x:Static languages:Lang.Score}"/><Run Text=" "/><Run Name="TextBlockMaxScore"/></TextBlock>
+                    <TextBlock FontWeight="Bold" Width="963" FontSize="36" Height="115" TextWrapping="Wrap" TextAlignment="Center" Margin="0 32 0 0"><Run Text="{x:Static languages:Lang.ChooseSave}"/></TextBlock>
+                </StackPanel>
 
-                </StackPanel>
-                <TextBlock FontWeight="Bold" Width="963" FontSize="48" Height="128" TextWrapping="Wrap" TextAlignment="Center"><Run Text="{x:Static languages:Lang.ChooseSave}"/></TextBlock>
-            </StackPanel>
-
-            <Canvas x:Name="CharactersSelectMenu" Visibility="Hidden">
-                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="785" Canvas.Top="184">
-                    <StackPanel Orientation="Horizontal" Margin="0 0 0 30">
-                        <Image Source="Assets/Texture/character-exemple.jpg" Height="350"/>
-                        <!--   <Image Source="Assets/Texture/character-exemple.jpg" Height="350"/>
-                        <Image Source="Assets/Texture/character-exemple.jpg" Height="350"/> -->
+                <StackPanel x:Name="CharactersSelectMenu" Visibility="Hidden" Canvas.Left="734" Canvas.Top="341" HorizontalAlignment="Left" VerticalAlignment="Center" Width="456">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="835" Canvas.Top="266">
+                        <StackPanel Orientation="Horizontal" Margin="0 0 0 30">
+                            <Image Source="Assets/Textures/character-1.jpg" Height="250"/>
+                            <!--   <Image Source="Assets/Texture/character-1.jpg" Height="350"/>
+                        <Image Source="Assets/Texture/character-1.jpg" Height="350"/> -->
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Button Name="btnCharacter1" Content="{x:Static languages:Lang.Character1Name}" Click="Choose_Character1_Click" FontSize="20" Padding="10"/>
+                            <!--<Button Name="btnCharacter2" Content="{x:Static languages:Lang.Character2Name}" Click="Choose_Character2_Click" FontSize="20" Padding="10" Margin="225 0"/>
+                        <Button Name="btnCharacter3" Content="{x:Static languages:Lang.Character3Name}" Click="Choose_Character3_Click" FontSize="20" Padding="10"/>-->
+                        </StackPanel>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button Content="{x:Static languages:Lang.Character1Name}" Click="Choose_Character1_Click" FontSize="20" Padding="10"/>
-                        <!--   <Button Content="{x:Static languages:Lang.Character2Name}" Click="Choose_Character2_Click" FontSize="20" Padding="10" Margin="225 0"/>
-                        <Button Content="{x:Static languages:Lang.Character3Name}" Click="Choose_Character3_Click" FontSize="20" Padding="10"/> -->
+                    <StackPanel Canvas.Left="734" Canvas.Top="600" Orientation="Vertical" Width="452" HorizontalAlignment="Left" VerticalAlignment="Center">
+                        <TextBlock Text="{x:Static languages:Lang.SelectDifficulty}" FontWeight="Bold" FontSize="32" Margin="0 0 0 20" Width="246"/>
+                        <StackPanel Orientation="Horizontal" Width="451">
+                            <Button Name="btnEasy" Content="{x:Static languages:Lang.Difficulty0}" FontSize="22" Padding="12" Width="130" Click="Easy_Difficulty_Selected_Click"/>
+                            <Button Name="btnNormal" Content="{x:Static languages:Lang.Difficulty1}" FontSize="22" Padding="12" Width="130" Click="Normal_Difficulty_Selected_Click" Margin="30 0"/>
+                            <Button Name="btnHard" Content="{x:Static languages:Lang.Difficulty2}" FontSize="22" Padding="12" Width="130" Click="Hard_Difficulty_Selected_Click"/>
+                        </StackPanel>
                     </StackPanel>
+                    <Button Content="{x:Static languages:Lang.StartGame}" Click="StartGame_Click" Padding="30" FontSize="40" Width="350" Margin="0 90 0 0"/>
                 </StackPanel>
-                <StackPanel Canvas.Left="705" Canvas.Top="674" Orientation="Vertical" Width="510" HorizontalAlignment="Center" VerticalAlignment="Top">
-                    <TextBlock Text="{x:Static languages:Lang.SelectDifficulty}" FontWeight="Bold" FontSize="32" Margin="0 0 0 20" Width="246"/>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <Button Content="{x:Static languages:Lang.Difficulty0}" FontSize="28" Padding="12" Width="150" Click="Easy_Difficulty_Selected_Click"/>
-                        <Button Content="{x:Static languages:Lang.Difficulty1}" FontSize="28" Padding="12" Width="150" Click="Normal_Difficulty_Selected_Click" Margin="30 0"/>
-                        <Button Content="{x:Static languages:Lang.Difficulty2}" FontSize="28" Padding="12" Width="150" Click="Hard_Difficulty_Selected_Click"/>
-                    </StackPanel>
-                </StackPanel>
-                <Button Content="{x:Static languages:Lang.StartGame}" Click="StartGame_Click" Padding="30" FontSize="40" Width="350" Canvas.Left="785" Canvas.Top="872" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+            </Canvas>
+            <Canvas x:Name="GameSpace" Width="1920" Height="1064" Visibility="Visible">
+                
             </Canvas>
         </Canvas>
-    </Canvas>
+    </Viewbox>
 </Window>

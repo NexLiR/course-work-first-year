@@ -165,6 +165,9 @@
   <data name="SaveSettings" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="Score" xml:space="preserve">
+    <value>Score:</value>
+  </data>
   <data name="SelectDifficulty" xml:space="preserve">
     <value>Select difficulty:</value>
   </data>

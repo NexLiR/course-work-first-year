@@ -30,6 +30,7 @@ namespace Project
         {
             SoundControls music = new SoundControls();
             music.PlayMusic();
+            UpdateMaxScore();
         }
 
         SavesControls save = new SavesControls();
@@ -97,6 +98,7 @@ namespace Project
         {
             sound.PlaySound("button-click");
             SaveSettings.Visibility = Visibility.Hidden;
+            SettingsMenu.Visibility = Visibility.Visible;
         }
         private void SaveChanges_Click(object sender, RoutedEventArgs e)
         {
@@ -106,6 +108,7 @@ namespace Project
         }
         private void Save_Settings_Click(object sender, RoutedEventArgs e)
         {
+            SettingsMenu.Visibility = Visibility.Hidden;
             sound.PlaySound("button-click");
             SaveSettings.Visibility = Visibility.Visible;
         }
@@ -140,7 +143,7 @@ namespace Project
             {
                 MessageBox.Show("Save not found.");
             }
-            
+
         }
         //private void Load_Save2_Click(object sender, RoutedEventArgs e)
         //{
@@ -160,26 +163,76 @@ namespace Project
         private void Choose_Character1_Click(object sender, RoutedEventArgs e)
         {
             sound.PlaySound("button-click");
+            btnCharacter1.Background = Brushes.Green;
+            //btnCharacter2.Background = Brushes.Transparent;
+            //btnCharacter3.Background = Brushes.Transparent;
         }
         //private void Choose_Character2_Click(object sender, RoutedEventArgs e)
         //{
         //    sound.PlaySound("button-click");
+        //    btnCharacter1.Background = Brushes.Transparent;
+        //    btnCharacter2.Background = Brushes.Green;
+        //    btnCharacter3.Background = Brushes.Transparent;
         //}
         //private void Choose_Character3_Click(object sender, RoutedEventArgs e)
         //{
         //    sound.PlaySound("button-click");
+        //    btnCharacter1.Background = Brushes.Transparent;
+        //    btnCharacter2.Background = Brushes.Transparent;
+        //    btnCharacter3.Background = Brushes.Green;
         //}
         private void Easy_Difficulty_Selected_Click(object sender, RoutedEventArgs e)
         {
             sound.PlaySound("button-click");
+            btnEasy.Background = Brushes.Green;
+            btnNormal.Background = Brushes.Transparent;
+            btnHard.Background = Brushes.Transparent;
         }
         private void Normal_Difficulty_Selected_Click(object sender, RoutedEventArgs e)
         {
             sound.PlaySound("button-click");
+            btnEasy.Background = Brushes.Transparent;
+            btnNormal.Background = Brushes.Green;
+            btnHard.Background = Brushes.Transparent;
         }
         private void Hard_Difficulty_Selected_Click(object sender, RoutedEventArgs e)
         {
             sound.PlaySound("button-click");
+            btnEasy.Background = Brushes.Transparent;
+            btnNormal.Background = Brushes.Transparent;
+            btnHard.Background = Brushes.Green;
+        }
+
+        //Functional methods
+        private void UpdateMaxScore()
+        {
+            if (save.CheckSaveExistence("save1.txt") == false)
+            {
+                maxScore.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                maxScore.Visibility = Visibility.Visible;
+                string saveData = save.ReadSaveData("save1.txt");
+                if (saveData != null)
+                {
+                    string[] saveParts = saveData.Split(';');
+                    foreach (string part in saveParts)
+                    {
+                        string[] keyValue = part.Split(':');
+                        if (keyValue.Length == 2)
+                        {
+                            string key = keyValue[0].Trim();
+                            string value = keyValue[1].Trim();
+                            if (key == "maxScore")
+                            {
+                                TextBlockMaxScore.Text = value;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

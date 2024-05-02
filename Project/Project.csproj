@@ -61,7 +61,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Assets\Class\SavesControls.cs" />
+    <Compile Include="Assets\ControlClasses\SavesControls.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -70,7 +70,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Assets\Class\SoundControls.cs" />
+    <Compile Include="Assets\ControlClasses\SoundControls.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -114,7 +114,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Texture\character-exemple.jpg">
+    <Resource Include="Assets\Textures\character-1.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
@@ -125,14 +125,14 @@
     <Folder Include="Saves\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Music\music-1.mp3">
+    <Content Include="Assets\Musics\music-1.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Assets\Sound\button-click.mp3">
+    <Content Include="Assets\Sounds\button-click.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Assets\Texture\menu-background.png" />
-    <Resource Include="Assets\Texture\redCrossIcon.png">
+    <Resource Include="Assets\Textures\menu-background.png" />
+    <Resource Include="Assets\Textures\redCrossIcon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>

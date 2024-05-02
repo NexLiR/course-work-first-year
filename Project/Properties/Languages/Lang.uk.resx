@@ -165,6 +165,9 @@
   <data name="SaveSettings" xml:space="preserve">
     <value>Зберегти</value>
   </data>
+  <data name="Score" xml:space="preserve">
+    <value>Рахунок:</value>
+  </data>
   <data name="SelectDifficulty" xml:space="preserve">
     <value>Виберіть складність:</value>
   </data>
@@ -181,7 +184,7 @@
     <value>Українська</value>
   </data>
   <data name="WantToChangeLang1" xml:space="preserve">
-    <value>Для зміни налаштувань, перезавантажте гру.</value>
+    <value>Для зміни налаштувань перезавантажте гру.</value>
   </data>
   <data name="WantToChangeLang2" xml:space="preserve">
     <value>Хочете вийти з гри?</value>
