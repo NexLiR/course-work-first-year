@@ -1,0 +1,16 @@
+﻿<UserControl x:Class="Project.Assets.UserControls.Character1Control"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Project.Assets.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="50" d:DesignWidth="50">
+    <Grid>
+        <Rectangle Width="50" Height="50">
+            <Rectangle.Fill>
+                <ImageBrush ImageSource="\Project;component\Assets\Textures\character-1-in-game.png"/>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Grid>
+</UserControl>

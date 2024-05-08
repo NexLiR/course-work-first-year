@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Project"
+        xmlns:userControls="clr-namespace:Project.Assets.UserControls"
         xmlns:settings="clr-namespace:Project.Properties"
         xmlns:languages="clr-namespace:Project.Properties.Languages"
         mc:Ignorable="d"
@@ -125,8 +125,8 @@
                     <Button Content="{x:Static languages:Lang.StartGame}" Click="StartGame_Click" Padding="30" FontSize="40" Width="350" Margin="0 90 0 0"/>
                 </StackPanel>
             </Canvas>
-            <Canvas x:Name="GameSpace" Width="1920" Height="1064" Visibility="Visible">
-                
+            <Canvas x:Name="GameSpace" Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}" Visibility="Visible">
+                <userControls:Character1Control x:Name="Character1"/>
             </Canvas>
         </Canvas>
     </Viewbox>

@@ -12,9 +12,12 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Xml;
 using Project.Assets.Class;
+using Project.Assets.DataClasses;
+using System.IO;
+using Project.Assets.ControlClasses;
+using Project.Assets.UserControls;
 
 namespace Project
 {
@@ -23,6 +26,7 @@ namespace Project
         public MainWindow()
         {
             InitializeComponent();
+            InitializeGame();
             Loaded += Window_Loaded;
         }
 
@@ -31,8 +35,16 @@ namespace Project
             SoundControls music = new SoundControls();
             music.PlayMusic();
             UpdateMaxScore();
+            _viewModel.InitializeGameComponents();
         }
 
+        private void InitializeGame()
+        {
+
+        }
+
+        // Control classes
+        GameViewModel _viewModel = new GameViewModel();
         SavesControls save = new SavesControls();
         SoundControls sound = new SoundControls();
 
@@ -42,6 +54,7 @@ namespace Project
             sound.PlaySound("button-click");
             MainMenu.Visibility = Visibility.Hidden;
             GameSaves.Visibility = Visibility.Visible;
+            UpdateMaxScore();
         }
         private void ContinueGame_Click(object sender, RoutedEventArgs e)
         {
@@ -112,7 +125,6 @@ namespace Project
             sound.PlaySound("button-click");
             SaveSettings.Visibility = Visibility.Visible;
         }
-
         //Game save buttons
         private void Load_Save1_Click(object sender, RoutedEventArgs e)
         {
@@ -159,11 +171,12 @@ namespace Project
             sound.PlaySound("button-click");
             CharactersSelectMenu.Visibility = Visibility.Hidden;
             Menu.Visibility = Visibility.Hidden;
+            Game.Visibility = Visibility.Visible;
         }
         private void Choose_Character1_Click(object sender, RoutedEventArgs e)
         {
             sound.PlaySound("button-click");
-            btnCharacter1.Background = Brushes.Green;
+            btnCharacter1.Background = System.Windows.Media.Brushes.Green;
             //btnCharacter2.Background = Brushes.Transparent;
             //btnCharacter3.Background = Brushes.Transparent;
         }
@@ -184,23 +197,23 @@ namespace Project
         private void Easy_Difficulty_Selected_Click(object sender, RoutedEventArgs e)
         {
             sound.PlaySound("button-click");
-            btnEasy.Background = Brushes.Green;
-            btnNormal.Background = Brushes.Transparent;
-            btnHard.Background = Brushes.Transparent;
+            btnEasy.Background = System.Windows.Media.Brushes.Green;
+            btnNormal.Background = System.Windows.Media.Brushes.Transparent;
+            btnHard.Background = System.Windows.Media.Brushes.Transparent;
         }
         private void Normal_Difficulty_Selected_Click(object sender, RoutedEventArgs e)
         {
             sound.PlaySound("button-click");
-            btnEasy.Background = Brushes.Transparent;
-            btnNormal.Background = Brushes.Green;
-            btnHard.Background = Brushes.Transparent;
+            btnEasy.Background = System.Windows.Media.Brushes.Transparent;
+            btnNormal.Background = System.Windows.Media.Brushes.Green;
+            btnHard.Background = System.Windows.Media.Brushes.Transparent;
         }
         private void Hard_Difficulty_Selected_Click(object sender, RoutedEventArgs e)
         {
             sound.PlaySound("button-click");
-            btnEasy.Background = Brushes.Transparent;
-            btnNormal.Background = Brushes.Transparent;
-            btnHard.Background = Brushes.Green;
+            btnEasy.Background = System.Windows.Media.Brushes.Transparent;
+            btnNormal.Background = System.Windows.Media.Brushes.Transparent;
+            btnHard.Background = System.Windows.Media.Brushes.Green;
         }
 
         //Functional methods
