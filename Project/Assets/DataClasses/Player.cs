@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using System.Windows.Shell;
 using System.Xml.Linq;
 
 namespace Project.Assets.DataClasses
@@ -15,34 +16,27 @@ namespace Project.Assets.DataClasses
     {
         public int Gold { set; get; }
         public List<Item> Items { set; get; }
+        public float JumpLenght { set; get; }
+
         public Player()
             : base()
         {
             Gold = 0;
             Items = new List<Item>();
         }
-        public Player(int id, string name, double health, double speed, double damage, double attackSpeed, Vector vector, int gold, List<Item> items)
+        public Player(int id, string name, double health, double speed, double damage, double attackSpeed, Vector vector, int gold, List<Item> items, float jumpLenght)
             : base(id, name, health, speed, damage, attackSpeed, vector)
         {
             Gold = gold;
             Items = items;
-        }
+            JumpLenght = jumpLenght;
+        } 
         public Player(Player player)
             : base(player)
         {
             Gold = player.Gold;
             Items = new List<Item>(player.Items);
-        }
-        public override async void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            await Task.Run(() =>
-            {
-                
-            });
-        }
-        public override void Movement()
-        {
-
+            JumpLenght = player.JumpLenght;
         }
     }
 }

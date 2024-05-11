@@ -84,6 +84,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Assets\ControlClasses\GameControls.cs" />
     <Compile Include="Assets\ControlClasses\SavesControls.cs" />
     <Page Include="Assets\UserControls\Character1Control.xaml">
       <SubType>Designer</SubType>
@@ -164,6 +165,8 @@
     <Content Include="Assets\Sounds\button-click.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Assets\Textures\UK-flag.png" />
+    <Resource Include="Assets\Textures\Ukraine-flag.png" />
     <Resource Include="Assets\Textures\character-1.png" />
     <Resource Include="Assets\Textures\character-1-in-game.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

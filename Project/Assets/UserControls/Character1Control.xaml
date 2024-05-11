@@ -7,7 +7,12 @@
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="50">
     <Grid x:Name="Player" Background="Transparent">
-        <Rectangle Width="50" Height="50">
+        <Rectangle Width="50" Height="50" RenderTransformOrigin="0.5,0.5">
+            <Rectangle.RenderTransform>
+                <TransformGroup>
+                    <RotateTransform Angle="90"/>
+                </TransformGroup>
+            </Rectangle.RenderTransform>
             <Rectangle.Fill>
                 <ImageBrush ImageSource="\Project;component\Assets\Textures\character-1-in-game.png"/>
             </Rectangle.Fill>

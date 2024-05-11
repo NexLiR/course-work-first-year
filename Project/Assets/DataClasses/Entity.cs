@@ -11,9 +11,8 @@ using System.Runtime.CompilerServices;
 
 namespace Project.Assets.DataClasses
 {
-    public abstract class Entity : INotifyPropertyChanged
+    public abstract class Entity
     {
-        public event PropertyChangedEventHandler PropertyChanged;
         public int Id { get; set; }
         public string Name { get; set; }
         public double Health { get; set; }
@@ -52,9 +51,5 @@ namespace Project.Assets.DataClasses
             AttackSpeed = entity.AttackSpeed;
             Position = entity.Position;
         }
-
-        public abstract void NotifyPropertyChanged([CallerMemberName] String propertyName = "");
-
-        public abstract void Movement();
     }
 }
