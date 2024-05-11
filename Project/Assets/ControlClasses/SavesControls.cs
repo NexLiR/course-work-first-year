@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
 
-namespace Project.Assets.Class
+namespace Project.Assets.ControlClasses
 {
     public class SavesControls
     {

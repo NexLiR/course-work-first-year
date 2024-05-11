@@ -14,15 +14,21 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Project.Assets.ControlClasses;
+using System.Xml.Linq;
+using System.Windows.Threading;
 
 namespace Project.Assets.UserControls
 {
     public partial class Character1Control : UserControl
     {
-        public Character1Control()
+        private Player _player;
+
+
+        public Character1Control(Player player)
         {
             InitializeComponent();
-            Player character_1 = new Player(1, "character-1", 100, 1, 1, 1, 0, new List<Item>());
+            _player = player;
+            DataContext = _player;
         }
     }
 }

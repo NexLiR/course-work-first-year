@@ -84,8 +84,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Assets\ControlClasses\GameViewModel.cs" />
-    <Compile Include="Assets\ControlClasses\PlayerControl.cs" />
     <Compile Include="Assets\ControlClasses\SavesControls.cs" />
     <Page Include="Assets\UserControls\Character1Control.xaml">
       <SubType>Designer</SubType>
@@ -153,11 +151,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Textures\character-1.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -171,6 +164,7 @@
     <Content Include="Assets\Sounds\button-click.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Assets\Textures\character-1.png" />
     <Resource Include="Assets\Textures\character-1-in-game.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

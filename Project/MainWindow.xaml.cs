@@ -13,21 +13,29 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Xml;
-using Project.Assets.Class;
 using Project.Assets.DataClasses;
 using System.IO;
 using Project.Assets.ControlClasses;
 using Project.Assets.UserControls;
+using System.Windows.Threading;
 
 namespace Project
 {
     public partial class MainWindow : Window
     {
+
+        private DispatcherTimer GameTimer = new DispatcherTimer();
+        private bool UpKeyPressed, DownKeyPressed, LeftKeyPressed, RightKeyPressed;
+        private float SpeedX, SpeedY, Friction = 0.75f, Speed = (float)character1.Speed;
         public MainWindow()
         {
             InitializeComponent();
             InitializeGame();
             Loaded += Window_Loaded;
+
+            GameTimer.Interval = TimeSpan.FromMilliseconds(16);
+            GameTimer.Tick += GameTick;
+            GameTimer.Start();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -35,20 +43,24 @@ namespace Project
             SoundControls music = new SoundControls();
             music.PlayMusic();
             UpdateMaxScore();
-            _viewModel.InitializeGameComponents();
         }
 
         private void InitializeGame()
         {
-
+            gameSpace = new Space(1, 1920, 1064, false, false, new List<Enemy>());
+            GameScreen.Children.Add(character1Control);
+            character1Control.RenderTransform = new TranslateTransform(character1.Position.X, character1.Position.Y);
+            DataContext = gameSpace;
         }
 
         // Control classes
-        GameViewModel _viewModel = new GameViewModel();
+        static Player character1 = new Player(1, "Character1", 100.0, 3.0, 1.0, 1.0, new Vector(800, 400), 0, new List<Item>());
+        Space gameSpace = new Space();
         SavesControls save = new SavesControls();
         SoundControls sound = new SoundControls();
+        UserControl character1Control = new Character1Control(character1);
 
-        // Main menu buttons
+        #region ButtonFunctions
         private void NewGame_Click(object sender, RoutedEventArgs e)
         {
             sound.PlaySound("button-click");
@@ -171,12 +183,13 @@ namespace Project
             sound.PlaySound("button-click");
             CharactersSelectMenu.Visibility = Visibility.Hidden;
             Menu.Visibility = Visibility.Hidden;
-            Game.Visibility = Visibility.Visible;
+            GameScreen.Visibility = Visibility.Visible;
+            GameScreen.Focus();
         }
         private void Choose_Character1_Click(object sender, RoutedEventArgs e)
         {
             sound.PlaySound("button-click");
-            btnCharacter1.Background = System.Windows.Media.Brushes.Green;
+            btnCharacter1.Background = Brushes.Green;
             //btnCharacter2.Background = Brushes.Transparent;
             //btnCharacter3.Background = Brushes.Transparent;
         }
@@ -197,24 +210,25 @@ namespace Project
         private void Easy_Difficulty_Selected_Click(object sender, RoutedEventArgs e)
         {
             sound.PlaySound("button-click");
-            btnEasy.Background = System.Windows.Media.Brushes.Green;
-            btnNormal.Background = System.Windows.Media.Brushes.Transparent;
-            btnHard.Background = System.Windows.Media.Brushes.Transparent;
+            btnEasy.Background = Brushes.Green;
+            btnNormal.Background = Brushes.Transparent;
+            btnHard.Background = Brushes.Transparent;
         }
         private void Normal_Difficulty_Selected_Click(object sender, RoutedEventArgs e)
         {
             sound.PlaySound("button-click");
-            btnEasy.Background = System.Windows.Media.Brushes.Transparent;
-            btnNormal.Background = System.Windows.Media.Brushes.Green;
-            btnHard.Background = System.Windows.Media.Brushes.Transparent;
+            btnEasy.Background = Brushes.Transparent;
+            btnNormal.Background = Brushes.Green;
+            btnHard.Background = Brushes.Transparent;
         }
         private void Hard_Difficulty_Selected_Click(object sender, RoutedEventArgs e)
         {
             sound.PlaySound("button-click");
-            btnEasy.Background = System.Windows.Media.Brushes.Transparent;
-            btnNormal.Background = System.Windows.Media.Brushes.Transparent;
-            btnHard.Background = System.Windows.Media.Brushes.Green;
+            btnEasy.Background = Brushes.Transparent;
+            btnNormal.Background = Brushes.Transparent;
+            btnHard.Background = Brushes.Green;
         }
+        #endregion
 
         //Functional methods
         private void UpdateMaxScore()
@@ -247,5 +261,76 @@ namespace Project
                 }
             }
         }
+
+        #region GameKeyEvents
+        
+
+        private void KeyboardDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.W)
+            {
+                UpKeyPressed = true;
+            }
+            if (e.Key == Key.S)
+            {
+                DownKeyPressed = true;
+            }
+            if (e.Key == Key.A)
+            {
+                LeftKeyPressed = true;
+            }
+            if (e.Key == Key.D)
+            {
+                RightKeyPressed = true;
+            }
+        }
+
+        private void KeyboardUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.W)
+            {
+                UpKeyPressed = false;
+            }
+            if (e.Key == Key.S)
+            {
+                DownKeyPressed = false;
+            }
+            if (e.Key == Key.A)
+            {
+                LeftKeyPressed = false;
+            }
+            if (e.Key == Key.D)
+            {
+                RightKeyPressed = false;
+            }
+        }
+
+        private void GameTick(object sender, EventArgs e)
+        {
+            if (UpKeyPressed)
+            {
+                SpeedY += Speed;
+            }
+            if (DownKeyPressed)
+            {
+                SpeedY -= Speed;
+            }
+            if (LeftKeyPressed)
+            {
+                SpeedX -= Speed;
+            }
+            if (RightKeyPressed)
+            {
+                SpeedX += Speed;
+            }
+
+            SpeedX = SpeedX * Friction;
+            SpeedY = SpeedY * Friction;
+
+            var transform = character1Control.RenderTransform as TranslateTransform;
+            transform.X += SpeedX;
+            transform.Y -= SpeedY;
+        }
+        #endregion
     }
 }

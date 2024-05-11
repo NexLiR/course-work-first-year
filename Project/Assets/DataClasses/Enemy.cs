@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows;
 
 namespace Project.Assets.DataClasses
 {
@@ -17,8 +18,8 @@ namespace Project.Assets.DataClasses
         {
             ScoreValue = 0;
         }
-        public Enemy(int id, string name, double health, double speed, double damage, double attackSpeed, int scoreValue)
-            : base(id, name, health, speed, damage, attackSpeed)
+        public Enemy(int id, string name, double health, double speed, double damage, double attackSpeed, int scoreValue, Vector vector)
+            : base(id, name, health, speed, damage, attackSpeed, vector)
         {
             ScoreValue = scoreValue;
         }

@@ -11,7 +11,7 @@ using System.Threading;
 using System.Windows.Threading;
 using System.Windows;
 
-namespace Project.Assets.Class
+namespace Project.Assets.ControlClasses
 {
     public class SoundControls
     {

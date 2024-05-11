@@ -13,7 +13,7 @@
 
     <Viewbox Visibility="Visible" Stretch="UniformToFill">
         <Canvas x:Name="Game" Width="1920" Height="1064" Visibility="Visible">
-            <Canvas x:Name="Menu" Width="1920" Height="1064" Visibility="Hidden">
+            <Canvas x:Name="Menu" Width="1920" Height="1064" Visibility="Visible">
                 <Canvas.Background>
                     <ImageBrush ImageSource="Assets/Textures/menu-background.png"/>
                 </Canvas.Background>
@@ -104,9 +104,9 @@
                 <StackPanel x:Name="CharactersSelectMenu" Visibility="Hidden" Canvas.Left="734" Canvas.Top="341" HorizontalAlignment="Left" VerticalAlignment="Center" Width="456">
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="835" Canvas.Top="266">
                         <StackPanel Orientation="Horizontal" Margin="0 0 0 30">
-                            <Image Source="Assets/Textures/character-1.jpg" Height="250"/>
-                            <!--   <Image Source="Assets/Texture/character-1.jpg" Height="350"/>
-                        <Image Source="Assets/Texture/character-1.jpg" Height="350"/> -->
+                            <Image Source="Assets/Textures/character-1.png" Height="250"/>
+                            <!--   <Image Source="Assets/Texture/character-1.png" Height="350"/>
+                        <Image Source="Assets/Texture/character-1.png" Height="350"/> -->
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                             <Button Name="btnCharacter1" Content="{x:Static languages:Lang.Character1Name}" Click="Choose_Character1_Click" FontSize="20" Padding="10"/>
@@ -115,18 +115,18 @@
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Canvas.Left="734" Canvas.Top="600" Orientation="Vertical" Width="452" HorizontalAlignment="Left" VerticalAlignment="Center">
-                        <TextBlock Text="{x:Static languages:Lang.SelectDifficulty}" FontWeight="Bold" FontSize="32" Margin="0 0 0 20" Width="246"/>
+                        <TextBlock Text="{x:Static languages:Lang.SelectDifficulty}" FontWeight="Bold" FontSize="32" Margin="0 0 0 20" Width="451" TextAlignment="Center"/>
                         <StackPanel Orientation="Horizontal" Width="451">
-                            <Button Name="btnEasy" Content="{x:Static languages:Lang.Difficulty0}" FontSize="22" Padding="12" Width="130" Click="Easy_Difficulty_Selected_Click"/>
-                            <Button Name="btnNormal" Content="{x:Static languages:Lang.Difficulty1}" FontSize="22" Padding="12" Width="130" Click="Normal_Difficulty_Selected_Click" Margin="30 0"/>
-                            <Button Name="btnHard" Content="{x:Static languages:Lang.Difficulty2}" FontSize="22" Padding="12" Width="130" Click="Hard_Difficulty_Selected_Click"/>
+                            <Button Name="btnEasy" Content="{x:Static languages:Lang.Difficulty0}" FontSize="18" Padding="12" Width="130" Click="Easy_Difficulty_Selected_Click"/>
+                            <Button Name="btnNormal" Content="{x:Static languages:Lang.Difficulty1}" FontSize="18" Padding="12" Width="130" Click="Normal_Difficulty_Selected_Click" Margin="30 0"/>
+                            <Button Name="btnHard" Content="{x:Static languages:Lang.Difficulty2}" FontSize="18" Padding="12" Width="130" Click="Hard_Difficulty_Selected_Click"/>
                         </StackPanel>
                     </StackPanel>
                     <Button Content="{x:Static languages:Lang.StartGame}" Click="StartGame_Click" Padding="30" FontSize="40" Width="350" Margin="0 90 0 0"/>
                 </StackPanel>
             </Canvas>
-            <Canvas x:Name="GameSpace" Width="{Binding CanvasWidth}" Height="{Binding CanvasHeight}" Visibility="Visible">
-                <userControls:Character1Control x:Name="Character1"/>
+            <Canvas x:Name="GameScreen" Width="{Binding Width}" Height="{Binding Height}" Visibility="Hidden" Focusable="True" KeyUp="KeyboardUp" KeyDown="KeyboardDown">
+                
             </Canvas>
         </Canvas>
     </Viewbox>

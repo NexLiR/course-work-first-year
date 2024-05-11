@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Project.Assets.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="50">
-    <Grid>
+    <Grid x:Name="Player" Background="Transparent">
         <Rectangle Width="50" Height="50">
             <Rectangle.Fill>
                 <ImageBrush ImageSource="\Project;component\Assets\Textures\character-1-in-game.png"/>
