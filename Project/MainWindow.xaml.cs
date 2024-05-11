@@ -40,19 +40,23 @@ namespace Project
 
         private void InitializeGame()
         {
-            gameSpace = new Space(1, 1980, 1100, false, false, new List<Enemy>());
+            gameSpace = new Space(1, 1920, 1064, false, false, new List<Enemy>());
             DataContext = gameSpace;
+            UIUpdateTimer.Interval = TimeSpan.FromMilliseconds(6);
+            UIUpdateTimer.Tick += UIUpdateTimer_Tick;
         }
 
         // Control classes
-        Player charapter1 = new Player(1, "Character1", 100.0, 1.0, 1.0, 1.0, new Vector(800, 400), 0, new List<Item>(), 40.0f);
+        Player charapter1 = new Player(1, "Character1", 100.0, 1.0, 1.0, 0.5, new Vector(960, 532), 0, new List<Item>(), 40.0f);
         Space gameSpace = new Space();
         SavesControls save = new SavesControls();
         SoundControls music = new SoundControls();
         SoundControls sound = new SoundControls();
+        private DispatcherTimer UIUpdateTimer = new DispatcherTimer();
         //Data Storage
+        public int currentScore = 0;
         protected string currentSave;
-        protected int currentDifficulty = -1;
+        protected static double currentDifficultyMultiplayer = -1;
         protected int currentCharacter = -1;
 
         #region ButtonFunctions
@@ -222,13 +226,17 @@ namespace Project
         private void StartGame_Click(object sender, RoutedEventArgs e)
         {
             sound.PlaySound("button-click");
-            if (currentCharacter != -1 && currentDifficulty != -1)
+            if (currentCharacter != -1 && currentDifficultyMultiplayer != -1)
             {
                 GameSaves.Visibility = Visibility.Hidden;
                 CharactersSelectMenu.Visibility = Visibility.Hidden;
                 Menu.Visibility = Visibility.Hidden;
                 GameScreen.Visibility = Visibility.Visible;
                 GameScreen.Focus();
+                UIUpdateTimer.Start();
+                charapter1.Health = charapter1.Health * currentDifficultyMultiplayer;
+                charapter1.Damage = charapter1.Damage * currentDifficultyMultiplayer;
+                charapter1.AttackSpeed = charapter1.AttackSpeed * currentDifficultyMultiplayer;
             }
             else
             {
@@ -251,7 +259,7 @@ namespace Project
             btnNormal.Foreground = Brushes.White;
             btnHard.Background = Brushes.Black;
             btnHard.Foreground = Brushes.White;
-            currentDifficulty = 0;
+            currentDifficultyMultiplayer = 5.0;
         }
         private void Normal_Difficulty_Selected_Click(object sender, RoutedEventArgs e)
         {
@@ -262,7 +270,7 @@ namespace Project
             btnNormal.Foreground = Brushes.Black;
             btnHard.Background = Brushes.Black;
             btnHard.Foreground = Brushes.White;
-            currentDifficulty = 1;
+            currentDifficultyMultiplayer = 1;
         }
         private void Hard_Difficulty_Selected_Click(object sender, RoutedEventArgs e)
         {
@@ -273,7 +281,7 @@ namespace Project
             btnNormal.Foreground = Brushes.White;
             btnHard.Background = Brushes.White;
             btnHard.Foreground = Brushes.Black;
-            currentDifficulty = 2;
+            currentDifficultyMultiplayer = 0.5;
         }
         #endregion
 
@@ -313,6 +321,11 @@ namespace Project
             UpdateMaxScore(maxScore1, "save1.txt", TextBlockMaxScore1);
             UpdateMaxScore(maxScore2, "save2.txt", TextBlockMaxScore2);
             UpdateMaxScore(maxScore3, "save3.txt", TextBlockMaxScore3);
+        }
+        private void UIUpdateTimer_Tick(object sender, EventArgs e)
+        {
+            GoldCount.Text = charapter1.Gold.ToString();
+            ScoreCount.Text = currentScore.ToString();
         }
     }
 }

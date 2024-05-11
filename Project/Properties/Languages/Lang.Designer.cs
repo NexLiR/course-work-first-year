@@ -151,6 +151,15 @@ namespace Project.Properties.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Gold: .
+        /// </summary>
+        public static string GoldCount {
+            get {
+                return ResourceManager.GetString("GoldCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Music.
         /// </summary>
         public static string Music {
@@ -205,7 +214,7 @@ namespace Project.Properties.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Score:.
+        ///   Looks up a localized string similar to Score: .
         /// </summary>
         public static string Score {
             get {

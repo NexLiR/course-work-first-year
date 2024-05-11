@@ -147,6 +147,9 @@
   <data name="Exit" xml:space="preserve">
     <value>Exit</value>
   </data>
+  <data name="GoldCount" xml:space="preserve">
+    <value>Gold: </value>
+  </data>
   <data name="Music" xml:space="preserve">
     <value>Music</value>
   </data>
@@ -166,7 +169,7 @@
     <value>Save</value>
   </data>
   <data name="Score" xml:space="preserve">
-    <value>Score:</value>
+    <value>Score: </value>
   </data>
   <data name="SelectDifficulty" xml:space="preserve">
     <value>Select difficulty:</value>

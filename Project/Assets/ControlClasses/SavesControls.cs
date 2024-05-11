@@ -41,7 +41,7 @@ namespace Project.Assets.ControlClasses
             FileStream fs = File.Create(fullPath);
             fs.Close();
 
-            string initialData = "maxScore: 0; IsCharapter1Unlocked: 1;";
+            string initialData = "maxScore: 0;";
             WriteSaveData(saveFileName, initialData);
         }
         public string GetSaveFullPath(string saveFileName)

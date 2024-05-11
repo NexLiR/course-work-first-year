@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Windows.Threading;
@@ -18,7 +19,7 @@ namespace Project.Assets.ControlClasses
     {
         private Canvas GameScreen { get; set; }
         private DispatcherTimer GameTimer = new DispatcherTimer();
-        private bool UpKeyPressed, DownKeyPressed, LeftKeyPressed, RightKeyPressed;
+        private bool UpKeyPressed, DownKeyPressed, LeftKeyPressed, RightKeyPressed, leftMouseButtonPressed;
         private float SpeedX, SpeedY, Friction = 0.75f, Speed;
         private Point mousePosition;
 
@@ -30,8 +31,10 @@ namespace Project.Assets.ControlClasses
         private TransformGroup combinedTransform;
 
         private Vector movementDirection;
-        private bool jumpAvailable = true;
+        private bool jumpAvailable = true, attackAvalible = true;
         private DispatcherTimer JumpTimer = new DispatcherTimer();
+
+        private DispatcherTimer AttackTimer = new DispatcherTimer();
 
         public GameControls(Canvas gameScreen, Player player)
         {
@@ -56,9 +59,15 @@ namespace Project.Assets.ControlClasses
 
         public void StartGame()
         {
+            translateTransform.X = character1.Position.X;
+            translateTransform.Y = character1.Position.Y;
+
             GameScreen.KeyDown += KeyboardDown;
             GameScreen.KeyUp += KeyboardUp;
             GameScreen.MouseMove += GameScreen_MouseMove;
+
+            GameScreen.MouseDown += MouseDown;
+            GameScreen.MouseUp += MouseUp;
 
             GameTimer.Interval = TimeSpan.FromMilliseconds(16);
             GameTimer.Tick += GameTick;
@@ -66,6 +75,26 @@ namespace Project.Assets.ControlClasses
 
             JumpTimer.Interval = TimeSpan.FromSeconds(3);
             JumpTimer.Tick += JumpTimer_Tick;
+
+            AttackTimer.Interval = TimeSpan.FromMilliseconds(character1.AttackSpeed * 1);
+            AttackTimer.Tick += AttackTimer_Tick;
+        }
+
+        private void MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                leftMouseButtonPressed = true;
+                Attack();
+            }
+        }
+
+        private void MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Released)
+            {
+                leftMouseButtonPressed = false;
+            }
         }
 
         private void KeyboardDown(object sender, KeyEventArgs e)
@@ -131,6 +160,20 @@ namespace Project.Assets.ControlClasses
             }
         }
 
+        private void AttackTimer_Tick(object sender, EventArgs e)
+        {
+            AttackTimer.Stop();
+            attackAvalible = true;
+        }
+        private void Attack()
+        {
+            if (attackAvalible)
+            {
+                attackAvalible = false;
+                AttackTimer.Start();
+            }
+        }
+
         private void GameTick(object sender, EventArgs e)
         {
             if (UpKeyPressed)
@@ -150,8 +193,8 @@ namespace Project.Assets.ControlClasses
                 SpeedX += Speed;
             }
 
-            var maxX = GameScreen.ActualWidth - character1Control.ActualWidth;
-            var maxY = GameScreen.ActualHeight - character1Control.ActualHeight;
+            var maxX = GameScreen.ActualWidth;
+            var maxY = GameScreen.ActualHeight;
 
             if (translateTransform.X < 0)
             {
@@ -169,6 +212,7 @@ namespace Project.Assets.ControlClasses
             {
                 translateTransform.Y = maxY - character1Control.ActualHeight;
             }
+
 
             SpeedX = SpeedX * Friction;
             SpeedY = SpeedY * Friction;

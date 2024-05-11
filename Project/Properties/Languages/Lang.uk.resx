@@ -147,6 +147,9 @@
   <data name="Exit" xml:space="preserve">
     <value>Вихід</value>
   </data>
+  <data name="GoldCount" xml:space="preserve">
+    <value>Золото: </value>
+  </data>
   <data name="Music" xml:space="preserve">
     <value>Музика</value>
   </data>
@@ -166,7 +169,7 @@
     <value>Зберегти</value>
   </data>
   <data name="Score" xml:space="preserve">
-    <value>Рахунок:</value>
+    <value>Рахунок: </value>
   </data>
   <data name="SelectDifficulty" xml:space="preserve">
     <value>Виберіть складність:</value>
