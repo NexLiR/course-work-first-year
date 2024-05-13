@@ -19,7 +19,7 @@ namespace Project.Assets.ControlClasses
     {
         private Canvas GameScreen { get; set; }
         private DispatcherTimer GameTimer = new DispatcherTimer();
-        private bool UpKeyPressed, DownKeyPressed, LeftKeyPressed, RightKeyPressed, leftMouseButtonPressed;
+        private bool UpKeyPressed, DownKeyPressed, LeftKeyPressed, RightKeyPressed, LeftMouseButtonPressed;
         private float SpeedX, SpeedY, Friction = 0.75f, Speed;
         private Point mousePosition;
 
@@ -35,6 +35,7 @@ namespace Project.Assets.ControlClasses
         private DispatcherTimer JumpTimer = new DispatcherTimer();
 
         private DispatcherTimer AttackTimer = new DispatcherTimer();
+        private Vector facingDirection;
 
         public GameControls(Canvas gameScreen, Player player)
         {
@@ -54,9 +55,10 @@ namespace Project.Assets.ControlClasses
 
             movementDirection = new Vector(1, 0);
 
+            facingDirection = new Vector(1, 0);
+
             StartGame();
         }
-
         public void StartGame()
         {
             translateTransform.X = character1.Position.X;
@@ -76,7 +78,7 @@ namespace Project.Assets.ControlClasses
             JumpTimer.Interval = TimeSpan.FromSeconds(3);
             JumpTimer.Tick += JumpTimer_Tick;
 
-            AttackTimer.Interval = TimeSpan.FromMilliseconds(character1.AttackSpeed * 1);
+            AttackTimer.Interval = TimeSpan.FromSeconds(character1.AttackSpeed);
             AttackTimer.Tick += AttackTimer_Tick;
         }
 
@@ -84,19 +86,17 @@ namespace Project.Assets.ControlClasses
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                leftMouseButtonPressed = true;
+                LeftMouseButtonPressed = true;
                 Attack();
             }
         }
-
         private void MouseUp(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Released)
             {
-                leftMouseButtonPressed = false;
+                LeftMouseButtonPressed = false;
             }
         }
-
         private void KeyboardDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.W)
@@ -122,7 +122,6 @@ namespace Project.Assets.ControlClasses
                 Jump();
             }
         }
-
         private void KeyboardUp(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.W)
@@ -143,23 +142,6 @@ namespace Project.Assets.ControlClasses
             }
         }
 
-        private void JumpTimer_Tick(object sender, EventArgs e)
-        {
-            JumpTimer.Stop();
-            jumpAvailable = true;
-        }
-
-        private void Jump()
-        {
-            if (jumpAvailable)
-            {
-                SpeedY = (float)(character1.JumpLenght * movementDirection.Y);
-                SpeedX = (float)(character1.JumpLenght * movementDirection.X);
-                jumpAvailable = false;
-                JumpTimer.Start();
-            }
-        }
-
         private void AttackTimer_Tick(object sender, EventArgs e)
         {
             AttackTimer.Stop();
@@ -171,9 +153,43 @@ namespace Project.Assets.ControlClasses
             {
                 attackAvalible = false;
                 AttackTimer.Start();
+
+                var characterPosition = character1Control.TranslatePoint(new Point(character1Control.ActualWidth / 2.0, character1Control.ActualHeight / 2.0), GameScreen);
+                var position = new Point(characterPosition.X, characterPosition.Y - character1Control.ActualHeight / 2.0);
+                Bullet bullet = CreateProjectile(position, facingDirection);
+                BulletControl projectileControl = new BulletControl();
+                GameScreen.Children.Add(projectileControl);
+                projectileControl.Visibility = Visibility.Visible;
+
+                DispatcherTimer projectileTimer = new DispatcherTimer();
+                projectileTimer.Interval = TimeSpan.FromMilliseconds(16);
+                projectileTimer.Tick += (sender, args) =>
+                {
+                    bullet.Position = new Point(bullet.Position.X + bullet.Direction.X * bullet.Speed, bullet.Position.Y + bullet.Direction.Y * bullet.Speed);
+                    projectileControl.SetValue(Canvas.LeftProperty, bullet.Position.X);
+                    projectileControl.SetValue(Canvas.TopProperty, bullet.Position.Y);
+
+                    bullet.LifeTime -= 10;
+                    if (bullet.LifeTime <= 0)
+                    {
+                        projectileTimer.Stop();
+                        GameScreen.Children.Remove(projectileControl);
+                    }
+                };
+                projectileTimer.Start();
             }
         }
-
+        private Bullet CreateProjectile(Point position, Vector direction)
+        {
+            return new Bullet(position, direction, 20, 400);
+        }
+        private void UpdateFacingDirection()
+        {
+            var characterPosition = character1Control.TranslatePoint(new Point(character1Control.ActualWidth / 2.0, character1Control.ActualHeight / 2.0), GameScreen);
+            var direction = mousePosition - characterPosition;
+            direction.Normalize();
+            facingDirection = direction;
+        }
         private void GameTick(object sender, EventArgs e)
         {
             if (UpKeyPressed)
@@ -222,8 +238,9 @@ namespace Project.Assets.ControlClasses
 
             mousePosition = Mouse.GetPosition(GameScreen);
             RotateCharacterToMouse();
-        }
 
+            UpdateFacingDirection();
+        }
         private void RotateCharacterToMouse()
         {
             var characterPosition = character1Control.TranslatePoint(new Point(character1Control.ActualWidth / 2.0, character1Control.ActualHeight / 2.0), GameScreen);
@@ -235,10 +252,24 @@ namespace Project.Assets.ControlClasses
 
             rotateTransform.Angle = angle;
         }
-
         private void GameScreen_MouseMove(object sender, MouseEventArgs e)
         {
             mousePosition = e.GetPosition(GameScreen);
+        }
+        private void JumpTimer_Tick(object sender, EventArgs e)
+        {
+            JumpTimer.Stop();
+            jumpAvailable = true;
+        }
+        private void Jump()
+        {
+            if (jumpAvailable)
+            {
+                SpeedY = (float)(character1.JumpLenght * movementDirection.Y);
+                SpeedX = (float)(character1.JumpLenght * movementDirection.X);
+                jumpAvailable = false;
+                JumpTimer.Start();
+            }
         }
     }
 }

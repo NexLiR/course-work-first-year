@@ -17,6 +17,7 @@ namespace Project.Assets.DataClasses
         public int Gold { set; get; }
         public List<Item> Items { set; get; }
         public float JumpLenght { set; get; }
+        public double MaxHealth { set; get; }
 
         public Player()
             : base()
@@ -24,12 +25,13 @@ namespace Project.Assets.DataClasses
             Gold = 0;
             Items = new List<Item>();
         }
-        public Player(int id, string name, double health, double speed, double damage, double attackSpeed, Vector vector, int gold, List<Item> items, float jumpLenght)
+        public Player(int id, string name, double health, double speed, double damage, double attackSpeed, Vector vector, int gold, List<Item> items, float jumpLenght, double maxHealth)
             : base(id, name, health, speed, damage, attackSpeed, vector)
         {
             Gold = gold;
             Items = items;
             JumpLenght = jumpLenght;
+            MaxHealth = maxHealth;
         } 
         public Player(Player player)
             : base(player)
@@ -37,6 +39,7 @@ namespace Project.Assets.DataClasses
             Gold = player.Gold;
             Items = new List<Item>(player.Items);
             JumpLenght = player.JumpLenght;
+            MaxHealth = player.MaxHealth;
         }
     }
 }

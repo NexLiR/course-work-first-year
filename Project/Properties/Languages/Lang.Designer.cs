@@ -88,7 +88,7 @@ namespace Project.Properties.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose the save to start game!.
+        ///   Looks up a localized string similar to Select a user to start a new game session.
         /// </summary>
         public static string ChooseSave {
             get {
@@ -196,7 +196,7 @@ namespace Project.Properties.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save.
+        ///   Looks up a localized string similar to User.
         /// </summary>
         public static string Save {
             get {

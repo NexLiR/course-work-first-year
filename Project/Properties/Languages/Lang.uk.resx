@@ -127,7 +127,7 @@
     <value>Персонаж 3</value>
   </data>
   <data name="ChooseSave" xml:space="preserve">
-    <value>Виберіть збереження щоб почати гру</value>
+    <value>Виберіть користувача, щоб розпочати нову ігрову сесію</value>
   </data>
   <data name="ContinueGame" xml:space="preserve">
     <value>Продовжити гру</value>
@@ -163,7 +163,7 @@
     <value>Повернутися назад</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Збереження</value>
+    <value>Користувач</value>
   </data>
   <data name="SaveSettings" xml:space="preserve">
     <value>Зберегти</value>

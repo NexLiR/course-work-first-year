@@ -102,7 +102,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Assets\ControlClasses\SoundControls.cs" />
+    <Compile Include="Assets\ControlClasses\SoundControls.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Assets\DataClasses\Bullet.cs" />
     <Compile Include="Assets\DataClasses\Enemy.cs" />
     <Compile Include="Assets\DataClasses\Entity.cs" />
     <Compile Include="Assets\DataClasses\Item.cs" />
@@ -172,6 +175,15 @@
     <Content Include="Assets\Sounds\button-click.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Assets\Textures\background-easy.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Textures\background-hard.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Textures\background-normal.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Assets\Textures\UK-flag.png" />
     <Resource Include="Assets\Textures\Ukraine-flag.png" />
     <Resource Include="Assets\Textures\character-1.png" />

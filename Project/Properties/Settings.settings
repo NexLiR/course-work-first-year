@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="languageCode" Type="System.String" Scope="User">
-      <Value Profile="(Default)">en</Value>
+      <Value Profile="(Default)">uk</Value>
     </Setting>
     <Setting Name="musicVolume" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">50</Value>

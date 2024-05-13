@@ -5,8 +5,10 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Project.Assets.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="2" d:DesignWidth="5">
-    <Grid>
-        <Rectangle Fill="Red"></Rectangle>
+             d:DesignHeight="16" d:DesignWidth="16">
+    <Grid Background="Transparent" Width="16" Height="16">
+        <Rectangle Width="16" Height="16"
+           Stroke="DarkRed" StrokeThickness="2"
+           RadiusX="50" RadiusY="50" Fill="Red"/>
     </Grid>
 </UserControl>

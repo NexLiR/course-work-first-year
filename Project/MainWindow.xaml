@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:userControls="clr-namespace:Project.Assets.UserControls"
+        xmlns:local="clr-namespace:Project"
         xmlns:settings="clr-namespace:Project.Properties"
         xmlns:languages="clr-namespace:Project.Properties.Languages"
         mc:Ignorable="d"
@@ -113,7 +114,7 @@
                             </TextBlock>
                         </StackPanel>
                     </StackPanel>
-                    <TextBlock FontWeight="Bold" Width="963" FontSize="36" Height="115" TextWrapping="Wrap" TextAlignment="Center" Margin="0 32 0 0"><Run Text="{x:Static languages:Lang.ChooseSave}"/></TextBlock>
+                    <TextBlock FontWeight="Bold" Width="963" FontSize="26" Height="115" TextWrapping="Wrap" TextAlignment="Center" Margin="0 32 0 0"><Run Text="{x:Static languages:Lang.ChooseSave}"/></TextBlock>
                 </StackPanel>
 
                 <StackPanel x:Name="CharactersSelectMenu" Visibility="Hidden" Canvas.Left="734" Canvas.Top="341" HorizontalAlignment="Left" VerticalAlignment="Center" Width="456">
@@ -140,12 +141,15 @@
                     <Button Background="Black" Foreground="White" Content="{x:Static languages:Lang.StartGame}" Click="StartGame_Click" Padding="30" FontSize="40" Width="350" Margin="0 90 0 0"/>
                 </StackPanel>
             </Canvas>
-            <Canvas x:Name="GameScreen" Width="{Binding Width}" Height="{Binding Height}" Visibility="Hidden" Focusable="True" Background="Transparent">
-                <StackPanel Name="InGameUI" Orientation="Vertical" Visibility="Visible" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 0 0 0">
-                    
-                    <TextBlock x:Name="Gold" FontSize="20" Text="{x:Static languages:Lang.GoldCount}"><Run Name="GoldCount"/></TextBlock>
-                    <TextBlock x:Name="Score" FontSize="20" Text="{x:Static languages:Lang.Score}"><Run Name="ScoreCount"/></TextBlock>
-                </StackPanel>
+            <Canvas x:Name="GameScreen" Width="{Binding Width}" Height="{Binding Height}" Visibility="Hidden" Focusable="True">
+                <Canvas Name="InGameUI" Visibility="Visible" Height="75" Width="200" Canvas.Left="15" Canvas.Top="15" HorizontalAlignment="Center" VerticalAlignment="Top">
+                    <Canvas>
+                        <ProgressBar x:Name="pbPlayerHealth" Height="25" Width="200" VerticalAlignment="Center"></ProgressBar>
+                        <TextBlock x:Name="PlayerHealth" FontSize="20" HorizontalAlignment="Center" Canvas.Left="66" Canvas.Top="-2"><Run Name="PlayerCurrentHelth"/><Run Text="/"/><Run Name="PlayerMaxHealth"/></TextBlock>
+                    </Canvas>
+                    <TextBlock x:Name="Gold" FontSize="20" Text="{x:Static languages:Lang.GoldCount}" HorizontalAlignment="Center" Canvas.Top="23" VerticalAlignment="Top"><Run x:Name="GoldCount"/></TextBlock>
+                    <TextBlock x:Name="Score" FontSize="20" Text="{x:Static languages:Lang.Score}" HorizontalAlignment="Center" Canvas.Top="50" VerticalAlignment="Top"><Run Name="ScoreCount"/></TextBlock>
+                </Canvas>
             </Canvas>
         </Canvas>
     </Viewbox>

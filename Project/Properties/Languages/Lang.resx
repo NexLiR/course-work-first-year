@@ -127,7 +127,7 @@
     <value>Character 3</value>
   </data>
   <data name="ChooseSave" xml:space="preserve">
-    <value>Choose the save to start game!</value>
+    <value>Select a user to start a new game session</value>
   </data>
   <data name="ContinueGame" xml:space="preserve">
     <value>Continue game</value>
@@ -163,7 +163,7 @@
     <value>Return to main menu</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Save</value>
+    <value>User</value>
   </data>
   <data name="SaveSettings" xml:space="preserve">
     <value>Save</value>

@@ -15,7 +15,7 @@ namespace Project.Assets.DataClasses
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public double Health { get; set; }
+        public double CurrentHealth { get; set; }
         public double Speed { get; set; }
         public double Damage { get; set; }
         public double AttackSpeed { get; set; }
@@ -25,7 +25,7 @@ namespace Project.Assets.DataClasses
         {
             Id = 0;
             Name = "Entity";
-            Health = 0;
+            CurrentHealth = 0;
             Speed = 0;
             Damage = 0;
             AttackSpeed = 0;
@@ -35,7 +35,7 @@ namespace Project.Assets.DataClasses
         {
             Id = id;
             Name = name;
-            Health = health;
+            CurrentHealth = health;
             Speed = speed;
             Damage = damage;
             AttackSpeed = attackSpeed;
@@ -45,7 +45,7 @@ namespace Project.Assets.DataClasses
         {
             Id = entity.Id;
             Name = entity.Name;
-            Health = entity.Health;
+            CurrentHealth = entity.CurrentHealth;
             Speed = entity.Speed;
             Damage = entity.Damage;
             AttackSpeed = entity.AttackSpeed;

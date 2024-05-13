@@ -25,7 +25,7 @@ namespace Project.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("en")]
+        [global::System.Configuration.DefaultSettingValueAttribute("uk")]
         public string languageCode {
             get {
                 return ((string)(this["languageCode"]));

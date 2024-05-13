@@ -55,6 +55,10 @@ namespace Project.Assets.ControlClasses
             mediaPlayer.Position = TimeSpan.Zero;
             mediaPlayer.Play();
         }
+        public void SetMusicVolume()
+        {
+            mediaPlayer.Volume = (double)Properties.Settings.Default.musicVolume / 100.0;
+        }
 
         // Sound player
         public async void PlaySound(string sound)

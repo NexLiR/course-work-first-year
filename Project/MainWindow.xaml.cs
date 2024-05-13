@@ -44,14 +44,16 @@ namespace Project
             DataContext = gameSpace;
             UIUpdateTimer.Interval = TimeSpan.FromMilliseconds(6);
             UIUpdateTimer.Tick += UIUpdateTimer_Tick;
+            UIUpdateTimer.Start();
         }
 
         // Control classes
-        Player charapter1 = new Player(1, "Character1", 100.0, 1.0, 1.0, 0.5, new Vector(960, 532), 0, new List<Item>(), 40.0f);
+        Player charapter1 = new Player(1, "Character1", 100.0, 1.0, 1.0, 0.5, new Vector(960, 532), 0, new List<Item>(), 40.0f, 100.0);
         Space gameSpace = new Space();
         SavesControls save = new SavesControls();
         SoundControls music = new SoundControls();
         SoundControls sound = new SoundControls();
+        ImageBrush backgroundImage = new ImageBrush();
         private DispatcherTimer UIUpdateTimer = new DispatcherTimer();
         //Data Storage
         public int currentScore = 0;
@@ -233,10 +235,10 @@ namespace Project
                 Menu.Visibility = Visibility.Hidden;
                 GameScreen.Visibility = Visibility.Visible;
                 GameScreen.Focus();
-                UIUpdateTimer.Start();
-                charapter1.Health = charapter1.Health * currentDifficultyMultiplayer;
+                charapter1.CurrentHealth = charapter1.CurrentHealth * currentDifficultyMultiplayer;
+                charapter1.MaxHealth = charapter1.MaxHealth * currentDifficultyMultiplayer;
                 charapter1.Damage = charapter1.Damage * currentDifficultyMultiplayer;
-                charapter1.AttackSpeed = charapter1.AttackSpeed * currentDifficultyMultiplayer;
+                charapter1.AttackSpeed = charapter1.AttackSpeed / currentDifficultyMultiplayer;
             }
             else
             {
@@ -260,6 +262,11 @@ namespace Project
             btnHard.Background = Brushes.Black;
             btnHard.Foreground = Brushes.White;
             currentDifficultyMultiplayer = 5.0;
+            BitmapImage bitmapImage = new BitmapImage(new Uri("pack://application:,,,/Assets/Textures/background-easy.png"));
+            backgroundImage.ImageSource = bitmapImage;
+            GameScreen.Background = backgroundImage;
+            Gold.Foreground = Brushes.Black;
+            Score.Foreground = Brushes.Black;
         }
         private void Normal_Difficulty_Selected_Click(object sender, RoutedEventArgs e)
         {
@@ -270,7 +277,12 @@ namespace Project
             btnNormal.Foreground = Brushes.Black;
             btnHard.Background = Brushes.Black;
             btnHard.Foreground = Brushes.White;
-            currentDifficultyMultiplayer = 1;
+            currentDifficultyMultiplayer = 1.0;
+            BitmapImage bitmapImage = new BitmapImage(new Uri("pack://application:,,,/Assets/Textures/background-normal.png"));
+            backgroundImage.ImageSource = bitmapImage;
+            GameScreen.Background = backgroundImage;
+            Gold.Foreground = Brushes.White;
+            Score.Foreground = Brushes.White;
         }
         private void Hard_Difficulty_Selected_Click(object sender, RoutedEventArgs e)
         {
@@ -282,10 +294,15 @@ namespace Project
             btnHard.Background = Brushes.White;
             btnHard.Foreground = Brushes.Black;
             currentDifficultyMultiplayer = 0.5;
+            BitmapImage bitmapImage = new BitmapImage(new Uri("pack://application:,,,/Assets/Textures/background-hard.png"));
+            backgroundImage.ImageSource = bitmapImage;
+            GameScreen.Background = backgroundImage;
+            Gold.Foreground = Brushes.White;
+            Score.Foreground = Brushes.White;
         }
         #endregion
 
-        //Functional methods
+        #region FuntionalMethods
         private void UpdateMaxScore(TextBlock maxScoreTextBlock, string saveFileName, Run textBlockMaxScore)
         {
             if (save.CheckSaveExistence(saveFileName) == false)
@@ -324,8 +341,14 @@ namespace Project
         }
         private void UIUpdateTimer_Tick(object sender, EventArgs e)
         {
+            music.SetMusicVolume();
+            PlayerCurrentHelth.Text = charapter1.CurrentHealth.ToString();
+            PlayerMaxHealth.Text = charapter1.MaxHealth.ToString();
+            pbPlayerHealth.Value = charapter1.CurrentHealth;
+            pbPlayerHealth.Maximum = charapter1.MaxHealth;
             GoldCount.Text = charapter1.Gold.ToString();
             ScoreCount.Text = currentScore.ToString();
         }
+        #endregion
     }
 }
