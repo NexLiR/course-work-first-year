@@ -34,8 +34,6 @@ namespace Project
         {
             music.PlayMusic();
             UpdateAllMaxScores();
-            GameControls gameControls = new GameControls(GameScreen, charapter1);
-            gameControls.StartGame();
         }
 
         private void InitializeGame()
@@ -48,7 +46,7 @@ namespace Project
         }
 
         // Control classes
-        Player charapter1 = new Player(1, "Character1", 100.0, 1.0, 1.0, 0.5, new Vector(960, 532), 0, new List<Item>(), 40.0f, 100.0);
+        public static Player charapter1 = new Player(1, "Character1", 100.0, 1.0, 1.0, 0.5, new Vector(960, 532), 0, new List<Item>(), 40.0f, 100.0);
         Space gameSpace = new Space();
         SavesControls save = new SavesControls();
         SoundControls music = new SoundControls();
@@ -56,9 +54,11 @@ namespace Project
         ImageBrush backgroundImage = new ImageBrush();
         private DispatcherTimer UIUpdateTimer = new DispatcherTimer();
         //Data Storage
-        public int currentScore = 0;
+        public static int currentScore = 0;
+        public int currentTime = 0;
+        private Thread timerThread;
         protected string currentSave;
-        protected static double currentDifficultyMultiplayer = -1;
+        public double currentDifficultyMultiplayer = -1;
         protected int currentCharacter = -1;
 
         #region ButtonFunctions
@@ -239,6 +239,12 @@ namespace Project
                 charapter1.MaxHealth = charapter1.MaxHealth * currentDifficultyMultiplayer;
                 charapter1.Damage = charapter1.Damage * currentDifficultyMultiplayer;
                 charapter1.AttackSpeed = charapter1.AttackSpeed / currentDifficultyMultiplayer;
+                StartTimer();
+
+                GameControls gameControls = new GameControls(GameScreen, charapter1);
+                EnemyControls enemyControls = new EnemyControls(currentDifficultyMultiplayer, GameScreen);
+                gameControls.StartGame();
+                enemyControls.StartEnemySpawning();
             }
             else
             {
@@ -261,12 +267,13 @@ namespace Project
             btnNormal.Foreground = Brushes.White;
             btnHard.Background = Brushes.Black;
             btnHard.Foreground = Brushes.White;
-            currentDifficultyMultiplayer = 5.0;
+            currentDifficultyMultiplayer = 2.5;
             BitmapImage bitmapImage = new BitmapImage(new Uri("pack://application:,,,/Assets/Textures/background-easy.png"));
             backgroundImage.ImageSource = bitmapImage;
             GameScreen.Background = backgroundImage;
             Gold.Foreground = Brushes.Black;
             Score.Foreground = Brushes.Black;
+            timerText.Foreground = Brushes.Black;
         }
         private void Normal_Difficulty_Selected_Click(object sender, RoutedEventArgs e)
         {
@@ -283,6 +290,7 @@ namespace Project
             GameScreen.Background = backgroundImage;
             Gold.Foreground = Brushes.White;
             Score.Foreground = Brushes.White;
+            timerText.Foreground = Brushes.White;
         }
         private void Hard_Difficulty_Selected_Click(object sender, RoutedEventArgs e)
         {
@@ -299,6 +307,7 @@ namespace Project
             GameScreen.Background = backgroundImage;
             Gold.Foreground = Brushes.White;
             Score.Foreground = Brushes.White;
+            timerText.Foreground = Brushes.White;
         }
         #endregion
 
@@ -348,6 +357,34 @@ namespace Project
             pbPlayerHealth.Maximum = charapter1.MaxHealth;
             GoldCount.Text = charapter1.Gold.ToString();
             ScoreCount.Text = currentScore.ToString();
+        }
+        private void StartTimer()
+        {
+            timerThread = new Thread(() =>
+            {
+                while (true)
+                {
+                    Thread.Sleep(1000);
+                    currentTime++;
+                    UpdateTimerUI();
+                }
+            });
+            timerThread.Start();
+        }
+        private void UpdateTimerUI()
+        {
+            int minutes = currentTime / 60;
+            int seconds = currentTime % 60;
+
+            Dispatcher.Invoke(() =>
+            {
+                timerText.Text = $"{minutes:00}:{seconds:00}";
+            });
+        }
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            timerThread.Abort();
         }
         #endregion
     }

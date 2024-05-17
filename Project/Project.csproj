@@ -84,13 +84,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Assets\ControlClasses\EnemyControls.cs" />
     <Compile Include="Assets\ControlClasses\GameControls.cs" />
     <Compile Include="Assets\ControlClasses\SavesControls.cs" />
+    <Page Include="Assets\UserControls\BasicEnemyControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Assets\UserControls\BulletControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Assets\UserControls\Character1Control.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Assets\UserControls\RangedEnemyControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -105,19 +114,27 @@
     <Compile Include="Assets\ControlClasses\SoundControls.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Assets\DataClasses\BasicEnemy.cs" />
     <Compile Include="Assets\DataClasses\Bullet.cs" />
     <Compile Include="Assets\DataClasses\Enemy.cs" />
     <Compile Include="Assets\DataClasses\Entity.cs" />
     <Compile Include="Assets\DataClasses\Item.cs" />
     <Compile Include="Assets\DataClasses\InGameObject.cs" />
     <Compile Include="Assets\DataClasses\Player.cs" />
+    <Compile Include="Assets\DataClasses\RangedEnemy.cs" />
     <Compile Include="Assets\DataClasses\Space.cs" />
     <Compile Include="Assets\DataClasses\WeaponItem.cs" />
+    <Compile Include="Assets\UserControls\BasicEnemyControl.xaml.cs">
+      <DependentUpon>BasicEnemyControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Assets\UserControls\BulletControl.xaml.cs">
       <DependentUpon>BulletControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Assets\UserControls\Character1Control.xaml.cs">
       <DependentUpon>Character1Control.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\UserControls\RangedEnemyControl.xaml.cs">
+      <DependentUpon>RangedEnemyControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -165,7 +182,6 @@
     <Resource Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Assets\Objects\" />
     <Folder Include="Saves\" />
   </ItemGroup>
   <ItemGroup>
@@ -175,6 +191,8 @@
     <Content Include="Assets\Sounds\button-click.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Assets\Textures\basic-enemy.png" />
+    <Resource Include="Assets\Textures\ranged-enemy.png" />
     <Resource Include="Assets\Textures\background-easy.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

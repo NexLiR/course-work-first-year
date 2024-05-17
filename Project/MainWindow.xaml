@@ -149,6 +149,7 @@
                     </Canvas>
                     <TextBlock x:Name="Gold" FontSize="20" Text="{x:Static languages:Lang.GoldCount}" HorizontalAlignment="Center" Canvas.Top="23" VerticalAlignment="Top"><Run x:Name="GoldCount"/></TextBlock>
                     <TextBlock x:Name="Score" FontSize="20" Text="{x:Static languages:Lang.Score}" HorizontalAlignment="Center" Canvas.Top="50" VerticalAlignment="Top"><Run Name="ScoreCount"/></TextBlock>
+                    <TextBlock x:Name="timerText" FontSize="44" Canvas.Left="1777" Canvas.Top="-3" HorizontalAlignment="Left" VerticalAlignment="Top"/>
                 </Canvas>
             </Canvas>
         </Canvas>

@@ -56,8 +56,6 @@ namespace Project.Assets.ControlClasses
             movementDirection = new Vector(1, 0);
 
             facingDirection = new Vector(1, 0);
-
-            StartGame();
         }
         public void StartGame()
         {
