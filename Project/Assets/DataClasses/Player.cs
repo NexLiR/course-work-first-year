@@ -19,6 +19,8 @@ namespace Project.Assets.DataClasses
         public float JumpLenght { set; get; }
         public double MaxHealth { set; get; }
 
+        public List<Bullet> Bullets { get; set; } = new List<Bullet>();
+
         public Player()
             : base()
         {

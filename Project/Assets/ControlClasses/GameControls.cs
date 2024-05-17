@@ -155,23 +155,24 @@ namespace Project.Assets.ControlClasses
                 var characterPosition = character1Control.TranslatePoint(new Point(character1Control.ActualWidth / 2.0, character1Control.ActualHeight / 2.0), GameScreen);
                 var position = new Point(characterPosition.X, characterPosition.Y - character1Control.ActualHeight / 2.0);
                 Bullet bullet = CreateProjectile(position, facingDirection);
-                BulletControl projectileControl = new BulletControl();
-                GameScreen.Children.Add(projectileControl);
-                projectileControl.Visibility = Visibility.Visible;
+                GameScreen.Children.Add(bullet.UserControl);
+                bullet.UserControl.Visibility = Visibility.Visible;
+                character1.Bullets.Add(bullet);
 
                 DispatcherTimer projectileTimer = new DispatcherTimer();
                 projectileTimer.Interval = TimeSpan.FromMilliseconds(16);
                 projectileTimer.Tick += (sender, args) =>
                 {
                     bullet.Position = new Point(bullet.Position.X + bullet.Direction.X * bullet.Speed, bullet.Position.Y + bullet.Direction.Y * bullet.Speed);
-                    projectileControl.SetValue(Canvas.LeftProperty, bullet.Position.X);
-                    projectileControl.SetValue(Canvas.TopProperty, bullet.Position.Y);
+                    bullet.UserControl.SetValue(Canvas.LeftProperty, bullet.Position.X);
+                    bullet.UserControl.SetValue(Canvas.TopProperty, bullet.Position.Y);
 
                     bullet.LifeTime -= 10;
                     if (bullet.LifeTime <= 0)
                     {
                         projectileTimer.Stop();
-                        GameScreen.Children.Remove(projectileControl);
+                        GameScreen.Children.Remove(bullet.UserControl);
+                        character1.Bullets.Remove(bullet);
                     }
                 };
                 projectileTimer.Start();
@@ -179,7 +180,7 @@ namespace Project.Assets.ControlClasses
         }
         private Bullet CreateProjectile(Point position, Vector direction)
         {
-            return new Bullet(position, direction, 20, 400);
+            return new Bullet(position, direction, 20, 400, character1.Damage, new BulletControl());
         }
         private void UpdateFacingDirection()
         {

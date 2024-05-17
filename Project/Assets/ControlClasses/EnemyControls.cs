@@ -96,19 +96,47 @@ namespace Project.Assets.ControlClasses
         {
             timeElapsed += UpdateTimer.Interval.TotalSeconds;
             if (timeElapsed >= 10)
-            {
+    {
                 maxEnemies++;
                 timeElapsed = 0;
             }
 
-            foreach (Enemy enemy in enemies)
+            foreach (var enemy in enemies.ToList())
             {
-                if (enemy.CurrentHealth <= 0)
-                {
-                    EnemyDeath(enemy);
-                }
                 enemy.Movement();
                 enemy.Attack();
+            }
+
+            CheckCollisions();
+        }
+        private void CheckCollisions()
+        {
+            foreach (var enemy in enemies.ToList())
+            {
+                var enemyPosition = enemy.UserControl.TransformToAncestor(GameScreen)
+                    .Transform(new Point(0, 0));
+                var enemyBounds = new Rect(enemyPosition, new Size(enemy.UserControl.ActualWidth, enemy.UserControl.ActualHeight));
+
+                foreach (var bullet in MainWindow.charapter1.Bullets.ToList())
+                {
+                    var bulletPosition = bullet.UserControl.TransformToAncestor(GameScreen).Transform(new Point(0, 0));
+                    var bulletBounds = new Rect(bulletPosition, new Size(bullet.UserControl.ActualWidth, bullet.UserControl.ActualHeight));
+
+                    if (enemyBounds.IntersectsWith(bulletBounds))
+                    {
+                        enemy.CurrentHealth -= MainWindow.charapter1.Damage;
+
+                        MainWindow.charapter1.Bullets.Remove(bullet);
+                        GameScreen.Children.Remove(bullet.UserControl);
+
+                        if (enemy.CurrentHealth <= 0)
+                        {
+                            EnemyDeath(enemy);
+                        }
+
+                        break;
+                    }
+                }
             }
         }
     }
