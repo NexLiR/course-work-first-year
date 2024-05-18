@@ -36,7 +36,8 @@ namespace Project.Assets.DataClasses
             GoldValue = enemy.GoldValue;
             UserControl = enemy.UserControl;
         }
-        public abstract void Movement();
-        public abstract void Attack();
+        public abstract void Movement(Vector playerPosition);
+        public abstract void Attack(Player player);
+        public abstract void UpdateHP();
     }
 }

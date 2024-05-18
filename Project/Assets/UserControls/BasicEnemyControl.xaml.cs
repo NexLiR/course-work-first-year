@@ -12,14 +12,22 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Project.Assets.UserControls
 {
     public partial class BasicEnemyControl : UserControl
     {
-        public BasicEnemyControl()
+        private double maxHP;
+        public BasicEnemyControl(double currentHP)
         {
             InitializeComponent();
+            maxHP = currentHP;
+            HPBar.Maximum = maxHP;
+        }
+        public void UpdateHP(double currentHP)
+        {
+            HPBar.Value = currentHP;
         }
     }
 }

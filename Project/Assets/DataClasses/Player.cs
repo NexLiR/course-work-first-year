@@ -43,5 +43,14 @@ namespace Project.Assets.DataClasses
             JumpLenght = player.JumpLenght;
             MaxHealth = player.MaxHealth;
         }
+
+        public void TakeDamage(double damage)
+        {
+            CurrentHealth -= damage;
+            if (CurrentHealth <= 0)
+            {
+                // Handle player death
+            }
+        }
     }
 }

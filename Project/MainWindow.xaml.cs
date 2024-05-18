@@ -46,13 +46,14 @@ namespace Project
         }
 
         // Control classes
-        public static Player charapter1 = new Player(1, "Character1", 100.0, 1.0, 1.0, 0.5, new Vector(960, 532), 0, new List<Item>(), 40.0f, 100.0);
+        public static Player charapter1 = new Player(1, "Character1", 100.0, 1.0, 5.0, 0.5, new Vector(960, 532),0, new List<Item>(), 40.0f, 100.0);
         Space gameSpace = new Space();
         SavesControls save = new SavesControls();
         SoundControls music = new SoundControls();
         SoundControls sound = new SoundControls();
         ImageBrush backgroundImage = new ImageBrush();
         private DispatcherTimer UIUpdateTimer = new DispatcherTimer();
+        public static GameControls gameControls;
         //Data Storage
         public static int currentScore = 0;
         public int currentTime = 0;
@@ -241,7 +242,7 @@ namespace Project
                 charapter1.AttackSpeed = charapter1.AttackSpeed / currentDifficultyMultiplayer;
                 StartTimer();
 
-                GameControls gameControls = new GameControls(GameScreen, charapter1);
+                gameControls = new GameControls(GameScreen, charapter1);
                 EnemyControls enemyControls = new EnemyControls(currentDifficultyMultiplayer, GameScreen);
                 gameControls.StartGame();
                 enemyControls.StartEnemySpawning();

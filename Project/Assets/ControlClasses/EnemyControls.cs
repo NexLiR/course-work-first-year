@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Threading;
 using Project.Assets.UserControls;
 using System.Windows.Documents;
+using System.Windows.Media;
 
 namespace Project.Assets.ControlClasses
 {
@@ -25,6 +26,8 @@ namespace Project.Assets.ControlClasses
         private int maxEnemies;
         private double timeElapsed;
 
+        private List<Vector> spawnPoints;
+
         public EnemyControls(double difficultyMultiplier, Canvas gameScreen)
         {
             enemies = new List<Enemy>();
@@ -34,6 +37,8 @@ namespace Project.Assets.ControlClasses
             currentDifficultyMultiplier = difficultyMultiplier;
             maxEnemies = 10;
             timeElapsed = 0;
+
+            spawnPoints = GenerateSpawnPoints();
         }
 
         public void StartEnemySpawning()
@@ -45,6 +50,8 @@ namespace Project.Assets.ControlClasses
             UpdateTimer.Interval = TimeSpan.FromMilliseconds(16);
             UpdateTimer.Tick += UpdateEnemiesTick;
             UpdateTimer.Start();
+
+            SpawnEnemies(currentDifficultyMultiplier);
         }
 
         private void SpawnEnemies(double difficultyMultiplier)
@@ -75,52 +82,87 @@ namespace Project.Assets.ControlClasses
             MainWindow.currentScore += enemy.ScoreValue;
             MainWindow.charapter1.Gold += enemy.GoldValue;
         }
+
+        private List<Vector> GenerateSpawnPoints()
+        {
+            return new List<Vector>
+            {
+            new Vector(-50, random.NextDouble() * GameScreen.ActualHeight),
+            new Vector(GameScreen.ActualWidth + 50, random.NextDouble() * GameScreen.ActualHeight),
+            new Vector(random.NextDouble() * GameScreen.ActualWidth, -50),
+            new Vector(random.NextDouble() * GameScreen.ActualWidth, GameScreen.ActualHeight + 50)
+            };
+        }
+        private int GetRandomSpawnPointIndex()
+        {
+            return random.Next(spawnPoints.Count);
+        }
+        private Vector GetRandomSpawnPoint()
+        {
+            int index = GetRandomSpawnPointIndex();
+            return spawnPoints[index];
+        }
         private BasicEnemy CreateBasicEnemy()
         {
-            return new BasicEnemy(1, "Basic Enemy", 20 * currentDifficultyMultiplier, 2 * currentDifficultyMultiplier, 5 * currentDifficultyMultiplier, 1 * currentDifficultyMultiplier, new Vector(0, 0), (int)(10.0 / currentDifficultyMultiplier), 10, new BasicEnemyControl());
+            Vector spawnPoint = GetRandomSpawnPoint();
+            return new BasicEnemy(1, "Basic Enemy", 20 / currentDifficultyMultiplier, 2 / currentDifficultyMultiplier, 5 / currentDifficultyMultiplier, 1 * currentDifficultyMultiplier, spawnPoint, (int)(10.0 / currentDifficultyMultiplier), 10, new BasicEnemyControl(20 / currentDifficultyMultiplier));
         }
         private RangedEnemy CreateRangedEnemy()
         {
-            return new RangedEnemy(2, "Ranged Enemy", 10 * currentDifficultyMultiplier, 1 * currentDifficultyMultiplier, 3 * currentDifficultyMultiplier, 0.5 * currentDifficultyMultiplier, new Vector(0, 0), (int)(30.0 / currentDifficultyMultiplier), 20, new RangedEnemyControl());
+            Vector spawnPoint = GetRandomSpawnPoint();
+            return new RangedEnemy(2, "Ranged Enemy", 10 / currentDifficultyMultiplier, 1 / currentDifficultyMultiplier, 3 / currentDifficultyMultiplier, 0.5 / currentDifficultyMultiplier, spawnPoint, (int)(30.0 / currentDifficultyMultiplier), 20, new RangedEnemyControl(10 / currentDifficultyMultiplier));
         }
+
         private void SpawnTimer_Tick(object sender, EventArgs e)
         {
             SpawnTimer.Stop();
-            double randomDelay = 1 + random.NextDouble() * 4;
+            double randomDelay = 2 + random.NextDouble() * 4;
             SpawnTimer.Interval = TimeSpan.FromSeconds(randomDelay);
             SpawnTimer.Start();
+
+            spawnPoints = GenerateSpawnPoints();
+
             SpawnEnemies(currentDifficultyMultiplier);
         }
-
         public void UpdateEnemiesTick(object sender, EventArgs e)
         {
             timeElapsed += UpdateTimer.Interval.TotalSeconds;
             if (timeElapsed >= 10)
-    {
+            {
                 maxEnemies++;
                 timeElapsed = 0;
             }
 
+            Vector playerPosition = new Vector(MainWindow.charapter1.Position.X, MainWindow.charapter1.Position.Y);
+
             foreach (var enemy in enemies.ToList())
             {
-                enemy.Movement();
-                enemy.Attack();
+                enemy.UpdateHP();
+                if (enemy.CurrentHealth <= 0)
+                {
+                    EnemyDeath(enemy);
+                }
+                else
+                {
+                    enemy.Movement(playerPosition);
+                    enemy.Attack(MainWindow.charapter1);
+                    if (enemy is RangedEnemy rangedEnemy)
+                    {
+                        rangedEnemy.UpdateBullets(MainWindow.charapter1);
+                    }
+                }
             }
-
             CheckCollisions();
         }
         private void CheckCollisions()
         {
             foreach (var enemy in enemies.ToList())
             {
-                var enemyPosition = enemy.UserControl.TransformToAncestor(GameScreen)
-                    .Transform(new Point(0, 0));
-                var enemyBounds = new Rect(enemyPosition, new Size(enemy.UserControl.ActualWidth, enemy.UserControl.ActualHeight));
+                var enemyBounds = GetBoundsRelativeToGameScreen(enemy.UserControl);
 
                 foreach (var bullet in MainWindow.charapter1.Bullets.ToList())
                 {
-                    var bulletPosition = bullet.UserControl.TransformToAncestor(GameScreen).Transform(new Point(0, 0));
-                    var bulletBounds = new Rect(bulletPosition, new Size(bullet.UserControl.ActualWidth, bullet.UserControl.ActualHeight));
+                    var bulletBounds = GetBoundsRelativeToGameScreen(bullet.UserControl);
 
                     if (enemyBounds.IntersectsWith(bulletBounds))
                     {
@@ -138,6 +180,12 @@ namespace Project.Assets.ControlClasses
                     }
                 }
             }
+        }
+        private Rect GetBoundsRelativeToGameScreen(FrameworkElement element)
+        {
+            var gameScreen = GameScreen;
+            GeneralTransform transform = element.TransformToVisual(gameScreen);
+            return transform.TransformBounds(new Rect(0, 0, element.ActualWidth, element.ActualHeight));
         }
     }
 }

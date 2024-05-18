@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="70" d:DesignWidth="70">
     <Grid>
-        <Rectangle Width="70" Height="70" RenderTransformOrigin="0.5,0.5">
+        <Rectangle Width="70" RenderTransformOrigin="0.5,0.5" Margin="-2,2,2,2">
             <Rectangle.RenderTransform>
                 <TransformGroup>
                     <RotateTransform Angle="270"/>
@@ -17,5 +17,12 @@
                 <ImageBrush ImageSource="\Project;component\Assets\Textures\basic-enemy.png"/>
             </Rectangle.Fill>
         </Rectangle>
+        <ProgressBar Margin="71,0,-71,65" x:Name="HPBar" BorderBrush="Transparent" Foreground="Red">
+            <ProgressBar.RenderTransform>
+                <TransformGroup>
+                    <RotateTransform Angle="90"/>
+                </TransformGroup>
+            </ProgressBar.RenderTransform>
+        </ProgressBar>
     </Grid>
 </UserControl>

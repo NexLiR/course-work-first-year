@@ -17,13 +17,13 @@ namespace Project.Assets.ControlClasses
 {
     public class GameControls
     {
-        private Canvas GameScreen { get; set; }
+        public Canvas GameScreen { get; set; }
         private DispatcherTimer GameTimer = new DispatcherTimer();
         private bool UpKeyPressed, DownKeyPressed, LeftKeyPressed, RightKeyPressed, LeftMouseButtonPressed;
         private float SpeedX, SpeedY, Friction = 0.75f, Speed;
         private Point mousePosition;
 
-        private UserControl character1Control;
+        public UserControl character1Control { get; set;}
         private static Player character1;
 
         private TranslateTransform translateTransform;
@@ -210,6 +210,7 @@ namespace Project.Assets.ControlClasses
 
             var maxX = GameScreen.ActualWidth;
             var maxY = GameScreen.ActualHeight;
+            character1.Position = new Vector(translateTransform.X + character1Control.ActualWidth / 2, translateTransform.Y + character1Control.ActualHeight / 2);
 
             if (translateTransform.X < 0)
             {
