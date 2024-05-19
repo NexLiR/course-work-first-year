@@ -46,6 +46,6 @@
                 <TextBlock Text="{x:Static languages:Lang.UpgradeCost}" FontSize="22"><Run x:Name="AttackSpeedCost"/></TextBlock>
             </StackPanel>
         </StackPanel>
-        <TextBlock x:Name="Gold" FontSize="32" Text="{x:Static languages:Lang.GoldCount}" HorizontalAlignment="Left" Canvas.Top="376" VerticalAlignment="Center" Canvas.Left="939"><Run x:Name="GoldCount"/></TextBlock>
+        <TextBlock x:Name="Gold" FontSize="28" Text="{x:Static languages:Lang.GoldCount}" HorizontalAlignment="Left" Canvas.Top="376" VerticalAlignment="Center" Canvas.Left="939"><Run x:Name="GoldCount"/></TextBlock>
     </Canvas>
 </UserControl>

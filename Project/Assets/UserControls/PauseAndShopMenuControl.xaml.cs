@@ -29,6 +29,18 @@ namespace Project.Assets.UserControls
             UITimer.Start();
         }
 
+        public void ResumeButton_Click(object sender, RoutedEventArgs e)
+        {
+            sound.PlaySound("button-click");
+            GameControls.IsUnpaused = true;
+        }
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            sound.PlaySound("button-click");
+            GameControls.isPlayerDead = true;
+            GameControls.IsUnpaused = true;
+        }
+
         private void UITimer_Tick(object sender, EventArgs e)
         {
             GoldCount.Text = MainWindow.player.Gold.ToString();
@@ -41,21 +53,6 @@ namespace Project.Assets.UserControls
             SpeedCost.Text = (MainWindow.player.Speed * 25 / MainWindow.currentDifficultyMultiplayer).ToString();
             AttackSpeedCost.Text = (MainWindow.player.AttackSpeed * 45 / MainWindow.currentDifficultyMultiplayer).ToString();
         }
-
-        public void ResumeButton_Click(object sender, RoutedEventArgs e)
-        {
-            sound.PlaySound("button-click");
-            GameControls.IsPaused = false;
-            GameControls.IsUnpaused = true;
-        }
-        private void ExitButton_Click(object sender, RoutedEventArgs e)
-        {
-            sound.PlaySound("button-click");
-            GameControls.isPlayerDead = true;
-            GameControls.IsPaused = false;
-            GameControls.IsUnpaused = true;
-        }
-
         private void UpgradeMaxHP_Click(object sender, RoutedEventArgs e)
         {
             if (MainWindow.player.Gold >= MainWindow.player.MaxHealth / 2.5 / MainWindow.currentDifficultyMultiplayer)

@@ -44,9 +44,9 @@ namespace Project.Assets.ControlClasses
 
         private DispatcherTimer RegenerationTimer = new DispatcherTimer();
 
-        private GameEndControl endGameScreen = new GameEndControl();
+        private GameEndControl endGameScreen;
 
-        private PauseAndShopMenuControl pauseAndShopMenu = new PauseAndShopMenuControl();
+        private PauseAndShopMenuControl pauseAndShopMenu;
         private DispatcherTimer UnpauseCheckTimer = new DispatcherTimer();
 
         public GameControls(Canvas gameScreen, Player character)
@@ -69,9 +69,8 @@ namespace Project.Assets.ControlClasses
 
             facingDirection = new Vector(1, 0);
 
-            IsPaused = false;
-            IsUnpaused = false;
-            isPlayerDead = false;
+            endGameScreen = new GameEndControl();
+            pauseAndShopMenu = new PauseAndShopMenuControl();
         }
         public void StartGame()
         {
@@ -104,14 +103,28 @@ namespace Project.Assets.ControlClasses
             UnpauseCheckTimer.Interval = TimeSpan.FromMilliseconds(6);
             UnpauseCheckTimer.Tick += UnpauseCheckTimer_Tick;
             UnpauseCheckTimer.Start();
+
+            IsPaused = false;
+            IsUnpaused = false;
+            isPlayerDead = false;
         }
 
         private void UnpauseCheckTimer_Tick(object sender, EventArgs e)
         {
+            HandlePauseState();
+        }
+        private void HandlePauseState()
+        {
             if (IsUnpaused)
             {
                 IsUnpaused = false;
-                HandlePauseState();
+                IsPaused = false;
+                Speed = (float)player.Speed;
+                endGameScreen = new GameEndControl();
+                AttackTimer.Interval = TimeSpan.FromSeconds(1 / player.AttackSpeed);
+                GameScreen.Children.Remove(pauseAndShopMenu);
+                GameScreen.Focus();
+                ResumeGame();
             }
         }
 
@@ -156,8 +169,14 @@ namespace Project.Assets.ControlClasses
             }
             if (e.Key == Key.Escape)
             {
-                IsPaused = !IsPaused;
-                HandlePauseState();
+                if (!IsPaused)
+                {
+                    IsPaused = true;
+                    StopGame();
+                    pauseAndShopMenu = new PauseAndShopMenuControl();
+                    GameScreen.Children.Add(pauseAndShopMenu);
+                    pauseAndShopMenu.Focus();
+                }
             }
         }
         private void KeyboardUp(object sender, KeyEventArgs e)
@@ -338,23 +357,7 @@ namespace Project.Assets.ControlClasses
                 isPlayerDead = true;
             }
         }
-        private void HandlePauseState()
-        {
-            if (IsPaused)
-            {
-                StopGame();
-                GameScreen.Children.Add(pauseAndShopMenu);
-                pauseAndShopMenu.Focus();
-            }
-            else
-            {
-                Speed = (float)player.Speed;
-                AttackTimer.Interval = TimeSpan.FromSeconds(1 / player.AttackSpeed);
-                GameScreen.Children.Remove(pauseAndShopMenu);
-                GameScreen.Focus();
-                ResumeGame();
-            }
-        }
+
         private void StopGame()
         {
             GameTimer.Stop();

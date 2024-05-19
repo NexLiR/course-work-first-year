@@ -19,7 +19,7 @@
                     <ImageBrush ImageSource="Assets/Textures/menu-background.png"/>
                 </Canvas.Background>
 
-                <StackPanel x:Name="MainMenu" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden" Canvas.Left="726" Canvas.Top="420" Height="460" Width="468">
+                <StackPanel x:Name="MainMenu" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible" Canvas.Left="726" Canvas.Top="420" Height="460" Width="468">
                     <Button Content="{x:Static languages:Lang.NewGame}" Click="NewGame_Click" Margin="0,20,0,10" FontSize="32" Padding="10, 20" Background="Black" Foreground="White"/>
                     <Button Content="{x:Static languages:Lang.Settings}" Click="Settings_Click" Margin="0,20,0,10" FontSize="32" Padding="10, 20" Background="Black" Foreground="White"/>
                     <Button Content="{x:Static languages:Lang.Exit}" Click="Exit_Click" Margin="0,20,0,10" FontSize="32" Padding="10, 20" Background="Black" Foreground="White"/>
@@ -76,7 +76,7 @@
                     </StackPanel>
                 </StackPanel>
 
-                <StackPanel x:Name="GameSaves" Visibility="Visible" Canvas.Left="478" Canvas.Top="341" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <StackPanel x:Name="GameSaves" Visibility="Hidden" Canvas.Left="478" Canvas.Top="341" HorizontalAlignment="Center" VerticalAlignment="Top">
                     <Canvas>
                         <TextBlock FontSize="32" FontWeight="Bold" Text="{x:Static languages:Lang.Records}" Canvas.Left="423" Canvas.Top="266"/>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="498" Canvas.Left="132" VerticalAlignment="Top">

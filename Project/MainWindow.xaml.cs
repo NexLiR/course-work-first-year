@@ -43,6 +43,8 @@ namespace Project
             UIUpdateTimer.Interval = TimeSpan.FromMilliseconds(6);
             UIUpdateTimer.Tick += UIUpdateTimer_Tick;
             UIUpdateTimer.Start();
+            TimeTimer.Interval = TimeSpan.FromSeconds(1);
+            TimeTimer.Tick += (sender, e) => currentTime++;
         }
 
         // Control classes
@@ -53,12 +55,12 @@ namespace Project
         SoundControls sound = new SoundControls();
         ImageBrush backgroundImage = new ImageBrush();
         private DispatcherTimer UIUpdateTimer = new DispatcherTimer();
+        private DispatcherTimer TimeTimer = new DispatcherTimer();
         public static GameControls gameControls;
         public static EnemyControls enemyControls;
         //Data Storage
         public static int currentScore = 0;
         public static int currentTime = 0;
-        private Thread timerThread;
         public static bool isPaused = false;
         public static bool isGameEnded = false;
         public static string currentSave { get; set;}
@@ -242,15 +244,15 @@ namespace Project
                 GameScreen.Visibility = Visibility.Visible;
                 InGameUI.Visibility = Visibility.Visible;
                 GameScreen.Focus();
-                player = new Player(1, "Character1", 100.0, 1.0, 5.0, 1.2, new Vector(960, 532), 999999, 40.0f, 100.0);
+                player = new Player(1, "Character1", 100.0, 1.0, 5.0, 1.2, new Vector(960, 532), 0, 40.0f, 100.0);
                 gameSpace = new Space(1, 1920, 1064);
-                player.CurrentHealth = player.CurrentHealth * currentDifficultyMultiplayer;
-                player.MaxHealth = player.MaxHealth * currentDifficultyMultiplayer;
-                isPaused = false;
-                StartTimer();
-
                 gameControls = new GameControls(GameScreen, player);
                 enemyControls = new EnemyControls(currentDifficultyMultiplayer, GameScreen);
+
+                player.CurrentHealth = player.CurrentHealth * currentDifficultyMultiplayer;
+                player.MaxHealth = player.MaxHealth * currentDifficultyMultiplayer;
+
+                TimeTimer.Start();
                 gameControls.StartGame();
                 enemyControls.StartEnemySpawning();
             }
@@ -377,55 +379,29 @@ namespace Project
             pbPlayerHealth.Maximum = player.MaxHealth;
             GoldCount.Text = player.Gold.ToString();
             ScoreCount.Text = currentScore.ToString();
+            int minutes = currentTime / 60;
+            int seconds = currentTime % 60;
+            timerText.Text = $"{minutes:00}:{seconds:00}";
             if (isGameEnded)
             {
                 RestartGame();
             }
         }
-        private void StartTimer()
-        {
-            timerThread = new Thread(() =>
-            {
-                while (true)
-                {
-                    Thread.Sleep(1000);
-                    if (!isPaused)
-                    {
-                        currentTime++;
-                        UpdateTimerUI();
-                    }
-                }
-            });
-            timerThread.Start();
-        }
-        private void UpdateTimerUI()
-        {
-            int minutes = currentTime / 60;
-            int seconds = currentTime % 60;
-
-            Dispatcher.Invoke(() =>
-            {
-                timerText.Text = $"{minutes:00}:{seconds:00}";
-            });
-        }
-        protected override void OnClosed(EventArgs e)
-        {
-            base.OnClosed(e);
-            timerThread.Abort();
-        }
         public void RestartGame()
         {
             isGameEnded = false;
             isPaused = false;
-            timerThread.Abort();
+            TimeTimer.Stop();
             currentTime = 0;
             currentScore = 0;
             currentSave = null;
+
+            GameScreen.Children.Clear();
+
             GameScreen.Visibility = Visibility.Hidden;
             InGameUI.Visibility = Visibility.Hidden;
             MainMenu.Visibility = Visibility.Visible;
             Menu.Visibility = Visibility.Visible;
-            GameScreen.Children.Clear();
         }
         #endregion
     }
