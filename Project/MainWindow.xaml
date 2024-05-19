@@ -19,7 +19,7 @@
                     <ImageBrush ImageSource="Assets/Textures/menu-background.png"/>
                 </Canvas.Background>
 
-                <StackPanel x:Name="MainMenu" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible" Canvas.Left="726" Canvas.Top="420" Height="460" Width="468">
+                <StackPanel x:Name="MainMenu" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden" Canvas.Left="726" Canvas.Top="420" Height="460" Width="468">
                     <Button Content="{x:Static languages:Lang.NewGame}" Click="NewGame_Click" Margin="0,20,0,10" FontSize="32" Padding="10, 20" Background="Black" Foreground="White"/>
                     <Button Content="{x:Static languages:Lang.Settings}" Click="Settings_Click" Margin="0,20,0,10" FontSize="32" Padding="10, 20" Background="Black" Foreground="White"/>
                     <Button Content="{x:Static languages:Lang.Exit}" Click="Exit_Click" Margin="0,20,0,10" FontSize="32" Padding="10, 20" Background="Black" Foreground="White"/>
@@ -76,54 +76,57 @@
                     </StackPanel>
                 </StackPanel>
 
-                <StackPanel x:Name="GameSaves" Visibility="Hidden" Canvas.Left="478" Canvas.Top="376" HorizontalAlignment="Center" VerticalAlignment="Top">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="390">
-                        <StackPanel Orientation="Vertical">
-                            <Button Width="64" Background="Transparent" Click="Delete_Save1_Click">
-                                <Image Source="Assets/Textures/redCrossIcon.png" Height="64"></Image>
-                            </Button>
-                            <Button Background="Black" Foreground="White" Click="Load_Save1_Click" FontSize="26" Padding="10" Width="200" Height="200">
-                                <TextBlock><Run Text="{x:Static languages:Lang.Save}" /><Run Text=" "/><Run Text=" 1"/></TextBlock>
-                            </Button>
-                            <TextBlock Name="maxScore1" FontSize="28" TextAlignment="Center" Margin="0 10">
-                                  <Run Text="{x:Static languages:Lang.Score}"/><Run Name="TextBlockMaxScore1"/>
-                            </TextBlock>
-                            <TextBlock Name="maxTime1" FontSize="28" TextAlignment="Center" Margin="0 10">
-                                  <Run Text="{x:Static languages:Lang.Time}"/><Run Name="TextBlockMaxTime1"/>
-                            </TextBlock>
+                <StackPanel x:Name="GameSaves" Visibility="Visible" Canvas.Left="478" Canvas.Top="341" HorizontalAlignment="Center" VerticalAlignment="Top">
+                    <Canvas>
+                        <TextBlock FontSize="32" FontWeight="Bold" Text="{x:Static languages:Lang.Records}" Canvas.Left="423" Canvas.Top="266"/>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="498" Canvas.Left="132" VerticalAlignment="Top">
+                            <StackPanel Orientation="Vertical">
+                                <Button Width="64" Background="Transparent" Click="Delete_Save1_Click">
+                                    <Image Source="Assets/Textures/redCrossIcon.png" Height="64"></Image>
+                                </Button>
+                                <Button Background="Black" Foreground="White" Click="Load_Save1_Click" FontSize="26" Padding="10" Width="200" Height="200">
+                                    <TextBlock><Run Text="{x:Static languages:Lang.Save}" /><Run Text=" "/><Run Text=" 1"/></TextBlock>
+                                </Button>
+                                <TextBlock Name="maxScore1" FontSize="25" TextAlignment="Center" Margin="0 40 0 0">
+                                      <Run Text="{x:Static languages:Lang.Score}"/><Run Name="TextBlockMaxScore1"/>
+                                </TextBlock>
+                                <TextBlock Name="maxTime1" FontSize="25" TextAlignment="Center" Margin="0 10">
+                                      <Run Text="{x:Static languages:Lang.Time}"/><Run Name="TextBlockMaxTime1"/>
+                                </TextBlock>
+                            </StackPanel>
+                            <Rectangle Width="50" Fill="Transparent"/>
+                            <StackPanel Orientation="Vertical">
+                                <Button Width="64" Background="Transparent" Click="Delete_Save2_Click">
+                                    <Image Source="Assets/Textures/redCrossIcon.png" Height="64"></Image>
+                                </Button>
+                                <Button Background="Black" Foreground="White" Click="Load_Save2_Click" FontSize="26" Padding="10" Width="200" Height="200">
+                                    <TextBlock><Run Text="{x:Static languages:Lang.Save}" /><Run Text=" "/><Run Text=" 2"/></TextBlock>
+                                </Button>
+                                <TextBlock Name="maxScore2" FontSize="25" TextAlignment="Center" Margin="0 40 0 0">
+                                      <Run Text="{x:Static languages:Lang.Score}"/><Run Name="TextBlockMaxScore2"/>
+                                </TextBlock>
+                                <TextBlock Name="maxTime2" FontSize="25" TextAlignment="Center" Margin="0 10">
+                                      <Run Text="{x:Static languages:Lang.Time}"/><Run Name="TextBlockMaxTime2"/>
+                                </TextBlock>
+                            </StackPanel>
+                            <Rectangle Width="50" Fill="Transparent"/>
+                            <StackPanel Orientation="Vertical">
+                                <Button Width="64" Background="Transparent" Click="Delete_Save3_Click">
+                                    <Image Source="Assets/Textures/redCrossIcon.png" Height="64"></Image>
+                                </Button>
+                                <Button Background="Black" Foreground="White" Click="Load_Save3_Click" FontSize="26" Padding="10" Width="200" Height="200">
+                                    <TextBlock><Run Text="{x:Static languages:Lang.Save}" /><Run Text=" "/><Run Text=" 3"/></TextBlock>
+                                </Button>
+                                <TextBlock Name="maxScore3" FontSize="25" TextAlignment="Center" Margin="0 40 0 0">
+                                     <Run Text="{x:Static languages:Lang.Score}"/><Run Name="TextBlockMaxScore3"/>
+                                </TextBlock>
+                                <TextBlock Name="maxTime3" FontSize="25" TextAlignment="Center" Margin="0 10">
+                                     <Run Text="{x:Static languages:Lang.Time}"/><Run Name="TextBlockMaxTime3"/>
+                                </TextBlock>
+                            </StackPanel>
                         </StackPanel>
-                        <Rectangle Width="50" Fill="Transparent"/>
-                        <StackPanel Orientation="Vertical">
-                            <Button Width="64" Background="Transparent" Click="Delete_Save2_Click">
-                                <Image Source="Assets/Textures/redCrossIcon.png" Height="64"></Image>
-                            </Button>
-                            <Button Background="Black" Foreground="White" Click="Load_Save2_Click" FontSize="26" Padding="10" Width="200" Height="200">
-                                <TextBlock><Run Text="{x:Static languages:Lang.Save}" /><Run Text=" "/><Run Text=" 2"/></TextBlock>
-                            </Button>
-                            <TextBlock Name="maxScore2" FontSize="28" TextAlignment="Center" Margin="0 10">
-                                  <Run Text="{x:Static languages:Lang.Score}"/><Run Name="TextBlockMaxScore2"/>
-                            </TextBlock>
-                            <TextBlock Name="maxTime2" FontSize="28" TextAlignment="Center" Margin="0 10">
-                                  <Run Text="{x:Static languages:Lang.Time}"/><Run Name="TextBlockMaxTime2"/>
-                            </TextBlock>
-                        </StackPanel>
-                        <Rectangle Width="50" Fill="Transparent"/>
-                        <StackPanel Orientation="Vertical">
-                            <Button Width="64" Background="Transparent" Click="Delete_Save3_Click">
-                                <Image Source="Assets/Textures/redCrossIcon.png" Height="64"></Image>
-                            </Button>
-                            <Button Background="Black" Foreground="White" Click="Load_Save3_Click" FontSize="26" Padding="10" Width="200" Height="200">
-                                <TextBlock><Run Text="{x:Static languages:Lang.Save}" /><Run Text=" "/><Run Text=" 3"/></TextBlock>
-                            </Button>
-                            <TextBlock Name="maxScore3" FontSize="28" TextAlignment="Center" Margin="0 10">
-                                 <Run Text="{x:Static languages:Lang.Score}"/><Run Name="TextBlockMaxScore3"/>
-                            </TextBlock>
-                            <TextBlock Name="maxTime3" FontSize="28" TextAlignment="Center" Margin="0 10">
-                                 <Run Text="{x:Static languages:Lang.Time}"/><Run Name="TextBlockMaxTime3"/>
-                            </TextBlock>
-                        </StackPanel>
-                    </StackPanel>
-                    <TextBlock FontWeight="Bold" Width="963" FontSize="26" Height="110" TextWrapping="Wrap" TextAlignment="Center" Margin="0 32 0 0"><Run Text="{x:Static languages:Lang.ChooseSave}"/></TextBlock>
+                        <TextBlock FontWeight="Bold" Width="964" FontSize="26" Height="82" TextWrapping="Wrap" TextAlignment="Center" HorizontalAlignment="Center" Canvas.Top="442" VerticalAlignment="Top"><Run Text="{x:Static languages:Lang.ChooseSave}"/></TextBlock>
+                    </Canvas>
                 </StackPanel>
 
                 <StackPanel x:Name="CharactersSelectMenu" Visibility="Hidden" Canvas.Left="734" Canvas.Top="341" HorizontalAlignment="Left" VerticalAlignment="Center" Width="456">
@@ -151,7 +154,7 @@
                 </StackPanel>
             </Canvas>
             <Canvas x:Name="GameScreen" Width="{Binding Width}" Height="{Binding Height}" Visibility="Hidden" Focusable="True">
-                
+
             </Canvas>
             <Canvas Name="InGameUI" Visibility="Hidden" Height="75" Width="200" Canvas.Left="15" Canvas.Top="15" HorizontalAlignment="Center" VerticalAlignment="Top">
                 <Canvas>

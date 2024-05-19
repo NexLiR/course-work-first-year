@@ -29,11 +29,14 @@ namespace Project.Assets.ControlClasses
 
         private List<Vector> spawnPoints;
 
+        private DispatcherTimer DifficultyIncreaseTimer;
+
         public EnemyControls(double difficultyMultiplier, Canvas gameScreen)
         {
             enemies = new List<Enemy>();
             SpawnTimer = new DispatcherTimer();
             UpdateTimer = new DispatcherTimer();
+            DifficultyIncreaseTimer = new DispatcherTimer();
             GameScreen = gameScreen;
             currentDifficultyMultiplier = difficultyMultiplier;
             maxEnemies = 10;
@@ -52,18 +55,29 @@ namespace Project.Assets.ControlClasses
             UpdateTimer.Tick += UpdateEnemiesTick;
             UpdateTimer.Start();
 
+            DifficultyIncreaseTimer.Interval = TimeSpan.FromSeconds(20);
+            DifficultyIncreaseTimer.Tick += DifficultyIncreaseTimer_Tick;
+            DifficultyIncreaseTimer.Start();
+
             SpawnEnemies(currentDifficultyMultiplier);
+        }
+
+        private void DifficultyIncreaseTimer_Tick(object sender, EventArgs e)
+        {
+            currentDifficultyMultiplier *= 0.95;
         }
 
         public void StopUpdate()
         {
             SpawnTimer.Stop();
             UpdateTimer.Stop();
+            DifficultyIncreaseTimer.Stop();
         }
         public void ResumeUpdate()
         {
             SpawnTimer.Start();
             UpdateTimer.Start();
+            DifficultyIncreaseTimer.Start();
         }
 
         private void SpawnEnemies(double difficultyMultiplier)
