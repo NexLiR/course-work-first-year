@@ -15,6 +15,7 @@ namespace Project.Assets.ControlClasses
 {
     public class EnemyControls
     {
+        protected SoundControls sound = new SoundControls();
         private List<Enemy> enemies;
         private DispatcherTimer SpawnTimer;
         private DispatcherTimer UpdateTimer;
@@ -88,6 +89,7 @@ namespace Project.Assets.ControlClasses
         }
         private void EnemyDeath(Enemy enemy)
         {
+            sound.PlaySound("enemy-death");
             if (enemy is RangedEnemy rangedEnemy)
             {
                 foreach (var bullet in rangedEnemy.Bullets)
@@ -98,7 +100,7 @@ namespace Project.Assets.ControlClasses
             enemies.Remove(enemy);
             GameScreen.Children.Remove(enemy.UserControl);
             MainWindow.currentScore += enemy.ScoreValue;
-            MainWindow.charapter1.Gold += enemy.GoldValue;
+            MainWindow.player.Gold += enemy.GoldValue;
         }
 
         private List<Vector> GenerateSpawnPoints()
@@ -151,7 +153,7 @@ namespace Project.Assets.ControlClasses
                 timeElapsed = 0;
             }
 
-            Vector playerPosition = new Vector(MainWindow.charapter1.Position.X, MainWindow.charapter1.Position.Y);
+            Vector playerPosition = new Vector(MainWindow.player.Position.X, MainWindow.player.Position.Y);
 
             foreach (var enemy in enemies.ToList())
             {
@@ -163,10 +165,10 @@ namespace Project.Assets.ControlClasses
                 else
                 {
                     enemy.Movement(playerPosition);
-                    enemy.Attack(MainWindow.charapter1);
+                    enemy.Attack(MainWindow.player);
                     if (enemy is RangedEnemy rangedEnemy)
                     {
-                        rangedEnemy.UpdateBullets(MainWindow.charapter1);
+                        rangedEnemy.UpdateBullets(MainWindow.player);
                     }
                 }
             }
@@ -178,15 +180,15 @@ namespace Project.Assets.ControlClasses
             {
                 var enemyBounds = GetBoundsRelativeToGameScreen(enemy.UserControl);
 
-                foreach (var bullet in MainWindow.charapter1.Bullets.ToList())
+                foreach (var bullet in MainWindow.player.Bullets.ToList())
                 {
                     var bulletBounds = GetBoundsRelativeToGameScreen(bullet.UserControl);
 
                     if (enemyBounds.IntersectsWith(bulletBounds))
                     {
-                        enemy.CurrentHealth -= MainWindow.charapter1.Damage;
+                        enemy.CurrentHealth -= MainWindow.player.Damage;
 
-                        MainWindow.charapter1.Bullets.Remove(bullet);
+                        MainWindow.player.Bullets.Remove(bullet);
                         GameScreen.Children.Remove(bullet.UserControl);
 
                         if (enemy.CurrentHealth <= 0)

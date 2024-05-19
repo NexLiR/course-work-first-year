@@ -58,7 +58,7 @@ namespace Project.Assets.DataClasses
 
         public override void Attack(Player player)
         {
-            if (isReadyToAttack && (MainWindow.charapter1.Position - Position).Length <= 301)
+            if (isReadyToAttack && (MainWindow.player.Position - Position).Length <= 301)
         {
                 var characterPosition = Position;
                 var direction = player.Position - characterPosition;
@@ -106,7 +106,7 @@ namespace Project.Assets.DataClasses
         private bool CheckCollisionWithPlayer(Bullet bullet, Player player)
         {
             var gameScreen = MainWindow.gameControls.GameScreen;
-            var playerControl = MainWindow.gameControls.character1Control;
+            var playerControl = MainWindow.gameControls.playerControl;
 
             GeneralTransform bulletTransform = bullet.UserControl.TransformToVisual(gameScreen);
             Rect bulletBounds = bulletTransform.TransformBounds(new Rect(0, 0, bullet.UserControl.ActualWidth, bullet.UserControl.ActualHeight));

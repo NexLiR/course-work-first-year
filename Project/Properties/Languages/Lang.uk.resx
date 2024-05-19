@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AttackSpeed" xml:space="preserve">
+    <value>Швидкість атаки: </value>
+  </data>
   <data name="Character1Name" xml:space="preserve">
     <value>Персонаж 1</value>
   </data>
@@ -131,6 +134,9 @@
   </data>
   <data name="ContinueGame" xml:space="preserve">
     <value>Продовжити гру</value>
+  </data>
+  <data name="Damage" xml:space="preserve">
+    <value>Шкода: </value>
   </data>
   <data name="Difficulty0" xml:space="preserve">
     <value>Легко</value>
@@ -156,6 +162,9 @@
   <data name="GoldCount" xml:space="preserve">
     <value>Золото: </value>
   </data>
+  <data name="MaxHealth" xml:space="preserve">
+    <value>Максимальне здоров'я: </value>
+  </data>
   <data name="Music" xml:space="preserve">
     <value>Музика</value>
   </data>
@@ -168,11 +177,23 @@
   <data name="No" xml:space="preserve">
     <value>Ні</value>
   </data>
+  <data name="PauseMenu" xml:space="preserve">
+    <value>Меню паузи</value>
+  </data>
+  <data name="Records" xml:space="preserve">
+    <value>Рекорди</value>
+  </data>
+  <data name="ResumeGame" xml:space="preserve">
+    <value>Продовжити гру</value>
+  </data>
   <data name="ReturnToMainMenu" xml:space="preserve">
     <value>Повернутися назад</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Користувач</value>
+  </data>
+  <data name="SaveAndExit" xml:space="preserve">
+    <value>Зберегтися і вийти</value>
   </data>
   <data name="SaveSettings" xml:space="preserve">
     <value>Зберегти</value>
@@ -186,8 +207,14 @@
   <data name="Settings" xml:space="preserve">
     <value>Налаштування</value>
   </data>
+  <data name="ShopMenu" xml:space="preserve">
+    <value>Магазин поліпшень персонажа</value>
+  </data>
   <data name="Sound" xml:space="preserve">
     <value>Звук</value>
+  </data>
+  <data name="Speed" xml:space="preserve">
+    <value>Швидкість переміщення: </value>
   </data>
   <data name="StartGame" xml:space="preserve">
     <value>Почати гру</value>
@@ -197,6 +224,9 @@
   </data>
   <data name="UkrainianLang" xml:space="preserve">
     <value>Українська</value>
+  </data>
+  <data name="UpgradeCost" xml:space="preserve">
+    <value>Вартість покращення: </value>
   </data>
   <data name="WantToChangeLang1" xml:space="preserve">
     <value>Для зміни налаштувань перезавантажте гру.</value>

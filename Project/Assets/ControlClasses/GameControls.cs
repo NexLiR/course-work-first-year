@@ -18,16 +18,18 @@ namespace Project.Assets.ControlClasses
 {
     public class GameControls
     {
-        private bool IsPaused = false;
-        private bool isPlayerDead = false;
+        private SoundControls sound = new SoundControls();
+        public static bool IsPaused = false;
+        public static bool IsUnpaused = false;
+        public static bool isPlayerDead = false;
         public Canvas GameScreen { get; set; }
         private DispatcherTimer GameTimer = new DispatcherTimer();
         private bool UpKeyPressed, DownKeyPressed, LeftKeyPressed, RightKeyPressed, LeftMouseButtonPressed;
         private float SpeedX, SpeedY, Friction = 0.75f, Speed;
         private Point mousePosition;
 
-        public UserControl character1Control { get; set;}
-        private static Player character1;
+        public UserControl playerControl { get; set;}
+        private static Player player;
 
         private TranslateTransform translateTransform;
         private RotateTransform rotateTransform;
@@ -44,30 +46,37 @@ namespace Project.Assets.ControlClasses
 
         private GameEndControl endGameScreen = new GameEndControl();
 
-        public GameControls(Canvas gameScreen, Player player)
+        private PauseAndShopMenuControl pauseAndShopMenu = new PauseAndShopMenuControl();
+        private DispatcherTimer UnpauseCheckTimer = new DispatcherTimer();
+
+        public GameControls(Canvas gameScreen, Player character)
         {
-            character1 = player;
-            Speed = (float)character1.Speed;
+            player = character;
+            Speed = (float)player.Speed;
             GameScreen = gameScreen;
 
-            character1Control = new Character1Control(character1);
-            GameScreen.Children.Add(character1Control);
+            playerControl = new Character1Control(player);
+            GameScreen.Children.Add(playerControl);
 
             translateTransform = new TranslateTransform();
             rotateTransform = new RotateTransform();
             combinedTransform = new TransformGroup();
             combinedTransform.Children.Add(rotateTransform);
             combinedTransform.Children.Add(translateTransform);
-            character1Control.RenderTransform = combinedTransform;
+            playerControl.RenderTransform = combinedTransform;
 
             movementDirection = new Vector(1, 0);
 
             facingDirection = new Vector(1, 0);
+
+            IsPaused = false;
+            IsUnpaused = false;
+            isPlayerDead = false;
         }
         public void StartGame()
         {
-            translateTransform.X = character1.Position.X;
-            translateTransform.Y = character1.Position.Y;
+            translateTransform.X = player.Position.X;
+            translateTransform.Y = player.Position.Y;
 
             GameScreen.KeyDown += KeyboardDown;
             GameScreen.KeyUp += KeyboardUp;
@@ -84,13 +93,26 @@ namespace Project.Assets.ControlClasses
             JumpTimer.Tick += JumpTimer_Tick;
             JumpTimer.Start();
 
-            AttackTimer.Interval = TimeSpan.FromSeconds(character1.AttackSpeed);
+            AttackTimer.Interval = TimeSpan.FromSeconds(1 / player.AttackSpeed);
             AttackTimer.Tick += AttackTimer_Tick;
             AttackTimer.Start();
 
             RegenerationTimer.Interval = TimeSpan.FromSeconds(1);
             RegenerationTimer.Tick += RegenerationTimer_Tick;
             RegenerationTimer.Start();
+
+            UnpauseCheckTimer.Interval = TimeSpan.FromMilliseconds(6);
+            UnpauseCheckTimer.Tick += UnpauseCheckTimer_Tick;
+            UnpauseCheckTimer.Start();
+        }
+
+        private void UnpauseCheckTimer_Tick(object sender, EventArgs e)
+        {
+            if (IsUnpaused)
+            {
+                IsUnpaused = false;
+                HandlePauseState();
+            }
         }
 
         private void MouseDown(object sender, MouseButtonEventArgs e)
@@ -160,10 +182,10 @@ namespace Project.Assets.ControlClasses
 
         private void RegenerationTimer_Tick(object sender, EventArgs e)
         {
-            character1.CurrentHealth += MainWindow.currentDifficultyMultiplayer * 0.5;
-            if (character1.CurrentHealth > character1.MaxHealth)
+            player.CurrentHealth += MainWindow.currentDifficultyMultiplayer * 0.5;
+            if (player.CurrentHealth > player.MaxHealth)
             {
-                character1.CurrentHealth = character1.MaxHealth;
+                player.CurrentHealth = player.MaxHealth;
             }
         }
         private void AttackTimer_Tick(object sender, EventArgs e)
@@ -178,12 +200,12 @@ namespace Project.Assets.ControlClasses
                 attackAvalible = false;
                 AttackTimer.Start();
 
-                var characterPosition = character1Control.TranslatePoint(new Point(character1Control.ActualWidth / 2.0, character1Control.ActualHeight / 2.0), GameScreen);
-                var position = new Point(characterPosition.X, characterPosition.Y - character1Control.ActualHeight / 2.0);
+                var characterPosition = playerControl.TranslatePoint(new Point(playerControl.ActualWidth / 2.0, playerControl.ActualHeight / 2.0), GameScreen);
+                var position = new Point(characterPosition.X, characterPosition.Y - playerControl.ActualHeight / 2.0);
                 Bullet bullet = CreateProjectile(position, facingDirection);
                 GameScreen.Children.Add(bullet.UserControl);
                 bullet.UserControl.Visibility = Visibility.Visible;
-                character1.Bullets.Add(bullet);
+                player.Bullets.Add(bullet);
 
                 DispatcherTimer projectileTimer = new DispatcherTimer();
                 projectileTimer.Interval = TimeSpan.FromMilliseconds(16);
@@ -198,7 +220,7 @@ namespace Project.Assets.ControlClasses
                     {
                         projectileTimer.Stop();
                         GameScreen.Children.Remove(bullet.UserControl);
-                        character1.Bullets.Remove(bullet);
+                        player.Bullets.Remove(bullet);
                     }
                 };
                 projectileTimer.Start();
@@ -206,11 +228,12 @@ namespace Project.Assets.ControlClasses
         }
         private Bullet CreateProjectile(Point position, Vector direction)
         {
-            return new Bullet(position, direction, 20, 400, character1.Damage, new BulletControl());
+            sound.PlaySound("player-attack");
+            return new Bullet(position, direction, 20, 400, player.Damage, new BulletControl());
         }
         private void UpdateFacingDirection()
         {
-            var characterPosition = character1Control.TranslatePoint(new Point(character1Control.ActualWidth / 2.0, character1Control.ActualHeight / 2.0), GameScreen);
+            var characterPosition = playerControl.TranslatePoint(new Point(playerControl.ActualWidth / 2.0, playerControl.ActualHeight / 2.0), GameScreen);
             var direction = mousePosition - characterPosition;
             direction.Normalize();
             facingDirection = direction;
@@ -236,23 +259,23 @@ namespace Project.Assets.ControlClasses
 
             var maxX = GameScreen.ActualWidth;
             var maxY = GameScreen.ActualHeight;
-            character1.Position = new Vector(translateTransform.X + character1Control.ActualWidth / 2, translateTransform.Y + character1Control.ActualHeight / 2);
+            player.Position = new Vector(translateTransform.X + playerControl.ActualWidth / 2, translateTransform.Y + playerControl.ActualHeight / 2);
 
             if (translateTransform.X < 0)
             {
                 translateTransform.X = 0;
             }
-            if (translateTransform.X + character1Control.ActualWidth > maxX)
+            if (translateTransform.X + playerControl.ActualWidth > maxX)
             {
-                translateTransform.X = maxX - character1Control.ActualWidth;
+                translateTransform.X = maxX - playerControl.ActualWidth;
             }
             if (translateTransform.Y < 0)
             {
                 translateTransform.Y = 0;
             }
-            if (translateTransform.Y + character1Control.ActualHeight > maxY)
+            if (translateTransform.Y + playerControl.ActualHeight > maxY)
             {
-                translateTransform.Y = maxY - character1Control.ActualHeight;
+                translateTransform.Y = maxY - playerControl.ActualHeight;
             }
 
             IsPlayerDead();
@@ -280,12 +303,12 @@ namespace Project.Assets.ControlClasses
         }
         private void RotateCharacterToMouse()
         {
-            var characterPosition = character1Control.TranslatePoint(new Point(character1Control.ActualWidth / 2.0, character1Control.ActualHeight / 2.0), GameScreen);
+            var characterPosition = playerControl.TranslatePoint(new Point(playerControl.ActualWidth / 2.0, playerControl.ActualHeight / 2.0), GameScreen);
             var direction = mousePosition - characterPosition;
             var angle = Math.Atan2(direction.Y, direction.X) * 180 / Math.PI;
 
-            rotateTransform.CenterX = character1Control.ActualWidth / 2.0;
-            rotateTransform.CenterY = character1Control.ActualHeight / 2.0;
+            rotateTransform.CenterX = playerControl.ActualWidth / 2.0;
+            rotateTransform.CenterY = playerControl.ActualHeight / 2.0;
 
             rotateTransform.Angle = angle;
         }
@@ -302,15 +325,15 @@ namespace Project.Assets.ControlClasses
         {
             if (jumpAvailable)
             {
-                SpeedY = (float)(character1.JumpLenght * movementDirection.Y);
-                SpeedX = (float)(character1.JumpLenght * movementDirection.X);
+                SpeedY = (float)(player.JumpLenght * movementDirection.Y);
+                SpeedX = (float)(player.JumpLenght * movementDirection.X);
                 jumpAvailable = false;
                 JumpTimer.Start();
             }
         }
         private void IsPlayerDead()
         {
-            if(character1.CurrentHealth <= 0)
+            if(player.CurrentHealth <= 0)
             {
                 isPlayerDead = true;
             }
@@ -320,9 +343,15 @@ namespace Project.Assets.ControlClasses
             if (IsPaused)
             {
                 StopGame();
+                GameScreen.Children.Add(pauseAndShopMenu);
+                pauseAndShopMenu.Focus();
             }
             else
             {
+                Speed = (float)player.Speed;
+                AttackTimer.Interval = TimeSpan.FromSeconds(1 / player.AttackSpeed);
+                GameScreen.Children.Remove(pauseAndShopMenu);
+                GameScreen.Focus();
                 ResumeGame();
             }
         }

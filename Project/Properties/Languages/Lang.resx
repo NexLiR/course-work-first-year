@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AttackSpeed" xml:space="preserve">
+    <value>Attack speed: </value>
+  </data>
   <data name="Character1Name" xml:space="preserve">
     <value>Character 1</value>
   </data>
@@ -131,6 +134,9 @@
   </data>
   <data name="ContinueGame" xml:space="preserve">
     <value>Continue game</value>
+  </data>
+  <data name="Damage" xml:space="preserve">
+    <value>Damage: </value>
   </data>
   <data name="Difficulty0" xml:space="preserve">
     <value>Easy</value>
@@ -156,6 +162,9 @@
   <data name="GoldCount" xml:space="preserve">
     <value>Gold: </value>
   </data>
+  <data name="MaxHealth" xml:space="preserve">
+    <value>Max health: </value>
+  </data>
   <data name="Music" xml:space="preserve">
     <value>Music</value>
   </data>
@@ -168,11 +177,23 @@
   <data name="No" xml:space="preserve">
     <value>No</value>
   </data>
+  <data name="PauseMenu" xml:space="preserve">
+    <value>Pause menu</value>
+  </data>
+  <data name="Records" xml:space="preserve">
+    <value>Records</value>
+  </data>
+  <data name="ResumeGame" xml:space="preserve">
+    <value>Resume game</value>
+  </data>
   <data name="ReturnToMainMenu" xml:space="preserve">
     <value>Return to main menu</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>User</value>
+  </data>
+  <data name="SaveAndExit" xml:space="preserve">
+    <value>Save and exit</value>
   </data>
   <data name="SaveSettings" xml:space="preserve">
     <value>Save</value>
@@ -186,8 +207,14 @@
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
   </data>
+  <data name="ShopMenu" xml:space="preserve">
+    <value>Character upgrade shop</value>
+  </data>
   <data name="Sound" xml:space="preserve">
     <value>Sound</value>
+  </data>
+  <data name="Speed" xml:space="preserve">
+    <value>Movement speed: </value>
   </data>
   <data name="StartGame" xml:space="preserve">
     <value>Start game</value>
@@ -197,6 +224,9 @@
   </data>
   <data name="UkrainianLang" xml:space="preserve">
     <value>Ukrainian</value>
+  </data>
+  <data name="UpgradeCost" xml:space="preserve">
+    <value>Upgrade cost: </value>
   </data>
   <data name="WantToChangeLang1" xml:space="preserve">
     <value>To change settings restart the game.</value>

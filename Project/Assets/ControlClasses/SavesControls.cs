@@ -11,22 +11,10 @@ namespace Project.Assets.ControlClasses
 {
     public class SavesControls
     {
-        public string saveFileName { get; set; }
-        public string saveData { get; set; }
 
         public SavesControls()
         {
-            this.saveData = "";
-            this.saveFileName = "save";
-        }
-        public SavesControls(string saveFileName)
-        {
-            this.saveFileName = saveFileName;
-        }
-        public SavesControls(string saveFileName, string saveData)
-        {
-            this.saveFileName = saveFileName;
-            this.saveData = saveData;
+
         }
 
         public void CreateSave(string saveFileName)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Project.Assets.ControlClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -14,8 +15,8 @@ namespace Project.Assets.DataClasses
 {
     public class Player : Entity
     {
+        protected SoundControls sound = new SoundControls();
         public int Gold { set; get; }
-        public List<Item> Items { set; get; }
         public float JumpLenght { set; get; }
         public double MaxHealth { set; get; }
 
@@ -25,13 +26,11 @@ namespace Project.Assets.DataClasses
             : base()
         {
             Gold = 0;
-            Items = new List<Item>();
         }
-        public Player(int id, string name, double health, double speed, double damage, double attackSpeed, Vector vector, int gold, List<Item> items, float jumpLenght, double maxHealth)
+        public Player(int id, string name, double health, double speed, double damage, double attackSpeed, Vector vector, int gold, float jumpLenght, double maxHealth)
             : base(id, name, health, speed, damage, attackSpeed, vector)
         {
             Gold = gold;
-            Items = items;
             JumpLenght = jumpLenght;
             MaxHealth = maxHealth;
         } 
@@ -39,13 +38,13 @@ namespace Project.Assets.DataClasses
             : base(player)
         {
             Gold = player.Gold;
-            Items = new List<Item>(player.Items);
             JumpLenght = player.JumpLenght;
             MaxHealth = player.MaxHealth;
         }
 
         public void TakeDamage(double damage)
         {
+            sound.PlaySound("player-hurts");
             CurrentHealth -= damage;
         }
     }

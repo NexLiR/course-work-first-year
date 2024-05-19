@@ -15,9 +15,6 @@ using System.Windows.Shapes;
 
 namespace Project.Assets.UserControls
 {
-    /// <summary>
-    /// Interaction logic for BulletControl.xaml
-    /// </summary>
     public partial class BulletControl : UserControl
     {
         public BulletControl()

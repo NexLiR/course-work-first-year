@@ -12,8 +12,8 @@
             <StackPanel Width="800" Height="500" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <TextBlock Text="{x:Static languages:Lang.GameOver}" FontSize="48" FontWeight="Bold" HorizontalAlignment="Center"/>
                 <TextBlock x:Name="NewRecord" Text="{x:Static languages:Lang.NewRecord}" FontSize="56" FontWeight="Bold" HorizontalAlignment="Center"/>
-                <TextBlock FontSize="36" HorizontalAlignment="Center" Text="{x:Static languages:Lang.GameTime}" Margin="0 10 0 10"><Run x:Name="gameEndTime"></Run></TextBlock>
-                <TextBlock FontSize="36" HorizontalAlignment="Center" Text="{x:Static languages:Lang.Score}"><Run x:Name="gameEndScore"></Run></TextBlock>
+                <TextBlock x:Name="Time" FontSize="36" HorizontalAlignment="Center" Text="{x:Static languages:Lang.GameTime}" Margin="0 10 0 10"><Run x:Name="gameEndTime"></Run></TextBlock>
+                <TextBlock x:Name="Score" FontSize="36" HorizontalAlignment="Center" Text="{x:Static languages:Lang.Score}"><Run x:Name="gameEndScore"></Run></TextBlock>
                 <Button Click="ToMainManu_Click" Content="{x:Static languages:Lang.ReturnToMainMenu}" FontSize="38" Padding="10, 20" Background="Black" Foreground="White" Width="450" Margin="0 120 0 0"></Button>
             </StackPanel>
         </Border>

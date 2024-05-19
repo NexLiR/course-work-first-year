@@ -61,6 +61,15 @@ namespace Project.Properties.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Attack speed: .
+        /// </summary>
+        public static string AttackSpeed {
+            get {
+                return ResourceManager.GetString("AttackSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Character 1.
         /// </summary>
         public static string Character1Name {
@@ -102,6 +111,15 @@ namespace Project.Properties.Languages {
         public static string ContinueGame {
             get {
                 return ResourceManager.GetString("ContinueGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Damage: .
+        /// </summary>
+        public static string Damage {
+            get {
+                return ResourceManager.GetString("Damage", resourceCulture);
             }
         }
         
@@ -178,6 +196,15 @@ namespace Project.Properties.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Max health: .
+        /// </summary>
+        public static string MaxHealth {
+            get {
+                return ResourceManager.GetString("MaxHealth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Music.
         /// </summary>
         public static string Music {
@@ -214,6 +241,33 @@ namespace Project.Properties.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pause menu.
+        /// </summary>
+        public static string PauseMenu {
+            get {
+                return ResourceManager.GetString("PauseMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Records.
+        /// </summary>
+        public static string Records {
+            get {
+                return ResourceManager.GetString("Records", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resume game.
+        /// </summary>
+        public static string ResumeGame {
+            get {
+                return ResourceManager.GetString("ResumeGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Return to main menu.
         /// </summary>
         public static string ReturnToMainMenu {
@@ -228,6 +282,15 @@ namespace Project.Properties.Languages {
         public static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save and exit.
+        /// </summary>
+        public static string SaveAndExit {
+            get {
+                return ResourceManager.GetString("SaveAndExit", resourceCulture);
             }
         }
         
@@ -268,11 +331,29 @@ namespace Project.Properties.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Character upgrade shop.
+        /// </summary>
+        public static string ShopMenu {
+            get {
+                return ResourceManager.GetString("ShopMenu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sound.
         /// </summary>
         public static string Sound {
             get {
                 return ResourceManager.GetString("Sound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Movement speed: .
+        /// </summary>
+        public static string Speed {
+            get {
+                return ResourceManager.GetString("Speed", resourceCulture);
             }
         }
         
@@ -300,6 +381,15 @@ namespace Project.Properties.Languages {
         public static string UkrainianLang {
             get {
                 return ResourceManager.GetString("UkrainianLang", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upgrade cost: .
+        /// </summary>
+        public static string UpgradeCost {
+            get {
+                return ResourceManager.GetString("UpgradeCost", resourceCulture);
             }
         }
         

@@ -38,7 +38,7 @@ namespace Project
 
         private void InitializeGame()
         {
-            gameSpace = new Space(1, 1920, 1064, false, false, new List<Enemy>());
+            gameSpace = new Space(1, 1920, 1064);
             DataContext = gameSpace;
             UIUpdateTimer.Interval = TimeSpan.FromMilliseconds(6);
             UIUpdateTimer.Tick += UIUpdateTimer_Tick;
@@ -46,7 +46,7 @@ namespace Project
         }
 
         // Control classes
-        public static Player charapter1 = new Player(1, "Character1", 100.0, 1.0, 5.0, 0.5, new Vector(960, 532), 0, new List<Item>(), 40.0f, 100.0);
+        public static Player player = new Player(1, "Character1", 100.0, 1.0, 5.0, 1.5, new Vector(960, 532), 0, 40.0f, 100.0);
         Space gameSpace = new Space();
         SavesControls save = new SavesControls();
         SoundControls music = new SoundControls();
@@ -237,20 +237,19 @@ namespace Project
             sound.PlaySound("button-click");
             if (currentCharacter != -1 && currentDifficultyMultiplayer != -1)
             {
-                GameSaves.Visibility = Visibility.Hidden;
                 CharactersSelectMenu.Visibility = Visibility.Hidden;
                 Menu.Visibility = Visibility.Hidden;
                 GameScreen.Visibility = Visibility.Visible;
                 InGameUI.Visibility = Visibility.Visible;
                 GameScreen.Focus();
-                charapter1 = new Player(1, "Character1", 100.0, 1.0, 5.0, 0.5, new Vector(960, 532), 0, new List<Item>(), 40.0f, 100.0);
-                charapter1.CurrentHealth = charapter1.CurrentHealth * currentDifficultyMultiplayer;
-                charapter1.MaxHealth = charapter1.MaxHealth * currentDifficultyMultiplayer;
-                charapter1.AttackSpeed = charapter1.AttackSpeed / currentDifficultyMultiplayer;
+                player = new Player(1, "Character1", 100.0, 1.0, 5.0, 1.2, new Vector(960, 532), 999999, 40.0f, 100.0);
+                gameSpace = new Space(1, 1920, 1064);
+                player.CurrentHealth = player.CurrentHealth * currentDifficultyMultiplayer;
+                player.MaxHealth = player.MaxHealth * currentDifficultyMultiplayer;
                 isPaused = false;
                 StartTimer();
 
-                gameControls = new GameControls(GameScreen, charapter1);
+                gameControls = new GameControls(GameScreen, player);
                 enemyControls = new EnemyControls(currentDifficultyMultiplayer, GameScreen);
                 gameControls.StartGame();
                 enemyControls.StartEnemySpawning();
@@ -372,11 +371,11 @@ namespace Project
         private void UIUpdateTimer_Tick(object sender, EventArgs e)
         {
             music.SetMusicVolume();
-            PlayerCurrentHelth.Text = charapter1.CurrentHealth.ToString();
-            PlayerMaxHealth.Text = charapter1.MaxHealth.ToString();
-            pbPlayerHealth.Value = charapter1.CurrentHealth;
-            pbPlayerHealth.Maximum = charapter1.MaxHealth;
-            GoldCount.Text = charapter1.Gold.ToString();
+            PlayerCurrentHelth.Text = player.CurrentHealth.ToString();
+            PlayerMaxHealth.Text = player.MaxHealth.ToString();
+            pbPlayerHealth.Value = player.CurrentHealth;
+            pbPlayerHealth.Maximum = player.MaxHealth;
+            GoldCount.Text = player.Gold.ToString();
             ScoreCount.Text = currentScore.ToString();
             if (isGameEnded)
             {
@@ -417,13 +416,13 @@ namespace Project
         public void RestartGame()
         {
             isGameEnded = false;
+            isPaused = false;
             timerThread.Abort();
             currentTime = 0;
             currentScore = 0;
             currentSave = null;
             GameScreen.Visibility = Visibility.Hidden;
             InGameUI.Visibility = Visibility.Hidden;
-            CharactersSelectMenu.Visibility = Visibility.Hidden;
             MainMenu.Visibility = Visibility.Visible;
             Menu.Visibility = Visibility.Visible;
             GameScreen.Children.Clear();

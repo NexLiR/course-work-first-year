@@ -20,6 +20,7 @@ namespace Project.Assets.UserControls
     public partial class GameEndControl : UserControl
     {
         private SavesControls save = new SavesControls();
+        private SoundControls sound = new SoundControls();
         private string GameEndTimeString { get; set; }
         public int GameEndScore { get; set; }
         public int GameEndTime { get; set; }
@@ -41,7 +42,6 @@ namespace Project.Assets.UserControls
             int seconds = time % 60;
             return $"{minutes:D2}:{seconds:D2}";
         }
-
         public void Update()
         {
             GameEndTimeString = FormatTime(GameEndTime);
@@ -58,7 +58,6 @@ namespace Project.Assets.UserControls
                 NewRecord.Visibility = Visibility.Hidden;
             }
         }
-
         private void GetSaveData(string currentSave)
         {
             string saveData = save.ReadSaveData(currentSave);
@@ -92,20 +91,23 @@ namespace Project.Assets.UserControls
         {
             if (GameEndScore > SaveMaxScore)
             {
+                Score.Foreground = Brushes.Red;
                 SaveMaxScore = GameEndScore;
             }
             if (GameEndTime > SaveMaxTime)
             {
+                Time.Foreground = Brushes.Red;
                 SaveMaxTime = GameEndTime;
             }
 
             string newSaveData = $"maxScore: {SaveMaxScore}; maxTime: {SaveMaxTime};";
             save.WriteSaveData(currentSave, newSaveData);
         }
-
         private void ToMainManu_Click(object sender, RoutedEventArgs e)
         {
+            sound.PlaySound("button-click");
             MainWindow.isGameEnded = true;
         }
     }
 }
+ 

@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="Project.Assets.UserControls.PauseAndShopMenuControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Project.Assets.UserControls"
+             xmlns:languages="clr-namespace:Project.Properties.Languages"
+             mc:Ignorable="d" 
+             d:DesignHeight="1064" d:DesignWidth="1920">
+    <Canvas Width="1920" Height="1064">
+        <StackPanel Height="1064" Width="500" Background="AliceBlue"></StackPanel>
+        <StackPanel Orientation="Vertical" Canvas.Left="0" Canvas.Top="368" Height="Auto" Width="500" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <TextBlock Text="{x:Static languages:Lang.PauseMenu}" FontSize="60" HorizontalAlignment="Center"/>
+            <Button Content="{x:Static languages:Lang.ResumeGame}" Width="300" Click="ResumeButton_Click" FontSize="28" Padding="10, 20" Background="Black" Foreground="White" Margin="0 50 0 40"/>
+            <Button Content="{x:Static languages:Lang.SaveAndExit}" Width="300" Click="ExitButton_Click" FontSize="28" Padding="10, 20" Background="Black" Foreground="White"/>
+        </StackPanel>
+        <StackPanel Height="1064" Width="1000" Background="AliceBlue" Canvas.Left="920" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <StackPanel Orientation="Vertical" Height="Auto" Width="1000" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="920" Canvas.Top="370">
+            <TextBlock Text="{x:Static languages:Lang.ShopMenu}" FontSize="40" HorizontalAlignment="Center" Margin="0 0 0 50"/>
+            <StackPanel Width="750" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <TextBlock Text="{x:Static languages:Lang.MaxHealth}" FontSize="26"><Run x:Name="MaxHealth"/></TextBlock>
+                <Button Margin="35 0 25 0" Width="32" Height="32" Click="UpgradeMaxHP_Click">
+                    <Image Source="\Project;component\Assets\Textures\upgrade.png" Stretch="Fill"></Image>
+                </Button>
+                <TextBlock Text="{x:Static languages:Lang.UpgradeCost}" FontSize="22"><Run x:Name="MaxHealthCost"/></TextBlock>
+            </StackPanel>
+            <StackPanel Width="750" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top"  Margin="0 20 0 20">
+                <TextBlock  Text="{x:Static languages:Lang.Damage}" FontSize="26"><Run x:Name="Damage"/></TextBlock>
+                <Button Margin="35 0 25 0" Width="32" Height="32" Click="UpgradeDamage_Click">
+                    <Image Source="\Project;component\Assets\Textures\upgrade.png" Stretch="Fill"></Image>
+                </Button>
+                <TextBlock Text="{x:Static languages:Lang.UpgradeCost}" FontSize="22"><Run x:Name="DamageCost"/></TextBlock>
+            </StackPanel>
+            <StackPanel Width="750" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <TextBlock Text="{x:Static languages:Lang.Speed}" FontSize="26"><Run x:Name="Speed"/></TextBlock>
+                <Button Margin="35 0 25 0" Width="32" Height="32" Click="UpgradeSpeed_Click">
+                    <Image Source="\Project;component\Assets\Textures\upgrade.png" Stretch="Fill"></Image>
+                </Button>
+                <TextBlock Text="{x:Static languages:Lang.UpgradeCost}" FontSize="22"><Run x:Name="SpeedCost"/></TextBlock>
+            </StackPanel>
+            <StackPanel Width="750" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top"  Margin="0 20 0 20">
+                <TextBlock Text="{x:Static languages:Lang.AttackSpeed}" FontSize="26"><Run x:Name="AttackSpeed"/></TextBlock>
+                <Button Margin="35 0 25 0" Width="32" Height="32" Click="UpgradeAttackSpeed_Click">
+                    <Image Source="\Project;component\Assets\Textures\upgrade.png" Stretch="Fill"></Image>
+                </Button>
+                <TextBlock Text="{x:Static languages:Lang.UpgradeCost}" FontSize="22"><Run x:Name="AttackSpeedCost"/></TextBlock>
+            </StackPanel>
+        </StackPanel>
+        <TextBlock x:Name="Gold" FontSize="32" Text="{x:Static languages:Lang.GoldCount}" HorizontalAlignment="Left" Canvas.Top="376" VerticalAlignment="Center" Canvas.Left="939"><Run x:Name="GoldCount"/></TextBlock>
+    </Canvas>
+</UserControl>
