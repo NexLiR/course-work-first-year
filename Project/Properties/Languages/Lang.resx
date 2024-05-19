@@ -147,6 +147,12 @@
   <data name="Exit" xml:space="preserve">
     <value>Exit</value>
   </data>
+  <data name="GameOver" xml:space="preserve">
+    <value>Game over!</value>
+  </data>
+  <data name="GameTime" xml:space="preserve">
+    <value>Play time: </value>
+  </data>
   <data name="GoldCount" xml:space="preserve">
     <value>Gold: </value>
   </data>
@@ -155,6 +161,9 @@
   </data>
   <data name="NewGame" xml:space="preserve">
     <value>New game</value>
+  </data>
+  <data name="NewRecord" xml:space="preserve">
+    <value>New record!</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>No</value>
@@ -182,6 +191,9 @@
   </data>
   <data name="StartGame" xml:space="preserve">
     <value>Start game</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Time: </value>
   </data>
   <data name="UkrainianLang" xml:space="preserve">
     <value>Ukrainian</value>

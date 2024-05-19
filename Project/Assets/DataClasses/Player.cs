@@ -47,10 +47,6 @@ namespace Project.Assets.DataClasses
         public void TakeDamage(double damage)
         {
             CurrentHealth -= damage;
-            if (CurrentHealth <= 0)
-            {
-                // Handle player death
-            }
         }
     }
 }

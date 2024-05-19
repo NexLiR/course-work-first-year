@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="Project.Assets.UserControls.GameEndControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Project.Assets.UserControls"
+             xmlns:languages="clr-namespace:Project.Properties.Languages"
+             mc:Ignorable="d" 
+             d:DesignHeight="1064" d:DesignWidth="1920">
+    <Canvas Width="1920" Height="1064" Background="Transparent">
+        <Border Width="800" Height="500" Canvas.Left="560" Canvas.Top="282" Background="White" CornerRadius="32">
+            <StackPanel Width="800" Height="500" Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock Text="{x:Static languages:Lang.GameOver}" FontSize="48" FontWeight="Bold" HorizontalAlignment="Center"/>
+                <TextBlock x:Name="NewRecord" Text="{x:Static languages:Lang.NewRecord}" FontSize="56" FontWeight="Bold" HorizontalAlignment="Center"/>
+                <TextBlock FontSize="36" HorizontalAlignment="Center" Text="{x:Static languages:Lang.GameTime}" Margin="0 10 0 10"><Run x:Name="gameEndTime"></Run></TextBlock>
+                <TextBlock FontSize="36" HorizontalAlignment="Center" Text="{x:Static languages:Lang.Score}"><Run x:Name="gameEndScore"></Run></TextBlock>
+                <Button Click="ToMainManu_Click" Content="{x:Static languages:Lang.ReturnToMainMenu}" FontSize="38" Padding="10, 20" Background="Black" Foreground="White" Width="450" Margin="0 120 0 0"></Button>
+            </StackPanel>
+        </Border>
+    </Canvas>
+</UserControl>

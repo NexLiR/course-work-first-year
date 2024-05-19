@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using System.Windows.Media.Media3D;
 using System.Windows.Threading;
 
@@ -17,6 +18,8 @@ namespace Project.Assets.ControlClasses
 {
     public class GameControls
     {
+        private bool IsPaused = false;
+        private bool isPlayerDead = false;
         public Canvas GameScreen { get; set; }
         private DispatcherTimer GameTimer = new DispatcherTimer();
         private bool UpKeyPressed, DownKeyPressed, LeftKeyPressed, RightKeyPressed, LeftMouseButtonPressed;
@@ -36,6 +39,10 @@ namespace Project.Assets.ControlClasses
 
         private DispatcherTimer AttackTimer = new DispatcherTimer();
         private Vector facingDirection;
+
+        private DispatcherTimer RegenerationTimer = new DispatcherTimer();
+
+        private GameEndControl endGameScreen = new GameEndControl();
 
         public GameControls(Canvas gameScreen, Player player)
         {
@@ -75,9 +82,15 @@ namespace Project.Assets.ControlClasses
 
             JumpTimer.Interval = TimeSpan.FromSeconds(3);
             JumpTimer.Tick += JumpTimer_Tick;
+            JumpTimer.Start();
 
             AttackTimer.Interval = TimeSpan.FromSeconds(character1.AttackSpeed);
             AttackTimer.Tick += AttackTimer_Tick;
+            AttackTimer.Start();
+
+            RegenerationTimer.Interval = TimeSpan.FromSeconds(1);
+            RegenerationTimer.Tick += RegenerationTimer_Tick;
+            RegenerationTimer.Start();
         }
 
         private void MouseDown(object sender, MouseButtonEventArgs e)
@@ -119,6 +132,11 @@ namespace Project.Assets.ControlClasses
                 movementDirection.Normalize();
                 Jump();
             }
+            if (e.Key == Key.Escape)
+            {
+                IsPaused = !IsPaused;
+                HandlePauseState();
+            }
         }
         private void KeyboardUp(object sender, KeyEventArgs e)
         {
@@ -140,6 +158,14 @@ namespace Project.Assets.ControlClasses
             }
         }
 
+        private void RegenerationTimer_Tick(object sender, EventArgs e)
+        {
+            character1.CurrentHealth += MainWindow.currentDifficultyMultiplayer * 0.5;
+            if (character1.CurrentHealth > character1.MaxHealth)
+            {
+                character1.CurrentHealth = character1.MaxHealth;
+            }
+        }
         private void AttackTimer_Tick(object sender, EventArgs e)
         {
             AttackTimer.Stop();
@@ -229,6 +255,17 @@ namespace Project.Assets.ControlClasses
                 translateTransform.Y = maxY - character1Control.ActualHeight;
             }
 
+            IsPlayerDead();
+            if (isPlayerDead)
+            {
+                StopGame();
+                isPlayerDead = false; 
+                endGameScreen.GameEndScore = MainWindow.currentScore;
+                endGameScreen.GameEndTime = MainWindow.currentTime;
+                GameScreen.Children.Add(endGameScreen);
+                endGameScreen.Focus();
+                endGameScreen.Update();
+            }
 
             SpeedX = SpeedX * Friction;
             SpeedY = SpeedY * Friction;
@@ -270,6 +307,44 @@ namespace Project.Assets.ControlClasses
                 jumpAvailable = false;
                 JumpTimer.Start();
             }
+        }
+        private void IsPlayerDead()
+        {
+            if(character1.CurrentHealth <= 0)
+            {
+                isPlayerDead = true;
+            }
+        }
+        private void HandlePauseState()
+        {
+            if (IsPaused)
+            {
+                StopGame();
+            }
+            else
+            {
+                ResumeGame();
+            }
+        }
+        private void StopGame()
+        {
+            GameTimer.Stop();
+            JumpTimer.Stop();
+            AttackTimer.Stop();
+            attackAvalible = false;
+            RegenerationTimer.Stop();
+            MainWindow.enemyControls.StopUpdate();
+            MainWindow.isPaused = true;
+        }
+        private void ResumeGame()
+        {
+            GameTimer.Start();
+            JumpTimer.Start();
+            AttackTimer.Start();
+            attackAvalible = true;
+            RegenerationTimer.Start();
+            MainWindow.enemyControls.ResumeUpdate();
+            MainWindow.isPaused = false;
         }
     }
 }

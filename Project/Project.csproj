@@ -99,6 +99,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Assets\UserControls\GameEndControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Assets\UserControls\RangedEnemyControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -132,6 +136,9 @@
     </Compile>
     <Compile Include="Assets\UserControls\Character1Control.xaml.cs">
       <DependentUpon>Character1Control.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\UserControls\GameEndControl.xaml.cs">
+      <DependentUpon>GameEndControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Assets\UserControls\RangedEnemyControl.xaml.cs">
       <DependentUpon>RangedEnemyControl.xaml</DependentUpon>

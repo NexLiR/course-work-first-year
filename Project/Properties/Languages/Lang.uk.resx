@@ -147,6 +147,12 @@
   <data name="Exit" xml:space="preserve">
     <value>Вихід</value>
   </data>
+  <data name="GameOver" xml:space="preserve">
+    <value>Гру завершено</value>
+  </data>
+  <data name="GameTime" xml:space="preserve">
+    <value>Час гри: </value>
+  </data>
   <data name="GoldCount" xml:space="preserve">
     <value>Золото: </value>
   </data>
@@ -155,6 +161,9 @@
   </data>
   <data name="NewGame" xml:space="preserve">
     <value>Нова гра</value>
+  </data>
+  <data name="NewRecord" xml:space="preserve">
+    <value>Новий рекорд!</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>Ні</value>
@@ -182,6 +191,9 @@
   </data>
   <data name="StartGame" xml:space="preserve">
     <value>Почати гру</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Час: </value>
   </data>
   <data name="UkrainianLang" xml:space="preserve">
     <value>Українська</value>

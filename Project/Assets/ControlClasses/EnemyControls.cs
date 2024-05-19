@@ -54,6 +54,17 @@ namespace Project.Assets.ControlClasses
             SpawnEnemies(currentDifficultyMultiplier);
         }
 
+        public void StopUpdate()
+        {
+            SpawnTimer.Stop();
+            UpdateTimer.Stop();
+        }
+        public void ResumeUpdate()
+        {
+            SpawnTimer.Start();
+            UpdateTimer.Start();
+        }
+
         private void SpawnEnemies(double difficultyMultiplier)
         {
             double requiredEnemies = maxEnemies / currentDifficultyMultiplier;
@@ -77,6 +88,13 @@ namespace Project.Assets.ControlClasses
         }
         private void EnemyDeath(Enemy enemy)
         {
+            if (enemy is RangedEnemy rangedEnemy)
+            {
+                foreach (var bullet in rangedEnemy.Bullets)
+                {
+                    GameScreen.Children.Remove(bullet.UserControl);
+                }
+            }
             enemies.Remove(enemy);
             GameScreen.Children.Remove(enemy.UserControl);
             MainWindow.currentScore += enemy.ScoreValue;
@@ -110,7 +128,7 @@ namespace Project.Assets.ControlClasses
         private RangedEnemy CreateRangedEnemy()
         {
             Vector spawnPoint = GetRandomSpawnPoint();
-            return new RangedEnemy(2, "Ranged Enemy", 10 / currentDifficultyMultiplier, 1 / currentDifficultyMultiplier, 3 / currentDifficultyMultiplier, 0.5 / currentDifficultyMultiplier, spawnPoint, (int)(30.0 / currentDifficultyMultiplier), 20, new RangedEnemyControl(10 / currentDifficultyMultiplier));
+            return new RangedEnemy(2, "Ranged Enemy", 10 / currentDifficultyMultiplier, 1 / currentDifficultyMultiplier, 3 / currentDifficultyMultiplier, 1.5 * currentDifficultyMultiplier, spawnPoint, (int)(30.0 / currentDifficultyMultiplier), 20, new RangedEnemyControl(10 / currentDifficultyMultiplier));
         }
 
         private void SpawnTimer_Tick(object sender, EventArgs e)

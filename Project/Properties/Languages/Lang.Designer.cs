@@ -151,6 +151,24 @@ namespace Project.Properties.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Game over!.
+        /// </summary>
+        public static string GameOver {
+            get {
+                return ResourceManager.GetString("GameOver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Play time: .
+        /// </summary>
+        public static string GameTime {
+            get {
+                return ResourceManager.GetString("GameTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Gold: .
         /// </summary>
         public static string GoldCount {
@@ -174,6 +192,15 @@ namespace Project.Properties.Languages {
         public static string NewGame {
             get {
                 return ResourceManager.GetString("NewGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New record!.
+        /// </summary>
+        public static string NewRecord {
+            get {
+                return ResourceManager.GetString("NewRecord", resourceCulture);
             }
         }
         
@@ -255,6 +282,15 @@ namespace Project.Properties.Languages {
         public static string StartGame {
             get {
                 return ResourceManager.GetString("StartGame", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time: .
+        /// </summary>
+        public static string Time {
+            get {
+                return ResourceManager.GetString("Time", resourceCulture);
             }
         }
         

@@ -46,7 +46,7 @@ namespace Project
         }
 
         // Control classes
-        public static Player charapter1 = new Player(1, "Character1", 100.0, 1.0, 5.0, 0.5, new Vector(960, 532),0, new List<Item>(), 40.0f, 100.0);
+        public static Player charapter1 = new Player(1, "Character1", 100.0, 1.0, 5.0, 0.5, new Vector(960, 532), 0, new List<Item>(), 40.0f, 100.0);
         Space gameSpace = new Space();
         SavesControls save = new SavesControls();
         SoundControls music = new SoundControls();
@@ -54,12 +54,15 @@ namespace Project
         ImageBrush backgroundImage = new ImageBrush();
         private DispatcherTimer UIUpdateTimer = new DispatcherTimer();
         public static GameControls gameControls;
+        public static EnemyControls enemyControls;
         //Data Storage
         public static int currentScore = 0;
-        public int currentTime = 0;
+        public static int currentTime = 0;
         private Thread timerThread;
-        protected string currentSave;
-        public double currentDifficultyMultiplayer = -1;
+        public static bool isPaused = false;
+        public static bool isGameEnded = false;
+        public static string currentSave { get; set;}
+        public static double currentDifficultyMultiplayer = -1;
         protected int currentCharacter = -1;
 
         #region ButtonFunctions
@@ -130,13 +133,14 @@ namespace Project
             sound.PlaySound("button-click");
             if (save.CheckSaveExistence("save1.txt") == true)
             {
+                currentSave = "save1.txt";
                 GameSaves.Visibility = Visibility.Hidden;
                 save.ReadSaveData("save1.txt");
                 CharactersSelectMenu.Visibility = Visibility.Visible;
-                currentSave = "save1.txt";
             }
             else
             {
+                currentSave = "save1.txt";
                 save.CreateSave("save1.txt");
                 MessageBox.Show("New save created.");
                 GameSaves.Visibility = Visibility.Hidden;
@@ -163,13 +167,14 @@ namespace Project
             sound.PlaySound("button-click");
             if (save.CheckSaveExistence("save2.txt") == true)
             {
+                currentSave = "save2.txt";
                 GameSaves.Visibility = Visibility.Hidden;
                 save.ReadSaveData("save2.txt");
                 CharactersSelectMenu.Visibility = Visibility.Visible;
-                currentSave = "save2.txt";
             }
             else
             {
+                currentSave = "save2.txt";
                 save.CreateSave("save2.txt");
                 MessageBox.Show("New save created.");
                 GameSaves.Visibility = Visibility.Hidden;
@@ -196,13 +201,14 @@ namespace Project
             sound.PlaySound("button-click");
             if (save.CheckSaveExistence("save3.txt") == true)
             {
+                currentSave = "save3.txt";
                 GameSaves.Visibility = Visibility.Hidden;
                 save.ReadSaveData("save3.txt");
                 CharactersSelectMenu.Visibility = Visibility.Visible;
-                currentSave = "save3.txt";
             }
             else
             {
+                currentSave = "save3.txt";
                 save.CreateSave("save3.txt");
                 MessageBox.Show("New save created.");
                 GameSaves.Visibility = Visibility.Hidden;
@@ -235,15 +241,17 @@ namespace Project
                 CharactersSelectMenu.Visibility = Visibility.Hidden;
                 Menu.Visibility = Visibility.Hidden;
                 GameScreen.Visibility = Visibility.Visible;
+                InGameUI.Visibility = Visibility.Visible;
                 GameScreen.Focus();
+                charapter1 = new Player(1, "Character1", 100.0, 1.0, 5.0, 0.5, new Vector(960, 532), 0, new List<Item>(), 40.0f, 100.0);
                 charapter1.CurrentHealth = charapter1.CurrentHealth * currentDifficultyMultiplayer;
                 charapter1.MaxHealth = charapter1.MaxHealth * currentDifficultyMultiplayer;
-                charapter1.Damage = charapter1.Damage * currentDifficultyMultiplayer;
                 charapter1.AttackSpeed = charapter1.AttackSpeed / currentDifficultyMultiplayer;
+                isPaused = false;
                 StartTimer();
 
                 gameControls = new GameControls(GameScreen, charapter1);
-                EnemyControls enemyControls = new EnemyControls(currentDifficultyMultiplayer, GameScreen);
+                enemyControls = new EnemyControls(currentDifficultyMultiplayer, GameScreen);
                 gameControls.StartGame();
                 enemyControls.StartEnemySpawning();
             }
@@ -268,7 +276,7 @@ namespace Project
             btnNormal.Foreground = Brushes.White;
             btnHard.Background = Brushes.Black;
             btnHard.Foreground = Brushes.White;
-            currentDifficultyMultiplayer = 2.5;
+            currentDifficultyMultiplayer = 2.0;
             BitmapImage bitmapImage = new BitmapImage(new Uri("pack://application:,,,/Assets/Textures/background-easy.png"));
             backgroundImage.ImageSource = bitmapImage;
             GameScreen.Background = backgroundImage;
@@ -313,15 +321,24 @@ namespace Project
         #endregion
 
         #region FuntionalMethods
-        private void UpdateMaxScore(TextBlock maxScoreTextBlock, string saveFileName, Run textBlockMaxScore)
+        private string FormatTime(string rawTime)
+        {
+            int timeInSeconds = int.Parse(rawTime);
+            int minutes = timeInSeconds / 60;
+            int seconds = timeInSeconds % 60;
+            return $"{minutes:D2}:{seconds:D2}";
+        }
+        private void UpdateMaxScoreAndTime(TextBlock maxScoreTextBlock, string saveFileName, Run textBlockMaxScore, TextBlock maxTimeTextBlock, Run textBlockMaxTime)
         {
             if (save.CheckSaveExistence(saveFileName) == false)
             {
                 maxScoreTextBlock.Visibility = Visibility.Hidden;
+                maxTimeTextBlock.Visibility = Visibility.Hidden;
             }
             else
             {
                 maxScoreTextBlock.Visibility = Visibility.Visible;
+                maxTimeTextBlock.Visibility = Visibility.Visible;
                 string saveData = save.ReadSaveData(saveFileName);
                 if (saveData != null)
                 {
@@ -336,7 +353,10 @@ namespace Project
                             if (key == "maxScore")
                             {
                                 textBlockMaxScore.Text = value;
-                                break;
+                            }
+                            else if (key == "maxTime")
+                            {
+                                textBlockMaxTime.Text = FormatTime(value);
                             }
                         }
                     }
@@ -345,9 +365,9 @@ namespace Project
         }
         private void UpdateAllMaxScores()
         {
-            UpdateMaxScore(maxScore1, "save1.txt", TextBlockMaxScore1);
-            UpdateMaxScore(maxScore2, "save2.txt", TextBlockMaxScore2);
-            UpdateMaxScore(maxScore3, "save3.txt", TextBlockMaxScore3);
+            UpdateMaxScoreAndTime(maxScore1, "save1.txt", TextBlockMaxScore1, maxTime1, TextBlockMaxTime1);
+            UpdateMaxScoreAndTime(maxScore2, "save2.txt", TextBlockMaxScore2, maxTime2, TextBlockMaxTime2);
+            UpdateMaxScoreAndTime(maxScore3, "save3.txt", TextBlockMaxScore3, maxTime3, TextBlockMaxTime3);
         }
         private void UIUpdateTimer_Tick(object sender, EventArgs e)
         {
@@ -358,6 +378,10 @@ namespace Project
             pbPlayerHealth.Maximum = charapter1.MaxHealth;
             GoldCount.Text = charapter1.Gold.ToString();
             ScoreCount.Text = currentScore.ToString();
+            if (isGameEnded)
+            {
+                RestartGame();
+            }
         }
         private void StartTimer()
         {
@@ -366,8 +390,11 @@ namespace Project
                 while (true)
                 {
                     Thread.Sleep(1000);
-                    currentTime++;
-                    UpdateTimerUI();
+                    if (!isPaused)
+                    {
+                        currentTime++;
+                        UpdateTimerUI();
+                    }
                 }
             });
             timerThread.Start();
@@ -386,6 +413,20 @@ namespace Project
         {
             base.OnClosed(e);
             timerThread.Abort();
+        }
+        public void RestartGame()
+        {
+            isGameEnded = false;
+            timerThread.Abort();
+            currentTime = 0;
+            currentScore = 0;
+            currentSave = null;
+            GameScreen.Visibility = Visibility.Hidden;
+            InGameUI.Visibility = Visibility.Hidden;
+            CharactersSelectMenu.Visibility = Visibility.Hidden;
+            MainMenu.Visibility = Visibility.Visible;
+            Menu.Visibility = Visibility.Visible;
+            GameScreen.Children.Clear();
         }
         #endregion
     }

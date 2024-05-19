@@ -77,7 +77,7 @@
                 </StackPanel>
 
                 <StackPanel x:Name="GameSaves" Visibility="Hidden" Canvas.Left="478" Canvas.Top="376" HorizontalAlignment="Center" VerticalAlignment="Top">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="350">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Height="390">
                         <StackPanel Orientation="Vertical">
                             <Button Width="64" Background="Transparent" Click="Delete_Save1_Click">
                                 <Image Source="Assets/Textures/redCrossIcon.png" Height="64"></Image>
@@ -85,8 +85,11 @@
                             <Button Background="Black" Foreground="White" Click="Load_Save1_Click" FontSize="26" Padding="10" Width="200" Height="200">
                                 <TextBlock><Run Text="{x:Static languages:Lang.Save}" /><Run Text=" "/><Run Text=" 1"/></TextBlock>
                             </Button>
-                            <TextBlock Name="maxScore1" FontSize="32" TextAlignment="Center" Margin="0 10">
-                                  <Run Text="{x:Static languages:Lang.Score}"/><Run Text=" "/><Run Name="TextBlockMaxScore1"/>
+                            <TextBlock Name="maxScore1" FontSize="28" TextAlignment="Center" Margin="0 10">
+                                  <Run Text="{x:Static languages:Lang.Score}"/><Run Name="TextBlockMaxScore1"/>
+                            </TextBlock>
+                            <TextBlock Name="maxTime1" FontSize="28" TextAlignment="Center" Margin="0 10">
+                                  <Run Text="{x:Static languages:Lang.Time}"/><Run Name="TextBlockMaxTime1"/>
                             </TextBlock>
                         </StackPanel>
                         <Rectangle Width="50" Fill="Transparent"/>
@@ -97,8 +100,11 @@
                             <Button Background="Black" Foreground="White" Click="Load_Save2_Click" FontSize="26" Padding="10" Width="200" Height="200">
                                 <TextBlock><Run Text="{x:Static languages:Lang.Save}" /><Run Text=" "/><Run Text=" 2"/></TextBlock>
                             </Button>
-                            <TextBlock Name="maxScore2" FontSize="32" TextAlignment="Center" Margin="0 10">
-                                  <Run Text="{x:Static languages:Lang.Score}"/><Run Text=" "/><Run Name="TextBlockMaxScore2"/>
+                            <TextBlock Name="maxScore2" FontSize="28" TextAlignment="Center" Margin="0 10">
+                                  <Run Text="{x:Static languages:Lang.Score}"/><Run Name="TextBlockMaxScore2"/>
+                            </TextBlock>
+                            <TextBlock Name="maxTime2" FontSize="28" TextAlignment="Center" Margin="0 10">
+                                  <Run Text="{x:Static languages:Lang.Time}"/><Run Name="TextBlockMaxTime2"/>
                             </TextBlock>
                         </StackPanel>
                         <Rectangle Width="50" Fill="Transparent"/>
@@ -109,12 +115,15 @@
                             <Button Background="Black" Foreground="White" Click="Load_Save3_Click" FontSize="26" Padding="10" Width="200" Height="200">
                                 <TextBlock><Run Text="{x:Static languages:Lang.Save}" /><Run Text=" "/><Run Text=" 3"/></TextBlock>
                             </Button>
-                            <TextBlock Name="maxScore3" FontSize="32" TextAlignment="Center" Margin="0 10">
-                                 <Run Text="{x:Static languages:Lang.Score}"/><Run Text=" "/><Run Name="TextBlockMaxScore3"/>
+                            <TextBlock Name="maxScore3" FontSize="28" TextAlignment="Center" Margin="0 10">
+                                 <Run Text="{x:Static languages:Lang.Score}"/><Run Name="TextBlockMaxScore3"/>
+                            </TextBlock>
+                            <TextBlock Name="maxTime3" FontSize="28" TextAlignment="Center" Margin="0 10">
+                                 <Run Text="{x:Static languages:Lang.Time}"/><Run Name="TextBlockMaxTime3"/>
                             </TextBlock>
                         </StackPanel>
                     </StackPanel>
-                    <TextBlock FontWeight="Bold" Width="963" FontSize="26" Height="115" TextWrapping="Wrap" TextAlignment="Center" Margin="0 32 0 0"><Run Text="{x:Static languages:Lang.ChooseSave}"/></TextBlock>
+                    <TextBlock FontWeight="Bold" Width="963" FontSize="26" Height="110" TextWrapping="Wrap" TextAlignment="Center" Margin="0 32 0 0"><Run Text="{x:Static languages:Lang.ChooseSave}"/></TextBlock>
                 </StackPanel>
 
                 <StackPanel x:Name="CharactersSelectMenu" Visibility="Hidden" Canvas.Left="734" Canvas.Top="341" HorizontalAlignment="Left" VerticalAlignment="Center" Width="456">
@@ -142,15 +151,16 @@
                 </StackPanel>
             </Canvas>
             <Canvas x:Name="GameScreen" Width="{Binding Width}" Height="{Binding Height}" Visibility="Hidden" Focusable="True">
-                <Canvas Name="InGameUI" Visibility="Visible" Height="75" Width="200" Canvas.Left="15" Canvas.Top="15" HorizontalAlignment="Center" VerticalAlignment="Top">
-                    <Canvas>
-                        <ProgressBar x:Name="pbPlayerHealth" Height="25" Width="200" VerticalAlignment="Center"></ProgressBar>
-                        <TextBlock x:Name="PlayerHealth" FontSize="20" HorizontalAlignment="Center" Canvas.Left="66" Canvas.Top="-2"><Run Name="PlayerCurrentHelth"/><Run Text="/"/><Run Name="PlayerMaxHealth"/></TextBlock>
-                    </Canvas>
-                    <TextBlock x:Name="Gold" FontSize="20" Text="{x:Static languages:Lang.GoldCount}" HorizontalAlignment="Center" Canvas.Top="23" VerticalAlignment="Top"><Run x:Name="GoldCount"/></TextBlock>
-                    <TextBlock x:Name="Score" FontSize="20" Text="{x:Static languages:Lang.Score}" HorizontalAlignment="Center" Canvas.Top="50" VerticalAlignment="Top"><Run Name="ScoreCount"/></TextBlock>
-                    <TextBlock x:Name="timerText" FontSize="44" Canvas.Left="1777" Canvas.Top="-3" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                
+            </Canvas>
+            <Canvas Name="InGameUI" Visibility="Hidden" Height="75" Width="200" Canvas.Left="15" Canvas.Top="15" HorizontalAlignment="Center" VerticalAlignment="Top">
+                <Canvas>
+                    <ProgressBar x:Name="pbPlayerHealth" Height="25" Width="200" VerticalAlignment="Center"></ProgressBar>
+                    <TextBlock x:Name="PlayerHealth" FontSize="20" HorizontalAlignment="Center" Canvas.Left="66" Canvas.Top="-2"><Run Name="PlayerCurrentHelth"/><Run Text="/"/><Run Name="PlayerMaxHealth"/></TextBlock>
                 </Canvas>
+                <TextBlock x:Name="Gold" FontSize="20" Text="{x:Static languages:Lang.GoldCount}" HorizontalAlignment="Center" Canvas.Top="23" VerticalAlignment="Top"><Run x:Name="GoldCount"/></TextBlock>
+                <TextBlock x:Name="Score" FontSize="20" Text="{x:Static languages:Lang.Score}" HorizontalAlignment="Center" Canvas.Top="50" VerticalAlignment="Top"><Run Name="ScoreCount"/></TextBlock>
+                <TextBlock x:Name="timerText" FontSize="44" Canvas.Left="1777" Canvas.Top="-3" HorizontalAlignment="Left" VerticalAlignment="Top"/>
             </Canvas>
         </Canvas>
     </Viewbox>

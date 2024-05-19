@@ -100,7 +100,7 @@ namespace Project.Assets.DataClasses
 
         private Bullet CreateProjectile(Point position, Vector direction)
         {
-            return new Bullet(position, direction, 10, 300, Damage, new BulletControl());
+            return new Bullet(position, direction, 7.5, 400, Damage, new BulletControl());
         }
 
         private bool CheckCollisionWithPlayer(Bullet bullet, Player player)
