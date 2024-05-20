@@ -193,7 +193,7 @@
     <value>Користувач</value>
   </data>
   <data name="SaveAndExit" xml:space="preserve">
-    <value>Зберегтися і вийти</value>
+    <value>Завершити гру</value>
   </data>
   <data name="SaveSettings" xml:space="preserve">
     <value>Зберегти</value>

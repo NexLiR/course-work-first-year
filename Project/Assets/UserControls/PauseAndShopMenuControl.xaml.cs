@@ -44,14 +44,15 @@ namespace Project.Assets.UserControls
         private void UITimer_Tick(object sender, EventArgs e)
         {
             GoldCount.Text = MainWindow.player.Gold.ToString();
-            MaxHealth.Text = MainWindow.player.MaxHealth.ToString();
-            Damage.Text = MainWindow.player.Damage.ToString();
-            Speed.Text = MainWindow.player.Speed.ToString();
-            AttackSpeed.Text = MainWindow.player.AttackSpeed.ToString();
-            MaxHealthCost.Text = (MainWindow.player.MaxHealth / 2.5 / MainWindow.currentDifficultyMultiplayer).ToString();
-            DamageCost.Text = (MainWindow.player.Damage * 7.5 / MainWindow.currentDifficultyMultiplayer).ToString();
-            SpeedCost.Text = (MainWindow.player.Speed * 25 / MainWindow.currentDifficultyMultiplayer).ToString();
-            AttackSpeedCost.Text = (MainWindow.player.AttackSpeed * 45 / MainWindow.currentDifficultyMultiplayer).ToString();
+            MaxHealth.Text = Math.Round(MainWindow.player.MaxHealth, 1).ToString("F1");
+            Damage.Text = Math.Round(MainWindow.player.Damage, 1).ToString("F1");
+            Speed.Text = Math.Round(MainWindow.player.Speed, 1).ToString("F1");
+            AttackSpeed.Text = Math.Round(MainWindow.player.AttackSpeed, 1).ToString("F1");
+            MaxHealthCost.Text = Math.Round(MainWindow.player.MaxHealth / 2.5 / MainWindow.currentDifficultyMultiplayer).ToString("F0");
+            DamageCost.Text = Math.Round(MainWindow.player.Damage * 7.5 / MainWindow.currentDifficultyMultiplayer).ToString("F0");
+            SpeedCost.Text = Math.Round(MainWindow.player.Speed * 25 / MainWindow.currentDifficultyMultiplayer).ToString("F0");
+            AttackSpeedCost.Text = Math.Round(MainWindow.player.AttackSpeed * 45 / MainWindow.currentDifficultyMultiplayer).ToString("F0");
+
         }
         private void UpgradeMaxHP_Click(object sender, RoutedEventArgs e)
         {

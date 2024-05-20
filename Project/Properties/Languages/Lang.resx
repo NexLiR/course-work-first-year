@@ -193,7 +193,7 @@
     <value>User</value>
   </data>
   <data name="SaveAndExit" xml:space="preserve">
-    <value>Save and exit</value>
+    <value>End game</value>
   </data>
   <data name="SaveSettings" xml:space="preserve">
     <value>Save</value>

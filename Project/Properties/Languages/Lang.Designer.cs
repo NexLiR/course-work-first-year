@@ -286,7 +286,7 @@ namespace Project.Properties.Languages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save and exit.
+        ///   Looks up a localized string similar to End game.
         /// </summary>
         public static string SaveAndExit {
             get {

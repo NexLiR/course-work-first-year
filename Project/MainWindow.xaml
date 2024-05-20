@@ -154,12 +154,12 @@
                 </StackPanel>
             </Canvas>
             <Canvas x:Name="GameScreen" Width="{Binding Width}" Height="{Binding Height}" Visibility="Hidden" Focusable="True">
-
+                
             </Canvas>
             <Canvas Name="InGameUI" Visibility="Hidden" Height="75" Width="200" Canvas.Left="15" Canvas.Top="15" HorizontalAlignment="Center" VerticalAlignment="Top">
                 <Canvas>
                     <ProgressBar x:Name="pbPlayerHealth" Height="25" Width="200" VerticalAlignment="Center"></ProgressBar>
-                    <TextBlock x:Name="PlayerHealth" FontSize="20" HorizontalAlignment="Center" Canvas.Left="66" Canvas.Top="-2"><Run Name="PlayerCurrentHelth"/><Run Text="/"/><Run Name="PlayerMaxHealth"/></TextBlock>
+                    <TextBlock x:Name="PlayerHealth" FontSize="20" HorizontalAlignment="Center" Canvas.Left="66" Canvas.Top="-2"><Run Name="PlayerCurrentHealth"/><Run Text="/"/><Run Name="PlayerMaxHealth"/></TextBlock>
                 </Canvas>
                 <TextBlock x:Name="Gold" FontSize="20" Text="{x:Static languages:Lang.GoldCount}" HorizontalAlignment="Center" Canvas.Top="23" VerticalAlignment="Top"><Run x:Name="GoldCount"/></TextBlock>
                 <TextBlock x:Name="Score" FontSize="20" Text="{x:Static languages:Lang.Score}" HorizontalAlignment="Center" Canvas.Top="50" VerticalAlignment="Top"><Run Name="ScoreCount"/></TextBlock>
