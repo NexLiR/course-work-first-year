@@ -10,7 +10,7 @@
         mc:Ignorable="d"
         MinHeight="576" MinWidth="1024" MaxHeight="2160" MaxWidth="3840"
         
-    Title="Void Hinters" Height="1080" Width="1920">
+    Title="Void Hunters" Height="1080" Width="1920">
 
     <Viewbox Visibility="Visible" Stretch="UniformToFill">
         <Canvas x:Name="Game" Width="1920" Height="1064" Visibility="Visible">
