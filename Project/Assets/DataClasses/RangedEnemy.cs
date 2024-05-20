@@ -66,7 +66,7 @@ namespace Project.Assets.DataClasses
 
                 var bullet = CreateProjectile(new Point(characterPosition.X, characterPosition.Y), direction);
 
-                MainWindow.gameControls.GameScreen.Children.Add(bullet.UserControl);
+                MainWindow.gameControls.GameScreen.GameSpace.Children.Add(bullet.UserControl);
                 bullet.UserControl.Visibility = Visibility.Visible;
                 Bullets.Add(bullet);
 
@@ -86,12 +86,12 @@ namespace Project.Assets.DataClasses
                 bullet.LifeTime -= 10;
                 if (bullet.LifeTime <= 0)
                 {
-                    MainWindow.gameControls.GameScreen.Children.Remove(bullet.UserControl);
+                    MainWindow.gameControls.GameScreen.GameSpace.Children.Remove(bullet.UserControl);
                     Bullets.Remove(bullet);
                 }
                 else if (CheckCollisionWithPlayer(bullet, player))
                 {
-                    MainWindow.gameControls.GameScreen.Children.Remove(bullet.UserControl);
+                    MainWindow.gameControls.GameScreen.GameSpace.Children.Remove(bullet.UserControl);
                     Bullets.Remove(bullet);
                     player.TakeDamage(Damage);
                 }
@@ -105,7 +105,7 @@ namespace Project.Assets.DataClasses
 
         private bool CheckCollisionWithPlayer(Bullet bullet, Player player)
         {
-            var gameScreen = MainWindow.gameControls.GameScreen;
+            var gameScreen = MainWindow.gameControls.GameScreen.GameSpace;
             var playerControl = MainWindow.gameControls.playerControl;
 
             GeneralTransform bulletTransform = bullet.UserControl.TransformToVisual(gameScreen);

@@ -53,7 +53,8 @@ namespace Project
         SavesControls save = new SavesControls();
         SoundControls music = new SoundControls();
         SoundControls sound = new SoundControls();
-        ImageBrush backgroundImage = new ImageBrush();
+        private BitmapImage bitmapImage;
+        private GameScreen GameScreen;
         private DispatcherTimer UIUpdateTimer = new DispatcherTimer();
         private DispatcherTimer TimeTimer = new DispatcherTimer();
         public static GameControls gameControls;
@@ -241,9 +242,11 @@ namespace Project
             {
                 CharactersSelectMenu.Visibility = Visibility.Hidden;
                 Menu.Visibility = Visibility.Hidden;
-                GameScreen.Visibility = Visibility.Visible;
                 InGameUI.Visibility = Visibility.Visible;
-                GameScreen.Focus();
+                GameScreen = new GameScreen(bitmapImage);
+                GameScreen.GameSpaceLoaded += (o, args) => GameScreen.GameSpace.Focus();
+                Game.Children.Add(GameScreen);
+                GameScreen.Visibility = Visibility.Visible;
                 player = new Player(1, "Character1", 100.0, 1.0, 5.0, 1.2, new Vector(960, 532), 0, 40.0f, 100.0);
                 gameSpace = new Space(1, 1920, 1064);
                 gameControls = new GameControls(GameScreen, player);
@@ -251,6 +254,8 @@ namespace Project
 
                 player.CurrentHealth = player.CurrentHealth * currentDifficultyMultiplayer;
                 player.MaxHealth = player.MaxHealth * currentDifficultyMultiplayer;
+
+                Canvas.SetZIndex(InGameUI, 1);
 
                 TimeTimer.Start();
                 gameControls.StartGame();
@@ -278,9 +283,7 @@ namespace Project
             btnHard.Background = Brushes.Black;
             btnHard.Foreground = Brushes.White;
             currentDifficultyMultiplayer = 2.0;
-            BitmapImage bitmapImage = new BitmapImage(new Uri("pack://application:,,,/Assets/Textures/background-easy.png"));
-            backgroundImage.ImageSource = bitmapImage;
-            GameScreen.Background = backgroundImage;
+            bitmapImage = new BitmapImage(new Uri("pack://application:,,,/Assets/Textures/background-easy.png"));
             Gold.Foreground = Brushes.Black;
             Score.Foreground = Brushes.Black;
             timerText.Foreground = Brushes.Black;
@@ -295,9 +298,7 @@ namespace Project
             btnHard.Background = Brushes.Black;
             btnHard.Foreground = Brushes.White;
             currentDifficultyMultiplayer = 1.0;
-            BitmapImage bitmapImage = new BitmapImage(new Uri("pack://application:,,,/Assets/Textures/background-normal.png"));
-            backgroundImage.ImageSource = bitmapImage;
-            GameScreen.Background = backgroundImage;
+            bitmapImage = new BitmapImage(new Uri("pack://application:,,,/Assets/Textures/background-normal.png"));
             Gold.Foreground = Brushes.White;
             Score.Foreground = Brushes.White;
             timerText.Foreground = Brushes.White;
@@ -312,9 +313,7 @@ namespace Project
             btnHard.Background = Brushes.White;
             btnHard.Foreground = Brushes.Black;
             currentDifficultyMultiplayer = 0.5;
-            BitmapImage bitmapImage = new BitmapImage(new Uri("pack://application:,,,/Assets/Textures/background-hard.png"));
-            backgroundImage.ImageSource = bitmapImage;
-            GameScreen.Background = backgroundImage;
+            bitmapImage = new BitmapImage(new Uri("pack://application:,,,/Assets/Textures/background-hard.png"));
             Gold.Foreground = Brushes.White;
             Score.Foreground = Brushes.White;
             timerText.Foreground = Brushes.White;
@@ -396,7 +395,7 @@ namespace Project
             currentScore = 0;
             currentSave = null;
 
-            GameScreen.Children.Clear();
+            GameScreen.GameSpace.Children.Clear();
 
             GameScreen.Visibility = Visibility.Hidden;
             InGameUI.Visibility = Visibility.Hidden;

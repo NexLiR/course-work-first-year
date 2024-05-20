@@ -153,9 +153,6 @@
                     <Button Background="Black" Foreground="White" Content="{x:Static languages:Lang.StartGame}" Click="StartGame_Click" Padding="30" FontSize="40" Width="350" Margin="0 90 0 0"/>
                 </StackPanel>
             </Canvas>
-            <Canvas x:Name="GameScreen" Width="{Binding Width}" Height="{Binding Height}" Visibility="Hidden" Focusable="True">
-                
-            </Canvas>
             <Canvas Name="InGameUI" Visibility="Hidden" Height="75" Width="200" Canvas.Left="15" Canvas.Top="15" HorizontalAlignment="Center" VerticalAlignment="Top">
                 <Canvas>
                     <ProgressBar x:Name="pbPlayerHealth" Height="25" Width="200" VerticalAlignment="Center"></ProgressBar>

@@ -22,7 +22,7 @@ namespace Project.Assets.ControlClasses
         private Random random = new Random();
 
         private double currentDifficultyMultiplier;
-        private Canvas GameScreen;
+        private GameScreen GameScreen;
 
         private int maxEnemies;
         private double timeElapsed;
@@ -31,7 +31,7 @@ namespace Project.Assets.ControlClasses
 
         private DispatcherTimer DifficultyIncreaseTimer;
 
-        public EnemyControls(double difficultyMultiplier, Canvas gameScreen)
+        public EnemyControls(double difficultyMultiplier, GameScreen gameScreen)
         {
             enemies = new List<Enemy>();
             SpawnTimer = new DispatcherTimer();
@@ -98,7 +98,7 @@ namespace Project.Assets.ControlClasses
                 }
 
                 enemies.Add(enemy);
-                GameScreen.Children.Add(enemy.UserControl);
+                GameScreen.GameSpace.Children.Add(enemy.UserControl);
             }
         }
         private void EnemyDeath(Enemy enemy)
@@ -108,11 +108,11 @@ namespace Project.Assets.ControlClasses
             {
                 foreach (var bullet in rangedEnemy.Bullets)
                 {
-                    GameScreen.Children.Remove(bullet.UserControl);
+                    GameScreen.GameSpace.Children.Remove(bullet.UserControl);
                 }
             }
             enemies.Remove(enemy);
-            GameScreen.Children.Remove(enemy.UserControl);
+            GameScreen.GameSpace.Children.Remove(enemy.UserControl);
             MainWindow.currentScore += enemy.ScoreValue;
             MainWindow.player.Gold += enemy.GoldValue;
         }
@@ -121,10 +121,10 @@ namespace Project.Assets.ControlClasses
         {
             return new List<Vector>
             {
-            new Vector(-50, random.NextDouble() * GameScreen.ActualHeight),
-            new Vector(GameScreen.ActualWidth + 50, random.NextDouble() * GameScreen.ActualHeight),
-            new Vector(random.NextDouble() * GameScreen.ActualWidth, -50),
-            new Vector(random.NextDouble() * GameScreen.ActualWidth, GameScreen.ActualHeight + 50)
+            new Vector(-50, random.NextDouble() * GameScreen.GameSpace.ActualHeight),
+            new Vector(GameScreen.ActualWidth + 50, random.NextDouble() * GameScreen.GameSpace.ActualHeight),
+            new Vector(random.NextDouble() * GameScreen.GameSpace.ActualWidth, -50),
+            new Vector(random.NextDouble() * GameScreen.GameSpace.ActualWidth, GameScreen.GameSpace.ActualHeight + 50)
             };
         }
         private int GetRandomSpawnPointIndex()
@@ -203,7 +203,7 @@ namespace Project.Assets.ControlClasses
                         enemy.CurrentHealth -= MainWindow.player.Damage;
 
                         MainWindow.player.Bullets.Remove(bullet);
-                        GameScreen.Children.Remove(bullet.UserControl);
+                        GameScreen.GameSpace.Children.Remove(bullet.UserControl);
 
                         if (enemy.CurrentHealth <= 0)
                         {
@@ -217,7 +217,7 @@ namespace Project.Assets.ControlClasses
         }
         private Rect GetBoundsRelativeToGameScreen(FrameworkElement element)
         {
-            var gameScreen = GameScreen;
+            var gameScreen = GameScreen.GameSpace;
             GeneralTransform transform = element.TransformToVisual(gameScreen);
             return transform.TransformBounds(new Rect(0, 0, element.ActualWidth, element.ActualHeight));
         }

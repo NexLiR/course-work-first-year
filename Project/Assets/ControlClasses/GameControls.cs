@@ -22,7 +22,7 @@ namespace Project.Assets.ControlClasses
         public static bool IsPaused = false;
         public static bool IsUnpaused = false;
         public static bool isPlayerDead = false;
-        public Canvas GameScreen { get; set; }
+        public GameScreen GameScreen { get; set; }
         private DispatcherTimer GameTimer = new DispatcherTimer();
         private bool UpKeyPressed, DownKeyPressed, LeftKeyPressed, RightKeyPressed, LeftMouseButtonPressed;
         private float SpeedX, SpeedY, Friction = 0.75f, Speed;
@@ -49,14 +49,14 @@ namespace Project.Assets.ControlClasses
         private PauseAndShopMenuControl pauseAndShopMenu;
         private DispatcherTimer UnpauseCheckTimer = new DispatcherTimer();
 
-        public GameControls(Canvas gameScreen, Player character)
+        public GameControls(GameScreen gameScreen, Player character)
         {
             player = character;
             Speed = (float)player.Speed;
             GameScreen = gameScreen;
 
             playerControl = new Character1Control(player);
-            GameScreen.Children.Add(playerControl);
+            GameScreen.GameSpace.Children.Add(playerControl);
 
             translateTransform = new TranslateTransform();
             rotateTransform = new RotateTransform();
@@ -76,13 +76,14 @@ namespace Project.Assets.ControlClasses
         {
             translateTransform.X = player.Position.X;
             translateTransform.Y = player.Position.Y;
+            GameScreen.GameSpace.Focus();
 
-            GameScreen.KeyDown += KeyboardDown;
-            GameScreen.KeyUp += KeyboardUp;
-            GameScreen.MouseMove += GameScreen_MouseMove;
+            GameScreen.GameSpace.KeyDown += KeyboardDown;
+            GameScreen.GameSpace.KeyUp += KeyboardUp;
+            GameScreen.GameSpace.MouseMove += GameScreen_MouseMove;
 
-            GameScreen.MouseDown += MouseDown;
-            GameScreen.MouseUp += MouseUp;
+            GameScreen.GameSpace.MouseDown += MouseDown;
+            GameScreen.GameSpace.MouseUp += MouseUp;
 
             GameTimer.Interval = TimeSpan.FromMilliseconds(16);
             GameTimer.Tick += GameTick;
@@ -122,8 +123,8 @@ namespace Project.Assets.ControlClasses
                 Speed = (float)player.Speed;
                 endGameScreen = new GameEndControl();
                 AttackTimer.Interval = TimeSpan.FromSeconds(1 / player.AttackSpeed);
-                GameScreen.Children.Remove(pauseAndShopMenu);
-                GameScreen.Focus();
+                GameScreen.GameSpace.Children.Remove(pauseAndShopMenu);
+                GameScreen.GameSpace.Focus();
                 ResumeGame();
             }
         }
@@ -174,7 +175,7 @@ namespace Project.Assets.ControlClasses
                     IsPaused = true;
                     StopGame();
                     pauseAndShopMenu = new PauseAndShopMenuControl();
-                    GameScreen.Children.Add(pauseAndShopMenu);
+                    GameScreen.GameSpace.Children.Add(pauseAndShopMenu);
                     pauseAndShopMenu.Focus();
                 }
             }
@@ -219,10 +220,10 @@ namespace Project.Assets.ControlClasses
                 attackAvalible = false;
                 AttackTimer.Start();
 
-                var characterPosition = playerControl.TranslatePoint(new Point(playerControl.ActualWidth / 2.0, playerControl.ActualHeight / 2.0), GameScreen);
+                var characterPosition = playerControl.TranslatePoint(new Point(playerControl.ActualWidth / 2.0, playerControl.ActualHeight / 2.0), GameScreen.GameSpace);
                 var position = new Point(characterPosition.X, characterPosition.Y - playerControl.ActualHeight / 2.0);
                 Bullet bullet = CreateProjectile(position, facingDirection);
-                GameScreen.Children.Add(bullet.UserControl);
+                GameScreen.GameSpace.Children.Add(bullet.UserControl);
                 bullet.UserControl.Visibility = Visibility.Visible;
                 player.Bullets.Add(bullet);
 
@@ -238,7 +239,7 @@ namespace Project.Assets.ControlClasses
                     if (bullet.LifeTime <= 0)
                     {
                         projectileTimer.Stop();
-                        GameScreen.Children.Remove(bullet.UserControl);
+                        GameScreen.GameSpace.Children.Remove(bullet.UserControl);
                         player.Bullets.Remove(bullet);
                     }
                 };
@@ -252,7 +253,7 @@ namespace Project.Assets.ControlClasses
         }
         private void UpdateFacingDirection()
         {
-            var characterPosition = playerControl.TranslatePoint(new Point(playerControl.ActualWidth / 2.0, playerControl.ActualHeight / 2.0), GameScreen);
+            var characterPosition = playerControl.TranslatePoint(new Point(playerControl.ActualWidth / 2.0, playerControl.ActualHeight / 2.0), GameScreen.GameSpace);
             var direction = mousePosition - characterPosition;
             direction.Normalize();
             facingDirection = direction;
@@ -276,8 +277,8 @@ namespace Project.Assets.ControlClasses
                 SpeedX += Speed;
             }
 
-            var maxX = GameScreen.ActualWidth;
-            var maxY = GameScreen.ActualHeight;
+            var maxX = GameScreen.GameSpace.ActualWidth;
+            var maxY = GameScreen.GameSpace.ActualHeight;
             player.Position = new Vector(translateTransform.X + playerControl.ActualWidth / 2, translateTransform.Y + playerControl.ActualHeight / 2);
 
             if (translateTransform.X < 0)
@@ -304,7 +305,7 @@ namespace Project.Assets.ControlClasses
                 isPlayerDead = false; 
                 endGameScreen.GameEndScore = MainWindow.currentScore;
                 endGameScreen.GameEndTime = MainWindow.currentTime;
-                GameScreen.Children.Add(endGameScreen);
+                GameScreen.GameSpace.Children.Add(endGameScreen);
                 endGameScreen.Focus();
                 endGameScreen.Update();
             }
@@ -322,7 +323,7 @@ namespace Project.Assets.ControlClasses
         }
         private void RotateCharacterToMouse()
         {
-            var characterPosition = playerControl.TranslatePoint(new Point(playerControl.ActualWidth / 2.0, playerControl.ActualHeight / 2.0), GameScreen);
+            var characterPosition = playerControl.TranslatePoint(new Point(playerControl.ActualWidth / 2.0, playerControl.ActualHeight / 2.0), GameScreen.GameSpace);
             var direction = mousePosition - characterPosition;
             var angle = Math.Atan2(direction.Y, direction.X) * 180 / Math.PI;
 
@@ -333,7 +334,7 @@ namespace Project.Assets.ControlClasses
         }
         private void GameScreen_MouseMove(object sender, MouseEventArgs e)
         {
-            mousePosition = e.GetPosition(GameScreen);
+            mousePosition = e.GetPosition(GameScreen.GameSpace);
         }
         private void JumpTimer_Tick(object sender, EventArgs e)
         {

@@ -103,6 +103,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Assets\UserControls\GameScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Assets\UserControls\PauseAndShopMenuControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -140,6 +144,9 @@
     </Compile>
     <Compile Include="Assets\UserControls\GameEndControl.xaml.cs">
       <DependentUpon>GameEndControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\UserControls\GameScreen.xaml.cs">
+      <DependentUpon>GameScreen.xaml</DependentUpon>
     </Compile>
     <Compile Include="Assets\UserControls\PauseAndShopMenuControl.xaml.cs">
       <DependentUpon>PauseAndShopMenuControl.xaml</DependentUpon>

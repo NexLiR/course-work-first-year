@@ -65,7 +65,7 @@ namespace Project.Assets.DataClasses
         }
         private bool CheckCollisionWithPlayer()
         {
-            var gameScreen = MainWindow.gameControls.GameScreen;
+            var gameScreen = MainWindow.gameControls.GameScreen.GameSpace;
             var playerControl = MainWindow.gameControls.playerControl;
 
             GeneralTransform enemyTransform = UserControl.TransformToVisual(gameScreen);
