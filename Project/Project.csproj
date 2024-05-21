@@ -99,6 +99,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Assets\UserControls\Character2Control.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Assets\UserControls\GameEndControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -141,6 +145,9 @@
     </Compile>
     <Compile Include="Assets\UserControls\Character1Control.xaml.cs">
       <DependentUpon>Character1Control.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Assets\UserControls\Character2Control.xaml.cs">
+      <DependentUpon>Character2Control.xaml</DependentUpon>
     </Compile>
     <Compile Include="Assets\UserControls\GameEndControl.xaml.cs">
       <DependentUpon>GameEndControl.xaml</DependentUpon>
@@ -218,6 +225,12 @@
     <Content Include="Assets\Sounds\enemy-death.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Assets\Textures\character-2-in-game.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Textures\character-2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Assets\Textures\upgrade.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>

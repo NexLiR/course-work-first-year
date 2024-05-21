@@ -56,7 +56,14 @@ namespace Project.Assets.ControlClasses
             player = character;
             Speed = (float)player.Speed;
             GameScreen = gameScreen;
-            playerControl = new Character1Control(player);
+            if (player.Id == 1)
+            {
+                playerControl = new Character1Control(player);
+            }
+            if (player.Id == 2)
+            {
+                playerControl = new Character2Control(player);
+            }
             GameScreen.GameSpace.Children.Add(playerControl);
 
             translateTransform = new TranslateTransform();
