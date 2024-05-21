@@ -48,7 +48,8 @@ namespace Project
         }
 
         // Control classes
-        public static Player player = new Player(1, "Character1", 100.0, 1.0, 5.0, 1.5, new Vector(960, 532), 0, 40.0f, 100.0);
+        public static Player player = new Player();
+
         Space gameSpace = new Space();
         SavesControls save = new SavesControls();
         SoundControls music = new SoundControls();
@@ -247,7 +248,14 @@ namespace Project
                 GameScreen.GameSpaceLoaded += (o, args) => GameScreen.GameSpace.Focus();
                 Game.Children.Add(GameScreen);
                 GameScreen.Visibility = Visibility.Visible;
-                player = new Player(1, "Character1", 100.0, 1.0, 5.0, 1.2, new Vector(960, 532), 0, 40.0f, 100.0);
+                if (currentCharacter == 1)
+                {
+                    player = new Player(1, "Character1", 100.0, 1.0, 5.0, 1.2, new Vector(960, 532), 0, 100.0, 1, 2.5);
+                }
+                else if (currentCharacter == 2)
+                {
+                    player = new Player(2, "Character2", 200.0, 0.75, 3.5, 1.5, new Vector(960, 532), 0, 200, 2, 10);
+                }
                 gameSpace = new Space(1, 1920, 1064);
                 gameControls = new GameControls(GameScreen, player);
                 enemyControls = new EnemyControls(currentDifficultyMultiplayer, GameScreen);
@@ -271,7 +279,18 @@ namespace Project
             sound.PlaySound("button-click");
             btnCharacter1.Background = Brushes.White;
             btnCharacter1.Foreground = Brushes.Black;
+            btnCharacter2.Background = Brushes.Black;
+            btnCharacter2.Foreground = Brushes.White;
             currentCharacter = 1;
+        }
+        private void Choose_Character2_Click(object sender, RoutedEventArgs e)
+        {
+            sound.PlaySound("button-click");
+            btnCharacter1.Background = Brushes.Black;
+            btnCharacter1.Foreground = Brushes.White;
+            btnCharacter2.Background = Brushes.White;
+            btnCharacter2.Foreground = Brushes.Black;
+            currentCharacter = 2;
         }
         private void Easy_Difficulty_Selected_Click(object sender, RoutedEventArgs e)
         {

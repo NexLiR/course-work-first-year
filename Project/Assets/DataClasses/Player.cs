@@ -17,8 +17,9 @@ namespace Project.Assets.DataClasses
     {
         protected SoundControls sound = new SoundControls();
         public int Gold { set; get; }
-        public float JumpLenght { set; get; }
         public double MaxHealth { set; get; }
+        public int UltimateID { set; get; }
+        public double UltimateCooldown { set; get; }
 
         public List<Bullet> Bullets { get; set; } = new List<Bullet>();
 
@@ -26,20 +27,25 @@ namespace Project.Assets.DataClasses
             : base()
         {
             Gold = 0;
+            MaxHealth = 0;
+            UltimateID = 0;
+            UltimateCooldown = 0;
         }
-        public Player(int id, string name, double health, double speed, double damage, double attackSpeed, Vector vector, int gold, float jumpLenght, double maxHealth)
+        public Player(int id, string name, double health, double speed, double damage, double attackSpeed, Vector vector, int gold, double maxHealth, int ultimateID, double ultimateCooldown)
             : base(id, name, health, speed, damage, attackSpeed, vector)
         {
             Gold = gold;
-            JumpLenght = jumpLenght;
             MaxHealth = maxHealth;
+            UltimateID = ultimateID;
+            UltimateCooldown = ultimateCooldown;
         } 
         public Player(Player player)
             : base(player)
         {
             Gold = player.Gold;
-            JumpLenght = player.JumpLenght;
             MaxHealth = player.MaxHealth;
+            UltimateID = player.UltimateID;
+            UltimateCooldown = player.UltimateCooldown;
         }
 
         public void TakeDamage(double damage)

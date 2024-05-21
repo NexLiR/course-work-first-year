@@ -130,16 +130,14 @@
                 </StackPanel>
 
                 <StackPanel x:Name="CharactersSelectMenu" Visibility="Hidden" Canvas.Left="734" Canvas.Top="341" HorizontalAlignment="Left" VerticalAlignment="Center" Width="456">
-                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Canvas.Left="835" Canvas.Top="266">
-                        <StackPanel Orientation="Horizontal" Margin="0 0 0 30">
-                            <Image Source="Assets/Textures/character-1.png" Height="250"/>
-                            <!--   <Image Source="Assets/Texture/character-1.png" Height="350"/>
-                        <Image Source="Assets/Texture/character-1.png" Height="350"/> -->
+                    <StackPanel  Margin="0 0 0 30" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="835" Canvas.Top="266">
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="Assets/Textures/character-1.png" Height="250"  Margin="0 0 0 20"/>
+                            <Button Background="Black" Foreground="White" Name="btnCharacter1" Content="{x:Static languages:Lang.Character1Name}" Click="Choose_Character1_Click" FontSize="20" Padding="10" Width="200"/>
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Button Background="Black" Foreground="White" Name="btnCharacter1" Content="{x:Static languages:Lang.Character1Name}" Click="Choose_Character1_Click" FontSize="20" Padding="10"/>
-                            <!--<Button Name="btnCharacter2" Content="{x:Static languages:Lang.Character2Name}" Click="Choose_Character2_Click" FontSize="20" Padding="10" Margin="225 0"/>
-                        <Button Name="btnCharacter3" Content="{x:Static languages:Lang.Character3Name}" Click="Choose_Character3_Click" FontSize="20" Padding="10"/>-->
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="Assets/Textures/character-1.png" Height="250"  Margin="0 0 0 20"/>
+                            <Button Background="Black" Foreground="White" Name="btnCharacter2" Content="{x:Static languages:Lang.Character2Name}" Click="Choose_Character2_Click" FontSize="20" Padding="10" Width="200"/>
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Canvas.Left="734" Canvas.Top="600" Orientation="Vertical" Width="452" HorizontalAlignment="Left" VerticalAlignment="Center">

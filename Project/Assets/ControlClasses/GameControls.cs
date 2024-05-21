@@ -36,8 +36,8 @@ namespace Project.Assets.ControlClasses
         private TransformGroup combinedTransform;
 
         private Vector movementDirection;
-        private bool jumpAvailable = true, attackAvalible = true;
-        private DispatcherTimer JumpTimer = new DispatcherTimer();
+        private bool ultimateAvailable = true, attackAvalible = true;
+        private DispatcherTimer UltimateTimer = new DispatcherTimer();
 
         private DispatcherTimer AttackTimer = new DispatcherTimer();
         private Vector facingDirection;
@@ -49,12 +49,13 @@ namespace Project.Assets.ControlClasses
         private PauseAndShopMenuControl pauseAndShopMenu;
         private DispatcherTimer UnpauseCheckTimer = new DispatcherTimer();
 
+        private DispatcherTimer Ultimate2DurationTimer = new DispatcherTimer();
+
         public GameControls(GameScreen gameScreen, Player character)
         {
             player = character;
             Speed = (float)player.Speed;
             GameScreen = gameScreen;
-
             playerControl = new Character1Control(player);
             GameScreen.GameSpace.Children.Add(playerControl);
 
@@ -89,11 +90,11 @@ namespace Project.Assets.ControlClasses
             GameTimer.Tick += GameTick;
             GameTimer.Start();
 
-            JumpTimer.Interval = TimeSpan.FromSeconds(3);
-            JumpTimer.Tick += JumpTimer_Tick;
-            JumpTimer.Start();
+            UltimateTimer.Interval = TimeSpan.FromSeconds(player.UltimateCooldown);
+            UltimateTimer.Tick += UltimateTimer_Tick;
+            UltimateTimer.Start();
 
-            AttackTimer.Interval = TimeSpan.FromSeconds(1 / player.AttackSpeed);
+            AttackTimer.Interval = TimeSpan.FromSeconds(1.0 / player.AttackSpeed);
             AttackTimer.Tick += AttackTimer_Tick;
             AttackTimer.Start();
 
@@ -134,7 +135,6 @@ namespace Project.Assets.ControlClasses
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 LeftMouseButtonPressed = true;
-                Attack();
             }
         }
         private void MouseUp(object sender, MouseButtonEventArgs e)
@@ -166,7 +166,7 @@ namespace Project.Assets.ControlClasses
             {
                 movementDirection = new Vector(SpeedX, SpeedY);
                 movementDirection.Normalize();
-                Jump();
+                Ultimate();
             }
             if (e.Key == Key.Escape)
             {
@@ -276,6 +276,10 @@ namespace Project.Assets.ControlClasses
             {
                 SpeedX += Speed;
             }
+            if (LeftMouseButtonPressed)
+            {
+                Attack();
+            }
 
             var maxX = GameScreen.GameSpace.ActualWidth;
             var maxY = GameScreen.GameSpace.ActualHeight;
@@ -336,19 +340,32 @@ namespace Project.Assets.ControlClasses
         {
             mousePosition = e.GetPosition(GameScreen.GameSpace);
         }
-        private void JumpTimer_Tick(object sender, EventArgs e)
+        private void UltimateTimer_Tick(object sender, EventArgs e)
         {
-            JumpTimer.Stop();
-            jumpAvailable = true;
+            UltimateTimer.Stop();
+            ultimateAvailable = true;
         }
-        private void Jump()
+        private void Ultimate()
         {
-            if (jumpAvailable)
+            if (ultimateAvailable && player.UltimateID == 1)
             {
-                SpeedY = (float)(player.JumpLenght * movementDirection.Y);
-                SpeedX = (float)(player.JumpLenght * movementDirection.X);
-                jumpAvailable = false;
-                JumpTimer.Start();
+                SpeedY = (float)(40.0f * movementDirection.Y);
+                SpeedX = (float)(40.0f * movementDirection.X);
+                ultimateAvailable = false;
+                UltimateTimer.Start();
+            }
+            if (ultimateAvailable && player.UltimateID == 2)
+            {
+                ultimateAvailable = false;
+                AttackTimer.Interval = TimeSpan.FromSeconds(1.0 / (5 * player.AttackSpeed));
+                Ultimate2DurationTimer.Interval = TimeSpan.FromSeconds(3);
+                Ultimate2DurationTimer.Tick += (sender, e) =>
+                {
+                    AttackTimer.Interval = TimeSpan.FromSeconds(1.0 / player.AttackSpeed);
+                    Ultimate2DurationTimer.Stop();
+                    UltimateTimer.Start();
+                };
+                Ultimate2DurationTimer.Start();
             }
         }
         private void IsPlayerDead()
@@ -362,7 +379,7 @@ namespace Project.Assets.ControlClasses
         private void StopGame()
         {
             GameTimer.Stop();
-            JumpTimer.Stop();
+            UltimateTimer.Stop();
             AttackTimer.Stop();
             attackAvalible = false;
             RegenerationTimer.Stop();
@@ -372,7 +389,7 @@ namespace Project.Assets.ControlClasses
         private void ResumeGame()
         {
             GameTimer.Start();
-            JumpTimer.Start();
+            UltimateTimer.Start();
             AttackTimer.Start();
             attackAvalible = true;
             RegenerationTimer.Start();
