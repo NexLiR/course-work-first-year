@@ -391,7 +391,14 @@ namespace Project
         private void UIUpdateTimer_Tick(object sender, EventArgs e)
         {
             music.SetMusicVolume();
-            PlayerCurrentHealth.Text = Math.Round(player.CurrentHealth, 1).ToString("F1");
+            if (player.CurrentHealth >= 0)
+            {
+                PlayerCurrentHealth.Text = Math.Round(player.CurrentHealth).ToString("F0");
+            }
+            else
+            {
+                PlayerCurrentHealth.Text = "0";
+            }
             PlayerMaxHealth.Text = player.MaxHealth.ToString();
             pbPlayerHealth.Value = player.CurrentHealth;
             pbPlayerHealth.Maximum = player.MaxHealth;
