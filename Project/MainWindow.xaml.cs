@@ -92,10 +92,12 @@ namespace Project
         private void Music_Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             Properties.Settings.Default.musicVolume = (int)Music_Slider.Value;
+            Properties.Settings.Default.Save();
         }
         private void Sound_Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             Properties.Settings.Default.soundVolume = (int)Sound_Slider.Value;
+            Properties.Settings.Default.Save();
         }
         private void Return_to_MainMenu_Click(object sender, RoutedEventArgs e)
         {
