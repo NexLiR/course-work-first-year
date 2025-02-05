@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Project.Assets.ControlClasses.EnemyControls">
+    <Position X="13" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAgAAAIAUAAAAABAAQAAEhAAAOhQCBBiQABEAABAg=</HashCode>
+      <FileName>Assets\ControlClasses\EnemyControls.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Project.Assets.ControlClasses.GameControls">
+    <Position X="14.75" Y="3" Width="1.5" />
+    <Members>
+      <Field Name="combinedTransform" Hidden="true" />
+      <Field Name="DownKeyPressed" Hidden="true" />
+      <Field Name="facingDirection" Hidden="true" />
+      <Field Name="Friction" Hidden="true" />
+      <Field Name="LeftKeyPressed" Hidden="true" />
+      <Field Name="LeftMouseButtonPressed" Hidden="true" />
+      <Field Name="mousePosition" Hidden="true" />
+      <Field Name="movementDirection" Hidden="true" />
+      <Field Name="RightKeyPressed" Hidden="true" />
+      <Field Name="rotateTransform" Hidden="true" />
+      <Field Name="Speed" Hidden="true" />
+      <Field Name="SpeedX" Hidden="true" />
+      <Field Name="SpeedY" Hidden="true" />
+      <Field Name="translateTransform" Hidden="true" />
+      <Field Name="UpKeyPressed" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>EbJEGAAQICAgIFAAggQKEBEhFIBEEBEBAAggAAIogSA=</HashCode>
+      <FileName>Assets\ControlClasses\GameControls.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Project.Assets.ControlClasses.SavesControls">
+    <Position X="16.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAEAAAAAAACCAAAAAAAAAAAEAAACAAAAA=</HashCode>
+      <FileName>Assets\ControlClasses\SavesControls.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Project.Assets.ControlClasses.SoundControls">
+    <Position X="18.25" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAQAAAQAEAAkAAAAAAAAAAAAgAAACAEA=</HashCode>
+      <FileName>Assets\ControlClasses\SoundControls.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

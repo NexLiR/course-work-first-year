@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Project.Assets.DataClasses.Enemy">
+    <Position X="13" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAABAAEAAAAAIAQAAAAAAAAAAACAAA=</HashCode>
+      <FileName>Assets\DataClasses\Enemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Project.Assets.DataClasses.Entity">
+    <Position X="11" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAACAAAAAAAAgAAAAAAQBAAAAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\DataClasses\Entity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Project.Assets.DataClasses.Player">
+    <Position X="8.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAACAAAAEAAAAAAAAAEIAAAAAAAgAAAAAE=</HashCode>
+      <FileName>Assets\DataClasses\Player.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Project.Assets.DataClasses.Bullet">
+    <Position X="15.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAADAAAAAAAAgACAAAAABAAAQAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\DataClasses\Bullet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Project.Assets.DataClasses.BasicEnemy">
+    <Position X="12" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAABAAEAAAAAMAAAAAAAAAQQAAAAAA=</HashCode>
+      <FileName>Assets\DataClasses\BasicEnemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Project.Assets.DataClasses.RangedEnemy">
+    <Position X="14" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAwAAAAAACAAAABAAEAAAAAMAAAAAAAAAQQAAAACA=</HashCode>
+      <FileName>Assets\DataClasses\RangedEnemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Project.Assets.DataClasses.Space">
+    <Position X="17.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAAAAAAAEIAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Assets\DataClasses\Space.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
