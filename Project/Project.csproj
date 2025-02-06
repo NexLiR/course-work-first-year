@@ -132,6 +132,7 @@
     </Compile>
     <Compile Include="Assets\DataClasses\BasicEnemy.cs" />
     <Compile Include="Assets\DataClasses\Bullet.cs" />
+    <Compile Include="Assets\DataClasses\DifficultySetting.cs" />
     <Compile Include="Assets\DataClasses\Enemy.cs" />
     <Compile Include="Assets\DataClasses\Entity.cs" />
     <Compile Include="Assets\DataClasses\Player.cs" />
