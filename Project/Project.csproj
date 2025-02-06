@@ -135,6 +135,7 @@
     <Compile Include="Assets\DataClasses\DifficultySetting.cs" />
     <Compile Include="Assets\DataClasses\Enemy.cs" />
     <Compile Include="Assets\DataClasses\Entity.cs" />
+    <Compile Include="Assets\DataClasses\GameState.cs" />
     <Compile Include="Assets\DataClasses\Player.cs" />
     <Compile Include="Assets\DataClasses\RangedEnemy.cs" />
     <Compile Include="Assets\DataClasses\Space.cs" />

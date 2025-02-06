@@ -29,9 +29,9 @@ namespace Project.Assets.UserControls
 
         public GameEndControl()
         {
-            GameEndScore = MainWindow.currentScore;
-            GameEndTime = MainWindow.currentTime;
-            GetSaveData(MainWindow.currentSave);
+            GameEndScore = MainWindow.gameState.CurrentScore;
+            GameEndTime = MainWindow.gameState.CurrentTime;
+            GetSaveData(MainWindow.gameState.CurrentSave);
             InitializeComponent();
             DataContext = this;
         }
@@ -51,7 +51,7 @@ namespace Project.Assets.UserControls
             if (NewRecordCheck())
             {
                 NewRecord.Visibility = Visibility.Visible;
-                UpdateSaveData(MainWindow.currentSave);
+                UpdateSaveData(MainWindow.gameState.CurrentSave);
             }
             else
             {
@@ -106,7 +106,7 @@ namespace Project.Assets.UserControls
         private void ToMainManu_Click(object sender, RoutedEventArgs e)
         {
             sound.PlaySound("button-click");
-            MainWindow.isGameEnded = true;
+            MainWindow.gameState.IsGameEnded = true;
         }
     }
 }
