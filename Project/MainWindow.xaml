@@ -133,19 +133,19 @@
                     <StackPanel  Margin="0 0 0 30" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Canvas.Left="835" Canvas.Top="266">
                         <StackPanel Orientation="Vertical">
                             <Image Source="Assets/Textures/character-1.png" Height="250"  Margin="0 0 0 20"/>
-                            <Button Background="Black" Foreground="White" Name="btnCharacter1" Content="{x:Static languages:Lang.Character1Name}" Click="Choose_Character1_Click" FontSize="20" Padding="10" Width="200"/>
+                            <Button Background="Black" Foreground="White" Name="btnCharacter1" Content="{x:Static languages:Lang.Character1Name}" FontSize="20" Padding="10" Width="200"/>
                         </StackPanel>
                         <StackPanel Orientation="Vertical">
                             <Image Source="Assets/Textures/character-2.png" Height="250"  Margin="0 0 0 20"/>
-                            <Button Background="Black" Foreground="White" Name="btnCharacter2" Content="{x:Static languages:Lang.Character2Name}" Click="Choose_Character2_Click" FontSize="20" Padding="10" Width="200"/>
+                            <Button Background="Black" Foreground="White" Name="btnCharacter2" Content="{x:Static languages:Lang.Character2Name}" FontSize="20" Padding="10" Width="200"/>
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Canvas.Left="734" Canvas.Top="600" Orientation="Vertical" Width="452" HorizontalAlignment="Left" VerticalAlignment="Center">
                         <TextBlock Text="{x:Static languages:Lang.SelectDifficulty}" FontWeight="Bold" FontSize="32" Margin="0 0 0 20" Width="451" TextAlignment="Center"/>
                         <StackPanel Orientation="Horizontal" Width="451">
-                            <Button Background="Black" Foreground="White" Name="btnEasy" Content="{x:Static languages:Lang.Difficulty0}" FontSize="18" Padding="12" Width="130" Click="Easy_Difficulty_Selected_Click"/>
-                            <Button Background="Black" Foreground="White" Name="btnNormal" Content="{x:Static languages:Lang.Difficulty1}" FontSize="18" Padding="12" Width="130" Click="Normal_Difficulty_Selected_Click" Margin="30 0"/>
-                            <Button Background="Black" Foreground="White" Name="btnHard" Content="{x:Static languages:Lang.Difficulty2}" FontSize="18" Padding="12" Width="130" Click="Hard_Difficulty_Selected_Click"/>
+                            <Button Background="Black" Foreground="White" Name="btnEasy" Content="{x:Static languages:Lang.Difficulty0}" FontSize="18" Padding="12" Width="130"/>
+                            <Button Background="Black" Foreground="White" Name="btnNormal" Content="{x:Static languages:Lang.Difficulty1}" FontSize="18" Padding="12" Width="130"/>
+                            <Button Background="Black" Foreground="White" Name="btnHard" Content="{x:Static languages:Lang.Difficulty2}" FontSize="18" Padding="12" Width="130"/>
                         </StackPanel>
                     </StackPanel>
                     <Button Background="Black" Foreground="White" Content="{x:Static languages:Lang.StartGame}" Click="StartGame_Click" Padding="30" FontSize="40" Width="350" Margin="0 90 0 0"/>

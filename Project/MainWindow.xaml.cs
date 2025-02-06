@@ -45,6 +45,8 @@ namespace Project
             UIUpdateTimer.Start();
             TimeTimer.Interval = TimeSpan.FromSeconds(1);
             TimeTimer.Tick += (sender, e) => currentTime++;
+            InitializeCharacterButtons();
+            InitializeDifficultyButtons();
         }
 
         // Control classes
@@ -134,100 +136,42 @@ namespace Project
             SaveSettings.Visibility = Visibility.Visible;
         }
         //Game save buttons
-        private void Load_Save1_Click(object sender, RoutedEventArgs e)
+
+        private void Load_Save1_Click(object sender, RoutedEventArgs e) => ProcessLoadSave("save1.txt");
+        private void Load_Save2_Click(object sender, RoutedEventArgs e) => ProcessLoadSave("save2.txt");
+        private void Load_Save3_Click(object sender, RoutedEventArgs e) => ProcessLoadSave("save3.txt");
+
+        private void ProcessLoadSave(string saveFileName)
         {
             sound.PlaySound("button-click");
-            if (save.CheckSaveExistence("save1.txt") == true)
+            if (save.CheckSaveExistence(saveFileName))
             {
-                currentSave = "save1.txt";
+                currentSave = saveFileName;
                 GameSaves.Visibility = Visibility.Hidden;
-                save.ReadSaveData("save1.txt");
+                save.ReadSaveData(saveFileName);
                 CharactersSelectMenu.Visibility = Visibility.Visible;
             }
             else
             {
-                currentSave = "save1.txt";
-                save.CreateSave("save1.txt");
+                currentSave = saveFileName;
+                save.CreateSave(saveFileName);
                 MessageBox.Show("New save created.");
                 GameSaves.Visibility = Visibility.Hidden;
                 CharactersSelectMenu.Visibility = Visibility.Visible;
             }
             UpdateAllMaxScores();
         }
-        private void Delete_Save1_Click(object sender, RoutedEventArgs e)
+
+        private void Delete_Save1_Click(object sender, RoutedEventArgs e) => ProcessDeleteSave("save1.txt");
+        private void Delete_Save2_Click(object sender, RoutedEventArgs e) => ProcessDeleteSave("save2.txt");
+        private void Delete_Save3_Click(object sender, RoutedEventArgs e) => ProcessDeleteSave("save3.txt");
+
+        private void ProcessDeleteSave(string saveFileName)
         {
             sound.PlaySound("button-click");
-            if (save.CheckSaveExistence("save1.txt") == true)
+            if (save.CheckSaveExistence(saveFileName))
             {
-                save.DeleteSave("save1.txt");
-                MessageBox.Show("Save deleted successfully.");
-            }
-            else
-            {
-                MessageBox.Show("Save not found.");
-            }
-            UpdateAllMaxScores();
-        }
-        private void Load_Save2_Click(object sender, RoutedEventArgs e)
-        {
-            sound.PlaySound("button-click");
-            if (save.CheckSaveExistence("save2.txt") == true)
-            {
-                currentSave = "save2.txt";
-                GameSaves.Visibility = Visibility.Hidden;
-                save.ReadSaveData("save2.txt");
-                CharactersSelectMenu.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                currentSave = "save2.txt";
-                save.CreateSave("save2.txt");
-                MessageBox.Show("New save created.");
-                GameSaves.Visibility = Visibility.Hidden;
-                CharactersSelectMenu.Visibility = Visibility.Visible;
-            }
-            UpdateAllMaxScores();
-        }
-        private void Delete_Save2_Click(object sender, RoutedEventArgs e)
-        {
-            sound.PlaySound("button-click");
-            if (save.CheckSaveExistence("save2.txt") == true)
-            {
-                save.DeleteSave("save2.txt");
-                MessageBox.Show("Save deleted successfully.");
-            }
-            else
-            {
-                MessageBox.Show("Save not found.");
-            }
-            UpdateAllMaxScores();
-        }
-        private void Load_Save3_Click(object sender, RoutedEventArgs e)
-        {
-            sound.PlaySound("button-click");
-            if (save.CheckSaveExistence("save3.txt") == true)
-            {
-                currentSave = "save3.txt";
-                GameSaves.Visibility = Visibility.Hidden;
-                save.ReadSaveData("save3.txt");
-                CharactersSelectMenu.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                currentSave = "save3.txt";
-                save.CreateSave("save3.txt");
-                MessageBox.Show("New save created.");
-                GameSaves.Visibility = Visibility.Hidden;
-                CharactersSelectMenu.Visibility = Visibility.Visible;
-            }
-            UpdateAllMaxScores();
-        }
-        private void Delete_Save3_Click(object sender, RoutedEventArgs e)
-        {
-            sound.PlaySound("button-click");
-            if (save.CheckSaveExistence("save3.txt") == true)
-            {
-                save.DeleteSave("save3.txt");
+                save.DeleteSave(saveFileName);
                 MessageBox.Show("Save deleted successfully.");
             }
             else
@@ -276,69 +220,97 @@ namespace Project
                 MessageBox.Show("Please select character and difficulty.");
             }
         }
-        private void Choose_Character1_Click(object sender, RoutedEventArgs e)
+
+        private List<Button> characterButtons;
+        private void InitializeCharacterButtons()
         {
-            sound.PlaySound("button-click");
-            btnCharacter1.Background = Brushes.White;
-            btnCharacter1.Foreground = Brushes.Black;
-            btnCharacter2.Background = Brushes.Black;
-            btnCharacter2.Foreground = Brushes.White;
-            currentCharacter = 1;
+            btnCharacter1.Tag = 1;
+            btnCharacter2.Tag = 2;
+
+            characterButtons = new List<Button> { btnCharacter1, btnCharacter2 };
+
+            foreach (var btn in characterButtons)
+            {
+                btn.Click += CharacterButton_Click;
+            }
         }
-        private void Choose_Character2_Click(object sender, RoutedEventArgs e)
+        private void CharacterButton_Click(object sender, RoutedEventArgs e)
         {
+            Button clickedButton = sender as Button;
             sound.PlaySound("button-click");
-            btnCharacter1.Background = Brushes.Black;
-            btnCharacter1.Foreground = Brushes.White;
-            btnCharacter2.Background = Brushes.White;
-            btnCharacter2.Foreground = Brushes.Black;
-            currentCharacter = 2;
+
+            foreach (var btn in characterButtons)
+            {
+                btn.Background = Brushes.Black;
+                btn.Foreground = Brushes.White;
+            }
+
+            clickedButton.Background = Brushes.White;
+            clickedButton.Foreground = Brushes.Black;
+
+            if (clickedButton.Tag is int characterId)
+            {
+                currentCharacter = characterId;
+            }
         }
-        private void Easy_Difficulty_Selected_Click(object sender, RoutedEventArgs e)
+
+        private List<Button> difficultyButtons;
+
+        private void InitializeDifficultyButtons()
         {
-            sound.PlaySound("button-click");
-            btnEasy.Background = Brushes.White;
-            btnEasy.Foreground = Brushes.Black;
-            btnNormal.Background = Brushes.Black;
-            btnNormal.Foreground = Brushes.White;
-            btnHard.Background = Brushes.Black;
-            btnHard.Foreground = Brushes.White;
-            currentDifficultyMultiplayer = 2.0;
-            bitmapImage = new BitmapImage(new Uri("pack://application:,,,/Assets/Textures/background-easy.png"));
-            Gold.Foreground = Brushes.Black;
-            Score.Foreground = Brushes.Black;
-            timerText.Foreground = Brushes.Black;
+            difficultyButtons = new List<Button> { btnEasy, btnNormal, btnHard };
+
+            btnEasy.Tag = new DifficultySetting
+            {
+                Multiplier = 2.0,
+                BackgroundUri = "pack://application:,,,/Assets/Textures/background-easy.png",
+                TextForeground = Brushes.Black
+            };
+
+            btnNormal.Tag = new DifficultySetting
+            {
+                Multiplier = 1.0,
+                BackgroundUri = "pack://application:,,,/Assets/Textures/background-normal.png",
+                TextForeground = Brushes.White
+            };
+
+            btnHard.Tag = new DifficultySetting
+            {
+                Multiplier = 0.5,
+                BackgroundUri = "pack://application:,,,/Assets/Textures/background-hard.png",
+                TextForeground = Brushes.White
+            };
+
+            foreach (var btn in difficultyButtons)
+            {
+                btn.Click += DifficultyButton_Click;
+            }
         }
-        private void Normal_Difficulty_Selected_Click(object sender, RoutedEventArgs e)
+        private void DifficultyButton_Click(object sender, RoutedEventArgs e)
         {
+            Button clickedButton = sender as Button;
             sound.PlaySound("button-click");
-            btnEasy.Background = Brushes.Black;
-            btnEasy.Foreground = Brushes.White;
-            btnNormal.Background = Brushes.White;
-            btnNormal.Foreground = Brushes.Black;
-            btnHard.Background = Brushes.Black;
-            btnHard.Foreground = Brushes.White;
-            currentDifficultyMultiplayer = 1.0;
-            bitmapImage = new BitmapImage(new Uri("pack://application:,,,/Assets/Textures/background-normal.png"));
-            Gold.Foreground = Brushes.White;
-            Score.Foreground = Brushes.White;
-            timerText.Foreground = Brushes.White;
+
+            foreach (var btn in difficultyButtons)
+            {
+                btn.Background = Brushes.Black;
+                btn.Foreground = Brushes.White;
+            }
+
+            clickedButton.Background = Brushes.White;
+            clickedButton.Foreground = Brushes.Black;
+
+            if (clickedButton.Tag is DifficultySetting setting)
+            {
+                currentDifficultyMultiplayer = setting.Multiplier;
+                bitmapImage = new BitmapImage(new Uri(setting.BackgroundUri));
+
+                Gold.Foreground = setting.TextForeground;
+                Score.Foreground = setting.TextForeground;
+                timerText.Foreground = setting.TextForeground;
+            }
         }
-        private void Hard_Difficulty_Selected_Click(object sender, RoutedEventArgs e)
-        {
-            sound.PlaySound("button-click");
-            btnEasy.Background = Brushes.Black;
-            btnEasy.Foreground = Brushes.White;
-            btnNormal.Background = Brushes.Black;
-            btnNormal.Foreground = Brushes.White;
-            btnHard.Background = Brushes.White;
-            btnHard.Foreground = Brushes.Black;
-            currentDifficultyMultiplayer = 0.5;
-            bitmapImage = new BitmapImage(new Uri("pack://application:,,,/Assets/Textures/background-hard.png"));
-            Gold.Foreground = Brushes.White;
-            Score.Foreground = Brushes.White;
-            timerText.Foreground = Brushes.White;
-        }
+
         #endregion
 
         #region FuntionalMethods
