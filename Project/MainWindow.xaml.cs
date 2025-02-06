@@ -44,7 +44,7 @@ namespace Project
             UIUpdateTimer.Tick += UIUpdateTimer_Tick;
             UIUpdateTimer.Start();
             TimeTimer.Interval = TimeSpan.FromSeconds(1);
-            TimeTimer.Tick += (sender, e) => currentTime++;
+            TimeTimer.Tick += (sender, e) => gameState.CurrentTime++;
             InitializeCharacterButtons();
             InitializeDifficultyButtons();
         }
@@ -62,14 +62,7 @@ namespace Project
         private DispatcherTimer TimeTimer = new DispatcherTimer();
         public static GameControls gameControls;
         public static EnemyControls enemyControls;
-        //Data Storage
-        public static int currentScore = 0;
-        public static int currentTime = 0;
-        public static bool isPaused = false;
-        public static bool isGameEnded = false;
-        public static string currentSave { get; set;}
-        public static double currentDifficultyMultiplayer = -1;
-        protected int currentCharacter = -1;
+        public static GameState gameState = new GameState();
 
         #region ButtonFunctions
         private void NewGame_Click(object sender, RoutedEventArgs e)
@@ -146,14 +139,14 @@ namespace Project
             sound.PlaySound("button-click");
             if (save.CheckSaveExistence(saveFileName))
             {
-                currentSave = saveFileName;
+                gameState.CurrentSave = saveFileName;
                 GameSaves.Visibility = Visibility.Hidden;
                 save.ReadSaveData(saveFileName);
                 CharactersSelectMenu.Visibility = Visibility.Visible;
             }
             else
             {
-                currentSave = saveFileName;
+                gameState.CurrentSave = saveFileName;
                 save.CreateSave(saveFileName);
                 MessageBox.Show("New save created.");
                 GameSaves.Visibility = Visibility.Hidden;
@@ -185,7 +178,7 @@ namespace Project
         private void StartGame_Click(object sender, RoutedEventArgs e)
         {
             sound.PlaySound("button-click");
-            if (currentCharacter != -1 && currentDifficultyMultiplayer != -1)
+            if (gameState.CurrentCharacter != -1 && gameState.CurrentDifficultyMultiplier != -1)
             {
                 CharactersSelectMenu.Visibility = Visibility.Hidden;
                 Menu.Visibility = Visibility.Hidden;
@@ -194,20 +187,20 @@ namespace Project
                 GameScreen.GameSpaceLoaded += (o, args) => GameScreen.GameSpace.Focus();
                 Game.Children.Add(GameScreen);
                 GameScreen.Visibility = Visibility.Visible;
-                if (currentCharacter == 1)
+                if (gameState.CurrentCharacter == 1)
                 {
                     player = new Player(1, "Character1", 100.0, 1.0, 5.0, 1.2, new Vector(960, 532), 0, 100.0, 1, 2.5);
                 }
-                else if (currentCharacter == 2)
+                else if (gameState.CurrentCharacter == 2)
                 {
                     player = new Player(2, "Character2", 200.0, 0.75, 3.5, 1.5, new Vector(960, 532), 0, 200, 2, 10);
                 }
                 gameSpace = new Space(1, 1920, 1064);
                 gameControls = new GameControls(GameScreen, player);
-                enemyControls = new EnemyControls(currentDifficultyMultiplayer, GameScreen);
+                enemyControls = new EnemyControls(gameState.CurrentDifficultyMultiplier, GameScreen);
 
-                player.CurrentHealth = player.CurrentHealth * currentDifficultyMultiplayer;
-                player.MaxHealth = player.MaxHealth * currentDifficultyMultiplayer;
+                player.CurrentHealth = player.CurrentHealth * gameState.CurrentDifficultyMultiplier;
+                player.MaxHealth = player.MaxHealth * gameState.CurrentDifficultyMultiplier;
 
                 Canvas.SetZIndex(InGameUI, 1);
 
@@ -250,7 +243,7 @@ namespace Project
 
             if (clickedButton.Tag is int characterId)
             {
-                currentCharacter = characterId;
+                gameState.CurrentCharacter = characterId;
             }
         }
 
@@ -302,7 +295,7 @@ namespace Project
 
             if (clickedButton.Tag is DifficultySetting setting)
             {
-                currentDifficultyMultiplayer = setting.Multiplier;
+                gameState.CurrentDifficultyMultiplier = setting.Multiplier;
                 bitmapImage = new BitmapImage(new Uri(setting.BackgroundUri));
 
                 Gold.Foreground = setting.TextForeground;
@@ -377,23 +370,23 @@ namespace Project
             pbPlayerHealth.Value = player.CurrentHealth;
             pbPlayerHealth.Maximum = player.MaxHealth;
             GoldCount.Text = player.Gold.ToString();
-            ScoreCount.Text = currentScore.ToString();
-            int minutes = currentTime / 60;
-            int seconds = currentTime % 60;
+            ScoreCount.Text = gameState.CurrentScore.ToString();
+            int minutes = gameState.CurrentTime / 60;
+            int seconds = gameState.CurrentTime % 60;
             timerText.Text = $"{minutes:00}:{seconds:00}";
-            if (isGameEnded)
+            if (gameState.IsGameEnded)
             {
                 RestartGame();
             }
         }
         public void RestartGame()
         {
-            isGameEnded = false;
-            isPaused = false;
+            gameState.IsGameEnded = false;
+            gameState.IsPaused = false;
             TimeTimer.Stop();
-            currentTime = 0;
-            currentScore = 0;
-            currentSave = null;
+            gameState.CurrentTime = 0;
+            gameState.CurrentScore = 0;
+            gameState.CurrentSave = null;
 
             GameScreen.GameSpace.Children.Clear();
 

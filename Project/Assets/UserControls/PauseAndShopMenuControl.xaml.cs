@@ -48,45 +48,45 @@ namespace Project.Assets.UserControls
             Damage.Text = Math.Round(MainWindow.player.Damage, 1).ToString("F1");
             Speed.Text = Math.Round(MainWindow.player.Speed, 1).ToString("F1");
             AttackSpeed.Text = Math.Round(MainWindow.player.AttackSpeed, 1).ToString("F1");
-            MaxHealthCost.Text = Math.Round(MainWindow.player.MaxHealth / 2.5 / MainWindow.currentDifficultyMultiplayer).ToString("F0");
-            DamageCost.Text = Math.Round(MainWindow.player.Damage * 7.5 / MainWindow.currentDifficultyMultiplayer).ToString("F0");
-            SpeedCost.Text = Math.Round(MainWindow.player.Speed * 25 / MainWindow.currentDifficultyMultiplayer).ToString("F0");
-            AttackSpeedCost.Text = Math.Round(MainWindow.player.AttackSpeed * 45 / MainWindow.currentDifficultyMultiplayer).ToString("F0");
+            MaxHealthCost.Text = Math.Round(MainWindow.player.MaxHealth / 2.5 / MainWindow.gameState.CurrentDifficultyMultiplier).ToString("F0");
+            DamageCost.Text = Math.Round(MainWindow.player.Damage * 7.5 / MainWindow.gameState.CurrentDifficultyMultiplier).ToString("F0");
+            SpeedCost.Text = Math.Round(MainWindow.player.Speed * 25 / MainWindow.gameState.CurrentDifficultyMultiplier).ToString("F0");
+            AttackSpeedCost.Text = Math.Round(MainWindow.player.AttackSpeed * 45 / MainWindow.gameState.CurrentDifficultyMultiplier).ToString("F0");
 
         }
         private void UpgradeMaxHP_Click(object sender, RoutedEventArgs e)
         {
-            if (MainWindow.player.Gold >= MainWindow.player.MaxHealth / 2.5 / MainWindow.currentDifficultyMultiplayer)
+            if (MainWindow.player.Gold >= MainWindow.player.MaxHealth / 2.5 / MainWindow.gameState.CurrentDifficultyMultiplier)
             {
-                MainWindow.player.Gold = MainWindow.player.Gold - (int)(MainWindow.player.MaxHealth / 2.5 / MainWindow.currentDifficultyMultiplayer);
-                MainWindow.player.MaxHealth += 10 * MainWindow.currentDifficultyMultiplayer;
+                MainWindow.player.Gold = MainWindow.player.Gold - (int)(MainWindow.player.MaxHealth / 2.5 / MainWindow.gameState.CurrentDifficultyMultiplier);
+                MainWindow.player.MaxHealth += 10 * MainWindow.gameState.CurrentDifficultyMultiplier;
                 sound.PlaySound("button-click");
             }
         }
         private void UpgradeDamage_Click(object sender, RoutedEventArgs e)
         {
-            if (MainWindow.player.Gold >= MainWindow.player.Damage * 7.5 / MainWindow.currentDifficultyMultiplayer)
+            if (MainWindow.player.Gold >= MainWindow.player.Damage * 7.5 / MainWindow.gameState.CurrentDifficultyMultiplier)
             {
-                MainWindow.player.Gold = MainWindow.player.Gold - (int)(MainWindow.player.Damage * 7.5 / MainWindow.currentDifficultyMultiplayer);
-                MainWindow.player.Damage += 1 * MainWindow.currentDifficultyMultiplayer;
+                MainWindow.player.Gold = MainWindow.player.Gold - (int)(MainWindow.player.Damage * 7.5 / MainWindow.gameState.CurrentDifficultyMultiplier);
+                MainWindow.player.Damage += 1 * MainWindow.gameState.CurrentDifficultyMultiplier;
                 sound.PlaySound("button-click");
             }
         }
         private void UpgradeSpeed_Click(object sender, RoutedEventArgs e)
         {
-            if (MainWindow.player.Gold >= MainWindow.player.Speed * 25 / MainWindow.currentDifficultyMultiplayer)
+            if (MainWindow.player.Gold >= MainWindow.player.Speed * 25 / MainWindow.gameState.CurrentDifficultyMultiplier)
             {
-                MainWindow.player.Gold = MainWindow.player.Gold - (int)(MainWindow.player.Speed * 25 / MainWindow.currentDifficultyMultiplayer);
-                MainWindow.player.Speed += 0.1 * MainWindow.currentDifficultyMultiplayer;
+                MainWindow.player.Gold = MainWindow.player.Gold - (int)(MainWindow.player.Speed * 25 / MainWindow.gameState.CurrentDifficultyMultiplier);
+                MainWindow.player.Speed += 0.1 * MainWindow.gameState.CurrentDifficultyMultiplier;
                 sound.PlaySound("button-click");
             }
         }
         private void UpgradeAttackSpeed_Click(object sender, RoutedEventArgs e)
         {
-            if (MainWindow.player.Gold >= MainWindow.player.AttackSpeed * 45 / MainWindow.currentDifficultyMultiplayer)
+            if (MainWindow.player.Gold >= MainWindow.player.AttackSpeed * 45 / MainWindow.gameState.CurrentDifficultyMultiplier)
             {
-                MainWindow.player.Gold = MainWindow.player.Gold - (int)(MainWindow.player.AttackSpeed * 45 / MainWindow.currentDifficultyMultiplayer);
-                MainWindow.player.AttackSpeed += 0.1 * MainWindow.currentDifficultyMultiplayer;
+                MainWindow.player.Gold = MainWindow.player.Gold - (int)(MainWindow.player.AttackSpeed * 45 / MainWindow.gameState.CurrentDifficultyMultiplier);
+                MainWindow.player.AttackSpeed += 0.1 * MainWindow.gameState.CurrentDifficultyMultiplier;
                 sound.PlaySound("button-click");
             }
         }

@@ -113,7 +113,7 @@ namespace Project.Assets.ControlClasses
             }
             enemies.Remove(enemy);
             GameScreen.GameSpace.Children.Remove(enemy.UserControl);
-            MainWindow.currentScore += enemy.ScoreValue;
+            MainWindow.gameState.CurrentScore += enemy.ScoreValue;
             MainWindow.player.Gold += enemy.GoldValue;
         }
 

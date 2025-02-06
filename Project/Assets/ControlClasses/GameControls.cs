@@ -209,7 +209,7 @@ namespace Project.Assets.ControlClasses
 
         private void RegenerationTimer_Tick(object sender, EventArgs e)
         {
-            player.CurrentHealth += MainWindow.currentDifficultyMultiplayer * 0.5;
+            player.CurrentHealth += MainWindow.gameState.CurrentDifficultyMultiplier * 0.5;
             if (player.CurrentHealth > player.MaxHealth)
             {
                 player.CurrentHealth = player.MaxHealth;
@@ -316,8 +316,8 @@ namespace Project.Assets.ControlClasses
             {
                 StopGame();
                 isPlayerDead = false;
-                endGameScreen.GameEndScore = MainWindow.currentScore;
-                endGameScreen.GameEndTime = MainWindow.currentTime;
+                endGameScreen.GameEndScore = MainWindow.gameState.CurrentScore;
+                endGameScreen.GameEndTime = MainWindow.gameState.CurrentTime;
                 GameScreen.GameSpace.Children.Add(endGameScreen);
                 endGameScreen.Focus();
                 endGameScreen.Update();
@@ -398,7 +398,7 @@ namespace Project.Assets.ControlClasses
             attackAvalible = false;
             RegenerationTimer.Stop();
             MainWindow.enemyControls.StopUpdate();
-            MainWindow.isPaused = true;
+            MainWindow.gameState.IsPaused = true;
         }
         private void ResumeGame()
         {
@@ -408,7 +408,7 @@ namespace Project.Assets.ControlClasses
             attackAvalible = true;
             RegenerationTimer.Start();
             MainWindow.enemyControls.ResumeUpdate();
-            MainWindow.isPaused = false;
+            MainWindow.gameState.IsPaused = false;
         }
     }
 }
