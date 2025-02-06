@@ -267,71 +267,78 @@ namespace Project.Assets.ControlClasses
         }
         private void GameTick(object sender, EventArgs e)
         {
-            if (UpKeyPressed)
-            {
-                SpeedY += Speed;
-            }
-            if (DownKeyPressed)
-            {
-                SpeedY -= Speed;
-            }
-            if (LeftKeyPressed)
-            {
-                SpeedX -= Speed;
-            }
-            if (RightKeyPressed)
-            {
-                SpeedX += Speed;
-            }
-            if (LeftMouseButtonPressed)
-            {
-                Attack();
-            }
+            ProcessInput();
+            UpdateMovement();
+            ClampPlayerPosition();
+            CheckPlayerDeath();
+            ApplyFrictionAndMove();
+            UpdateRotationAndFacing();
+        }
 
+        private void ProcessInput()
+        {
+            if (UpKeyPressed)
+                SpeedY += Speed;
+            if (DownKeyPressed)
+                SpeedY -= Speed;
+            if (LeftKeyPressed)
+                SpeedX -= Speed;
+            if (RightKeyPressed)
+                SpeedX += Speed;
+            if (LeftMouseButtonPressed)
+                Attack();
+        }
+
+        private void UpdateMovement()
+        {
+            player.Position = new Vector(translateTransform.X + playerControl.ActualWidth / 2,
+                                          translateTransform.Y + playerControl.ActualHeight / 2);
+        }
+
+        private void ClampPlayerPosition()
+        {
             var maxX = GameScreen.GameSpace.ActualWidth;
             var maxY = GameScreen.GameSpace.ActualHeight;
-            player.Position = new Vector(translateTransform.X + playerControl.ActualWidth / 2, translateTransform.Y + playerControl.ActualHeight / 2);
-
             if (translateTransform.X < 0)
-            {
                 translateTransform.X = 0;
-            }
             if (translateTransform.X + playerControl.ActualWidth > maxX)
-            {
                 translateTransform.X = maxX - playerControl.ActualWidth;
-            }
             if (translateTransform.Y < 0)
-            {
                 translateTransform.Y = 0;
-            }
             if (translateTransform.Y + playerControl.ActualHeight > maxY)
-            {
                 translateTransform.Y = maxY - playerControl.ActualHeight;
-            }
+        }
 
+        private void CheckPlayerDeath()
+        {
             IsPlayerDead();
             if (isPlayerDead)
             {
                 StopGame();
-                isPlayerDead = false; 
+                isPlayerDead = false;
                 endGameScreen.GameEndScore = MainWindow.currentScore;
                 endGameScreen.GameEndTime = MainWindow.currentTime;
                 GameScreen.GameSpace.Children.Add(endGameScreen);
                 endGameScreen.Focus();
                 endGameScreen.Update();
             }
+        }
 
-            SpeedX = SpeedX * Friction;
-            SpeedY = SpeedY * Friction;
-
+        private void ApplyFrictionAndMove()
+        {
+            SpeedX *= Friction;
+            SpeedY *= Friction;
             translateTransform.X += SpeedX;
             translateTransform.Y -= SpeedY;
+        }
 
+        private void UpdateRotationAndFacing()
+        {
             mousePosition = Mouse.GetPosition(GameScreen);
             RotateCharacterToMouse();
-
             UpdateFacingDirection();
         }
+
         private void RotateCharacterToMouse()
         {
             var characterPosition = playerControl.TranslatePoint(new Point(playerControl.ActualWidth / 2.0, playerControl.ActualHeight / 2.0), GameScreen.GameSpace);
