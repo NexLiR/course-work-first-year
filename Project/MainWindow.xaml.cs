@@ -23,7 +23,20 @@ namespace Project
 {
     public partial class MainWindow : Window
     {
-        public MainWindow()
+		private Player player;
+		private Space gameSpace;
+		private SavesControls save;
+		private SoundControls music;
+		private SoundControls sound;
+		private BitmapImage bitmapImage;
+		private GameScreen GameScreen;
+		private DispatcherTimer UIUpdateTimer;
+		private DispatcherTimer TimeTimer;
+		private GameControls gameControls;
+		private EnemyControls enemyControls;
+		private GameState gameState;
+
+		public MainWindow()
         {
             InitializeComponent();
             InitializeGame();
@@ -36,34 +49,24 @@ namespace Project
             UpdateAllMaxScores();
         }
 
-        private void InitializeGame()
-        {
-            gameSpace = new Space(1, 1920, 1064);
-            DataContext = gameSpace;
-            UIUpdateTimer.Interval = TimeSpan.FromMilliseconds(6);
-            UIUpdateTimer.Tick += UIUpdateTimer_Tick;
-            UIUpdateTimer.Start();
-            TimeTimer.Interval = TimeSpan.FromSeconds(1);
-            TimeTimer.Tick += (sender, e) => gameState.CurrentTime++;
-            InitializeCharacterButtons();
-            InitializeDifficultyButtons();
-        }
+		private void InitializeGame()
+		{
+			gameSpace = new Space(1, 1920, 1064);
+			gameState = new GameState();
+			player = new Player();
+			save = new SavesControls();
+			music = new SoundControls();
+			sound = new SoundControls();
+			UIUpdateTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(6) };
+			UIUpdateTimer.Tick += UIUpdateTimer_Tick;
+			UIUpdateTimer.Start();
+			TimeTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
+			TimeTimer.Tick += (sender, e) => gameState.CurrentTime++;
+			InitializeCharacterButtons();
+			InitializeDifficultyButtons();
+		}
 
-        // Control classes
-        public static Player player = new Player();
-
-        Space gameSpace = new Space();
-        SavesControls save = new SavesControls();
-        SoundControls music = new SoundControls();
-        SoundControls sound = new SoundControls();
-        private BitmapImage bitmapImage;
-        private GameScreen GameScreen;
-        private DispatcherTimer UIUpdateTimer = new DispatcherTimer();
-        private DispatcherTimer TimeTimer = new DispatcherTimer();
-        public static GameControls gameControls;
-        public static EnemyControls enemyControls;
-        public static GameState gameState = new GameState();
-
+		// Control classes
         #region ButtonFunctions
         private void NewGame_Click(object sender, RoutedEventArgs e)
         {
