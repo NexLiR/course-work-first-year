@@ -50,8 +50,9 @@ namespace Project.Assets.ControlClasses
         private DispatcherTimer UnpauseCheckTimer = new DispatcherTimer();
 
         private DispatcherTimer Ultimate2DurationTimer = new DispatcherTimer();
+		MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
 
-        public GameControls(GameScreen gameScreen, Player character)
+		public GameControls(GameScreen gameScreen, Player character)
         {
             player = character;
             Speed = (float)player.Speed;
@@ -209,7 +210,7 @@ namespace Project.Assets.ControlClasses
 
         private void RegenerationTimer_Tick(object sender, EventArgs e)
         {
-            player.CurrentHealth += MainWindow.gameState.CurrentDifficultyMultiplier * 0.5;
+            player.CurrentHealth += mainWindow.gameState.CurrentDifficultyMultiplier * 0.5;
             if (player.CurrentHealth > player.MaxHealth)
             {
                 player.CurrentHealth = player.MaxHealth;
@@ -316,8 +317,8 @@ namespace Project.Assets.ControlClasses
             {
                 StopGame();
                 isPlayerDead = false;
-                endGameScreen.GameEndScore = MainWindow.gameState.CurrentScore;
-                endGameScreen.GameEndTime = MainWindow.gameState.CurrentTime;
+                endGameScreen.GameEndScore = mainWindow.gameState.CurrentScore;
+                endGameScreen.GameEndTime = mainWindow.gameState.CurrentTime;
                 GameScreen.GameSpace.Children.Add(endGameScreen);
                 endGameScreen.Focus();
                 endGameScreen.Update();
@@ -397,8 +398,8 @@ namespace Project.Assets.ControlClasses
             AttackTimer.Stop();
             attackAvalible = false;
             RegenerationTimer.Stop();
-            MainWindow.enemyControls.StopUpdate();
-            MainWindow.gameState.IsPaused = true;
+			mainWindow.enemyControls.StopUpdate();
+			mainWindow.gameState.IsPaused = true;
         }
         private void ResumeGame()
         {
@@ -407,8 +408,8 @@ namespace Project.Assets.ControlClasses
             AttackTimer.Start();
             attackAvalible = true;
             RegenerationTimer.Start();
-            MainWindow.enemyControls.ResumeUpdate();
-            MainWindow.gameState.IsPaused = false;
+			mainWindow.enemyControls.ResumeUpdate();
+			mainWindow.gameState.IsPaused = false;
         }
     }
 }
