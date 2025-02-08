@@ -14,7 +14,8 @@ namespace Project.Assets.DataClasses
     public class RangedEnemy : Enemy
     {
         private bool isReadyToAttack = true;
-        public List<Bullet> Bullets { get; set; } = new List<Bullet>();
+		MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
+		public List<Bullet> Bullets { get; set; } = new List<Bullet>();
         public RangedEnemy(int id, string name, double health, double speed, double damage, double attackSpeed, Vector position, int scoreValue, int goldValue, UserControl userControl)
             : base(id, name, health, speed, damage, attackSpeed, position, scoreValue, goldValue, userControl)
         {
@@ -58,7 +59,7 @@ namespace Project.Assets.DataClasses
 
         public override void Attack(Player player)
         {
-            if (isReadyToAttack && (MainWindow.player.Position - Position).Length <= 301)
+            if (isReadyToAttack && (mainWindow.player.Position - Position).Length <= 301)
         {
                 var characterPosition = Position;
                 var direction = player.Position - characterPosition;
@@ -66,7 +67,7 @@ namespace Project.Assets.DataClasses
 
                 var bullet = CreateProjectile(new Point(characterPosition.X, characterPosition.Y), direction);
 
-                MainWindow.gameControls.GameScreen.GameSpace.Children.Add(bullet.UserControl);
+				mainWindow.gameControls.GameScreen.GameSpace.Children.Add(bullet.UserControl);
                 bullet.UserControl.Visibility = Visibility.Visible;
                 Bullets.Add(bullet);
 
@@ -86,12 +87,12 @@ namespace Project.Assets.DataClasses
                 bullet.LifeTime -= 10;
                 if (bullet.LifeTime <= 0)
                 {
-                    MainWindow.gameControls.GameScreen.GameSpace.Children.Remove(bullet.UserControl);
+					mainWindow.gameControls.GameScreen.GameSpace.Children.Remove(bullet.UserControl);
                     Bullets.Remove(bullet);
                 }
                 else if (CheckCollisionWithPlayer(bullet, player))
                 {
-                    MainWindow.gameControls.GameScreen.GameSpace.Children.Remove(bullet.UserControl);
+					mainWindow.gameControls.GameScreen.GameSpace.Children.Remove(bullet.UserControl);
                     Bullets.Remove(bullet);
                     player.TakeDamage(Damage);
                 }
@@ -105,8 +106,8 @@ namespace Project.Assets.DataClasses
 
         private bool CheckCollisionWithPlayer(Bullet bullet, Player player)
         {
-            var gameScreen = MainWindow.gameControls.GameScreen.GameSpace;
-            var playerControl = MainWindow.gameControls.playerControl;
+            var gameScreen = mainWindow.gameControls.GameScreen.GameSpace;
+            var playerControl = mainWindow.gameControls.playerControl;
 
             GeneralTransform bulletTransform = bullet.UserControl.TransformToVisual(gameScreen);
             Rect bulletBounds = bulletTransform.TransformBounds(new Rect(0, 0, bullet.UserControl.ActualWidth, bullet.UserControl.ActualHeight));
