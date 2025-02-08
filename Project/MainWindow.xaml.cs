@@ -51,16 +51,16 @@ namespace Project
 
 		private void InitializeGame()
 		{
-			gameSpace = new Space(1, 1920, 1064);
+			gameSpace = new Space(GameConstants.GameSpaceId, GameConstants.GameSpaceWidth, GameConstants.GameSpaceHeight);
 			gameState = new GameState();
 			player = new Player();
 			save = new SavesControls();
 			music = new SoundControls();
 			sound = new SoundControls();
-			UIUpdateTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(6) };
+			UIUpdateTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(GameConstants.UIUpdateIntervalMs) };
 			UIUpdateTimer.Tick += UIUpdateTimer_Tick;
 			UIUpdateTimer.Start();
-			TimeTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
+			TimeTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(GameConstants.TimeUpdateIntervalSec) };
 			TimeTimer.Tick += (sender, e) => gameState.CurrentTime++;
 			InitializeCharacterButtons();
 			InitializeDifficultyButtons();
@@ -185,13 +185,13 @@ namespace Project
                 GameScreen.Visibility = Visibility.Visible;
                 if (gameState.CurrentCharacter == 1)
                 {
-                    player = new Player(1, "Character1", 100.0, 1.0, 5.0, 1.2, new Vector(960, 532), 0, 100.0, 1, 2.5);
+                    player = new Player(1, "Character1", 100.0, 1.0, 5.0, 1.2, new Vector(GameConstants.DefaultCharacterPositionX, GameConstants.DefaultCharacterPositionY), 0, 100.0, 1, 2.5);
                 }
                 else if (gameState.CurrentCharacter == 2)
                 {
-                    player = new Player(2, "Character2", 200.0, 0.75, 3.5, 1.5, new Vector(960, 532), 0, 200, 2, 10);
+                    player = new Player(2, "Character2", 200.0, 0.75, 3.5, 1.5, new Vector(GameConstants.DefaultCharacterPositionX, GameConstants.DefaultCharacterPositionY), 0, 200, 2, 10);
                 }
-                gameSpace = new Space(1, 1920, 1064);
+                gameSpace = new Space(GameConstants.GameSpaceId, GameConstants.GameSpaceWidth, GameConstants.GameSpaceHeight);
                 gameControls = new GameControls(GameScreen, player);
                 enemyControls = new EnemyControls(gameState.CurrentDifficultyMultiplier, GameScreen);
 
@@ -249,28 +249,28 @@ namespace Project
         {
             difficultyButtons = new List<Button> { btnEasy, btnNormal, btnHard };
 
-            btnEasy.Tag = new DifficultySetting
-            {
-                Multiplier = 2.0,
-                BackgroundUri = "pack://application:,,,/Assets/Textures/background-easy.png",
-                TextForeground = Brushes.Black
-            };
+			btnEasy.Tag = new DifficultySetting
+			{
+				Multiplier = GameConstants.EasyMultiplier,
+				BackgroundUri = GameConstants.EasyBackgroundUri,
+				TextForeground = Brushes.Black
+			};
 
-            btnNormal.Tag = new DifficultySetting
-            {
-                Multiplier = 1.0,
-                BackgroundUri = "pack://application:,,,/Assets/Textures/background-normal.png",
-                TextForeground = Brushes.White
-            };
+			btnNormal.Tag = new DifficultySetting
+			{
+				Multiplier = GameConstants.NormalMultiplier,
+				BackgroundUri = GameConstants.NormalBackgroundUri,
+				TextForeground = Brushes.White
+			};
 
-            btnHard.Tag = new DifficultySetting
-            {
-                Multiplier = 0.5,
-                BackgroundUri = "pack://application:,,,/Assets/Textures/background-hard.png",
-                TextForeground = Brushes.White
-            };
+			btnHard.Tag = new DifficultySetting
+			{
+				Multiplier = GameConstants.HardMultiplier,
+				BackgroundUri = GameConstants.HardBackgroundUri,
+				TextForeground = Brushes.White
+			};
 
-            foreach (var btn in difficultyButtons)
+			foreach (var btn in difficultyButtons)
             {
                 btn.Click += DifficultyButton_Click;
             }
