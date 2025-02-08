@@ -26,12 +26,13 @@ namespace Project.Assets.UserControls
         public int GameEndTime { get; set; }
         private int SaveMaxScore { get; set; }
         private int SaveMaxTime { get; set; }
+		MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
 
-        public GameEndControl()
+		public GameEndControl()
         {
-            GameEndScore = MainWindow.gameState.CurrentScore;
-            GameEndTime = MainWindow.gameState.CurrentTime;
-            GetSaveData(MainWindow.gameState.CurrentSave);
+            GameEndScore = mainWindow.gameState.CurrentScore;
+            GameEndTime = mainWindow.gameState.CurrentTime;
+            GetSaveData(mainWindow.gameState.CurrentSave);
             InitializeComponent();
             DataContext = this;
         }
@@ -51,7 +52,7 @@ namespace Project.Assets.UserControls
             if (NewRecordCheck())
             {
                 NewRecord.Visibility = Visibility.Visible;
-                UpdateSaveData(MainWindow.gameState.CurrentSave);
+                UpdateSaveData(mainWindow.gameState.CurrentSave);
             }
             else
             {
@@ -106,7 +107,7 @@ namespace Project.Assets.UserControls
         private void ToMainManu_Click(object sender, RoutedEventArgs e)
         {
             sound.PlaySound("button-click");
-            MainWindow.gameState.IsGameEnded = true;
+			mainWindow.gameState.IsGameEnded = true;
         }
     }
 }

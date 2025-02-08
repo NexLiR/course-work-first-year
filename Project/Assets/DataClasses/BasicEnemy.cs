@@ -14,8 +14,9 @@ namespace Project.Assets.DataClasses
     public class BasicEnemy : Enemy
     {
         private bool isReadyToAttack = true;
+		MainWindow mainWindow = Application.Current.MainWindow as MainWindow;
 
-        public BasicEnemy(int id, string name, double health, double speed, double damage, double attackSpeed, Vector position, int scoreValue, int goldValue, UserControl userControl)
+		public BasicEnemy(int id, string name, double health, double speed, double damage, double attackSpeed, Vector position, int scoreValue, int goldValue, UserControl userControl)
             : base(id, name, health, speed, damage, attackSpeed, position, scoreValue, goldValue, userControl)
         {
             InitializeTimer();
@@ -65,8 +66,8 @@ namespace Project.Assets.DataClasses
         }
         private bool CheckCollisionWithPlayer()
         {
-            var gameScreen = MainWindow.gameControls.GameScreen.GameSpace;
-            var playerControl = MainWindow.gameControls.playerControl;
+            var gameScreen = mainWindow.gameControls.GameScreen.GameSpace;
+            var playerControl = mainWindow.gameControls.playerControl;
 
             GeneralTransform enemyTransform = UserControl.TransformToVisual(gameScreen);
             Rect enemyBounds = enemyTransform.TransformBounds(new Rect(0, 0, UserControl.ActualWidth, UserControl.ActualHeight));
